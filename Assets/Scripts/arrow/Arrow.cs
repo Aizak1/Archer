@@ -1,55 +1,64 @@
+using enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
-{
-    [SerializeField]
-    private float speed;
+namespace arrow {
+    public class Arrow : MonoBehaviour {
+        [SerializeField]
+        private float speed;
 
-    [SerializeField]
-    private Transform tip;
+        [SerializeField]
+        private Transform tip;
 
-    public bool isInAir;
+        public bool isInAir;
 
-    [SerializeField]
-    private new Rigidbody rigidbody;
+        [SerializeField]
+        private new Rigidbody rigidbody;
 
-    private Quaternion lastRotation;
+        private Vector3 lastTipPosition = Vector3.zero;
 
-    private void FixedUpdate() {
-        if (!isInAir) {
-            return;
+        private void FixedUpdate() {
+            if (!isInAir) {
+                return;
+            }
+
+            if (rigidbody.velocity == Vector3.zero) {
+                return;
+            }
+
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
+
+            if (Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
+                rigidbody.Sleep();
+                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+
+                isInAir = false;
+
+                rigidbody.useGravity = false;
+                rigidbody.isKinematic = true;
+                GetComponent<Collider>().enabled = false;
+
+                transform.parent = hit.collider.gameObject.transform;
+                var enemy = hit.collider.GetComponent<Enemy>();
+                if (enemy != null) {
+                    enemy.ApplyDamage();
+                }
+
+            }
+            lastTipPosition = tip.position;
         }
 
-        if (rigidbody.velocity == Vector3.zero) {
-            return;
+        public void Release(float pullAmount) {
+            isInAir = true;
+            rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+            Vector3 force = transform.forward * (pullAmount * speed);
+            rigidbody.AddForce(force);
+
         }
-
-        transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
-        lastRotation = transform.rotation;
-    }
-
-    public void Release(float pullAmount) {
-        isInAir = true;
-        rigidbody.useGravity = true;
-        rigidbody.isKinematic = false;
-        rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-        Vector3 force = transform.forward * (pullAmount * speed);
-        rigidbody.AddForce(force);
-
-    }
-
-    private void OnCollisionEnter(Collision collision) {
-        rigidbody.Sleep();
-        rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-        isInAir = false;
-        rigidbody.useGravity = false;
-        rigidbody.isKinematic = true;
-        GetComponent<Collider>().enabled = false;
-
-        transform.parent = collision.gameObject.transform;
-        transform.rotation = lastRotation;
     }
 }
+

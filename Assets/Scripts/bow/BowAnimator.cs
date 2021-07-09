@@ -7,12 +7,12 @@ namespace bow {
         [SerializeField]
         private Animator animator;
         [SerializeField]
-        private BowController puller;
+        private BowController bowController;
 
         private const string BLEND = "Blend";
 
         private void Update() {
-            animator.SetFloat(BLEND, puller.pullAmount);
+            animator.SetFloat(BLEND, bowController.pullAmount);
         }
     }
 }
