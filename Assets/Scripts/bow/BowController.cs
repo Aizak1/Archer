@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -11,13 +12,17 @@ namespace bow {
         private Transform max;
 
         [SerializeField]
-        private GameObject pivot;
+        private GameObject arrowRotationPivot;
+        [SerializeField]
+        private GameObject bowRotationPivot;
 
         [SerializeField]
-        private GameObject arrow;
+        private GameObject arrowSpawnGameObject;
 
         public float pullAmount;
         private Vector3 startTouchPosition;
+
+        private Arrow instantiatedArrow;
 
         private void Update() {
             if (Input.touchCount <= 0) {
@@ -25,12 +30,15 @@ namespace bow {
             }
 
             if (Input.touches[0].phase == TouchPhase.Began) {
-
                 startTouchPosition = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
                 startTouchPosition.z = max.position.z;
 
-                var pos = pivot.transform.position;
-                Instantiate(arrow, pos, pivot.transform.rotation, pivot.transform);
+                var pos = arrowRotationPivot.transform.position;
+                var rot = arrowRotationPivot.transform.rotation;
+                var parent = arrowRotationPivot.transform;
+
+                var arrowGameObject = Instantiate(arrowSpawnGameObject, pos, rot, parent);
+                instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
             }
 
             if (Input.touches[0].phase == TouchPhase.Moved) {
@@ -47,15 +55,18 @@ namespace bow {
                 float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
                 angle = Mathf.Clamp(angle, -90f, 90f);
 
-                transform.parent.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
+                bowRotationPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
 
                 pullAmount = CalculatePullAmount(pullPosition);
 
             }
 
             if (Input.touches[0].phase == TouchPhase.Ended) {
+                instantiatedArrow.transform.parent = null;
+                instantiatedArrow.Release(pullAmount);
+
                 pullAmount = 0;
-                pivot.transform.localPosition = start.localPosition;
+                arrowRotationPivot.transform.localPosition = start.localPosition;
                 startTouchPosition = Vector3.zero;
             }
 
@@ -65,8 +76,10 @@ namespace bow {
         private float CalculatePullAmount(Vector3 pullPosition) {
             var pullVector = pullPosition - startTouchPosition;
             var maxPullVector = max.position - start.position;
+
             float maxLength = maxPullVector.magnitude;
-            float pullAmount = pullVector.magnitude / maxLength;
+            float currentLength = pullVector.magnitude;
+            float pullAmount = currentLength / maxLength;
 
             return Mathf.Clamp(pullAmount, 0, 1);
         }
