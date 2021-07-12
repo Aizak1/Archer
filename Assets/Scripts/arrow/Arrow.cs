@@ -5,14 +5,11 @@ using UnityEngine;
 
 namespace arrow {
     public class Arrow : MonoBehaviour {
-        [SerializeField]
-        private float speed;
+        public float speed;
+        public bool isInAir;
 
         [SerializeField]
         private Transform tip;
-
-        public bool isInAir;
-
         [SerializeField]
         private new Rigidbody rigidbody;
 
@@ -56,7 +53,7 @@ namespace arrow {
             rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
             Vector3 force = transform.forward * (pullAmount * speed);
-            rigidbody.AddForce(force);
+            rigidbody.velocity = force;
 
         }
     }

@@ -28,7 +28,7 @@ namespace bow {
         public float pullAmount;
         private Vector3 startTouchPosition;
 
-        private Arrow instantiatedArrow;
+        public Arrow instantiatedArrow;
 
         private void Update() {
             if (Input.touchCount <= 0) {
