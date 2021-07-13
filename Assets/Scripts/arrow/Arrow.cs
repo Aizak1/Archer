@@ -18,13 +18,13 @@ namespace arrow {
         private int splitArrowsAmount;
 
         [SerializeField]
-        private float timeToSplit;
+        private float timeBeforeSplit;
 
         [SerializeField]
-        private float splitAngle;
+        private float angleBetweenSplitArrows;
 
         private float splitTime;
-        private bool isSpliting;
+        private bool isSplitArrow;
 
         private Vector3 lastTipPosition;
 
@@ -59,15 +59,17 @@ namespace arrow {
                 }
 
             }
+
             lastTipPosition = tip.position;
-            if(Time.time >= splitTime && isSpliting) {
+
+            if (Time.time >= splitTime && isSplitArrow) {
                 Split();
             }
         }
 
         private void Split() {
 
-            float angle = splitAngle * (splitArrowsAmount - 1) / 2 * (-1);
+            float angle = - angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
 
             for (int i = 0; i < splitArrowsAmount; i++) {
                 var newArrow = Instantiate(this, transform.position, transform.rotation);
@@ -80,23 +82,23 @@ namespace arrow {
 
                 var newVelocity = new Vector3(velocity.x, newY, newZ);
 
-                newArrow.Release(newVelocity);
+                newArrow.Release(newVelocity, false);
 
-                angle += splitAngle;
+                angle += angleBetweenSplitArrows;
             }
 
             Destroy(gameObject);
         }
 
-        public void Release(Vector3 velocity, bool isSpliting = false) {
+        public void Release(Vector3 velocity, bool isSplitArrow) {
             isInAir = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
-            this.isSpliting = isSpliting;
+            this.isSplitArrow = isSplitArrow;
             rigidbody.velocity = velocity;
 
-            if (isSpliting) {
-                splitTime = Time.time + timeToSplit;
+            if (isSplitArrow) {
+                splitTime = Time.time + timeBeforeSplit;
             }
         }
     }

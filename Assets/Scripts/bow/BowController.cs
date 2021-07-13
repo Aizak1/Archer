@@ -28,10 +28,13 @@ namespace bow {
         [SerializeField]
         private bool isSplitingMode;
 
-        public float pullAmount;
         private Vector3 startTouchPosition;
 
+        [HideInInspector]
+        public float pullAmount;
+        [HideInInspector]
         public Arrow instantiatedArrow;
+
 
         private void Update() {
             if (Input.touchCount <= 0) {
@@ -85,7 +88,6 @@ namespace bow {
                 startTouchPosition = Vector3.zero;
 
             }
-
 
         }
 

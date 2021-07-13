@@ -28,7 +28,7 @@ namespace ui {
             if (Input.touches[0].phase == TouchPhase.Began) {
                 points = new GameObject[numberOfPoitns];
                 for (int i = 0; i < numberOfPoitns; i++) {
-                    var pointPos = bowController.instantiatedArrow.transform.position;
+                    var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
                     points[i] = Instantiate(pointPrefab, pointPos , Quaternion.identity);
                 }
                 points[0].SetActive(false);
