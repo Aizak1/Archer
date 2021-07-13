@@ -1,4 +1,5 @@
 using enemy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,23 @@ namespace arrow {
         [SerializeField]
         private new Rigidbody rigidbody;
 
-        private Vector3 lastTipPosition = Vector3.zero;
+        [SerializeField]
+        private int splitArrowsAmount;
+
+        [SerializeField]
+        private float timeToSplit;
+
+        [SerializeField]
+        private float splitAngle;
+
+        private float splitTime;
+        private bool isSpliting;
+
+        private Vector3 lastTipPosition;
+
+        private void Start() {
+            lastTipPosition = tip.transform.position;
+        }
 
         private void FixedUpdate() {
             if (!isInAir) {
@@ -24,17 +41,16 @@ namespace arrow {
                 return;
             }
 
+
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
 
             if (Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
                 rigidbody.Sleep();
-                rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
                 isInAir = false;
 
                 rigidbody.useGravity = false;
                 rigidbody.isKinematic = true;
-                GetComponent<Collider>().enabled = false;
 
                 transform.parent = hit.collider.gameObject.transform;
                 var enemy = hit.collider.GetComponent<Enemy>();
@@ -44,17 +60,44 @@ namespace arrow {
 
             }
             lastTipPosition = tip.position;
+            if(Time.time >= splitTime && isSpliting) {
+                Split();
+            }
         }
 
-        public void Release(float pullAmount) {
+        private void Split() {
+
+            float angle = splitAngle * (splitArrowsAmount - 1) / 2 * (-1);
+
+            for (int i = 0; i < splitArrowsAmount; i++) {
+                var newArrow = Instantiate(this, transform.position, transform.rotation);
+                var velocity = rigidbody.velocity;
+
+                float radAngle = angle * Mathf.Deg2Rad;
+
+                float newY = Mathf.Sin(radAngle) * velocity.z + Mathf.Cos(radAngle) * velocity.y;
+                float newZ = Mathf.Cos(radAngle) * velocity.z - Mathf.Sin(radAngle) * velocity.y;
+
+                var newVelocity = new Vector3(velocity.x, newY, newZ);
+
+                newArrow.Release(newVelocity);
+
+                angle += splitAngle;
+            }
+
+            Destroy(gameObject);
+        }
+
+        public void Release(Vector3 velocity, bool isSpliting = false) {
             isInAir = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
-            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            this.isSpliting = isSpliting;
+            rigidbody.velocity = velocity;
 
-            Vector3 force = transform.forward * (pullAmount * speed);
-            rigidbody.velocity = force;
-
+            if (isSpliting) {
+                splitTime = Time.time + timeToSplit;
+            }
         }
     }
 }

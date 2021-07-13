@@ -31,19 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4865103414280939074
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8086864776207496262}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.02, z: 0.09685379}
-  m_Center: {x: 0, y: 0, z: 0.37842688}
 --- !u!114 &2440370348349494940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,9 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  tip: {fileID: 8273218216023482209}
   isInAir: 0
+  tip: {fileID: 8273218216023482209}
   rigidbody: {fileID: 3999320892077511152}
+  splitArrowsAmount: 2
+  timeToSplit: 1
+  splitAngle: 30
 --- !u!1001 &482436884134646276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,7 +117,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5990080644767838113, guid: 5c51937e899ec9443a1757aefe9d49cb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c51937e899ec9443a1757aefe9d49cb, type: 3}
 --- !u!1 &8086864776207496262 stripped
 GameObject:

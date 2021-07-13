@@ -25,6 +25,9 @@ namespace bow {
         [SerializeField]
         private GameObject arrowSpawnGameObject;
 
+        [SerializeField]
+        private bool isSplitingMode;
+
         public float pullAmount;
         private Vector3 startTouchPosition;
 
@@ -73,7 +76,9 @@ namespace bow {
             if (Input.touches[0].phase == TouchPhase.Ended) {
 
                 instantiatedArrow.transform.parent = null;
-                instantiatedArrow.Release(pullAmount);
+                var direction = instantiatedArrow.transform.forward;
+                var velocity = instantiatedArrow.speed * direction * pullAmount;
+                instantiatedArrow.Release(velocity, isSplitingMode);
 
                 pullAmount = 0;
                 arrowRotationPivot.transform.localPosition = start.localPosition;
