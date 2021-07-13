@@ -52,7 +52,17 @@ namespace arrow {
                 rigidbody.useGravity = false;
                 rigidbody.isKinematic = true;
 
+                var originalLossy = transform.lossyScale;
                 transform.parent = hit.collider.gameObject.transform;
+                var newLossy = transform.lossyScale;
+
+                var currentLocal = transform.localScale;
+                var scaleX = currentLocal.x * originalLossy.x / newLossy.x;
+                var scaleY = currentLocal.y * originalLossy.y / newLossy.y;
+                var scaleZ = currentLocal.z * originalLossy.z / newLossy.z;
+
+                transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+
                 var enemy = hit.collider.GetComponent<Enemy>();
                 if (enemy != null) {
                     enemy.ApplyDamage();
