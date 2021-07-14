@@ -73,11 +73,11 @@ namespace arrow {
             lastTipPosition = tip.position;
 
             if (Time.time >= splitTime && isSplitArrow) {
-                Split();
+                Split(angleBetweenSplitArrows, splitArrowsAmount);
             }
         }
 
-        private void Split() {
+        private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
 
             float angle = - angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
 

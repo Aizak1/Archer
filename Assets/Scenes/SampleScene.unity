@@ -842,6 +842,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535061994}
   m_CullTransparentMesh: 1
+--- !u!4 &601161777 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 320107371, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+  m_PrefabInstance: {fileID: 660293200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &660293200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -857,6 +862,18 @@ PrefabInstance:
       propertyPath: bowRotationPivot
       value: 
       objectReference: {fileID: 384573383}
+    - target: {fileID: 660293210, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+      propertyPath: maxPullTransform
+      value: 
+      objectReference: {fileID: 2094182874}
+    - target: {fileID: 660293210, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+      propertyPath: minPullTransform
+      value: 
+      objectReference: {fileID: 601161777}
+    - target: {fileID: 660293210, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+      propertyPath: arrowPlacementPoint
+      value: 
+      objectReference: {fileID: 948491807}
     - target: {fileID: 2589571369817754473, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
       propertyPath: m_Name
       value: Bow
@@ -1144,6 +1161,11 @@ Transform:
   m_Father: {fileID: 384573384}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &948491807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6361804486924920703, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+  m_PrefabInstance: {fileID: 660293200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2133,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2094182874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 463045334, guid: 6c3c0bfa92038bd4aa725e80a43ced1e, type: 3}
+  m_PrefabInstance: {fileID: 660293200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2096050407
 GameObject:
   m_ObjectHideFlags: 0

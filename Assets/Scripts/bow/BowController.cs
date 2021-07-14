@@ -8,12 +8,12 @@ using UnityEngine.UI;
 namespace bow {
     public class BowController : MonoBehaviour {
         [SerializeField]
-        private Transform start;
+        private Transform minPullTransform;
         [SerializeField]
-        private Transform max;
+        private Transform maxPullTransform;
 
         [SerializeField]
-        private GameObject arrowRotationPivot;
+        private GameObject arrowPlacementPoint;
         [SerializeField]
         private GameObject bowRotationPivot;
 
@@ -44,11 +44,11 @@ namespace bow {
             if (Input.touches[0].phase == TouchPhase.Began) {
 
                 startTouchPosition = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
-                startTouchPosition.z = max.position.z;
+                startTouchPosition.z = maxPullTransform.position.z;
 
-                var pos = arrowRotationPivot.transform.position;
-                var rot = arrowRotationPivot.transform.rotation;
-                var parent = arrowRotationPivot.transform;
+                var pos = arrowPlacementPoint.transform.position;
+                var rot = arrowPlacementPoint.transform.rotation;
+                var parent = arrowPlacementPoint.transform;
 
                 var arrowGameObject = Instantiate(arrowSpawnGameObject, pos, rot, parent);
                 instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
@@ -59,7 +59,7 @@ namespace bow {
 
                 var touchPosition = Input.touches[0].position;
                 Vector3 pullPosition = Camera.main.ScreenToViewportPoint(touchPosition);
-                pullPosition.z = max.position.z;
+                pullPosition.z = maxPullTransform.position.z;
 
                 if (pullPosition.x > startTouchPosition.x) {
                     return;
@@ -84,7 +84,7 @@ namespace bow {
                 instantiatedArrow.Release(velocity, isSplitingMode);
 
                 pullAmount = 0;
-                arrowRotationPivot.transform.localPosition = start.localPosition;
+                arrowPlacementPoint.transform.localPosition = minPullTransform.localPosition;
                 startTouchPosition = Vector3.zero;
 
             }
@@ -93,7 +93,7 @@ namespace bow {
 
         private float CalculatePullAmount(Vector3 pullPosition) {
             var pullVector = pullPosition - startTouchPosition;
-            var maxPullVector = max.position - start.position;
+            var maxPullVector = maxPullTransform.position - minPullTransform.position;
 
             float maxLength = maxPullVector.magnitude;
             float currentLength = pullVector.magnitude;
