@@ -51,7 +51,6 @@ namespace arrow {
                 return;
             }
 
-
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
 
             if (Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
@@ -62,16 +61,12 @@ namespace arrow {
                 rigidbody.useGravity = false;
                 rigidbody.isKinematic = true;
 
-                var originalLossy = transform.lossyScale;
-                transform.parent = hit.collider.gameObject.transform;
-                var newLossy = transform.lossyScale;
+                var parent = new GameObject();
+                parent.transform.position = hit.collider.gameObject.transform.position;
+                parent.transform.rotation = hit.collider.gameObject.transform.rotation;
 
-                var currentLocal = transform.localScale;
-                var scaleX = currentLocal.x * originalLossy.x / newLossy.x;
-                var scaleY = currentLocal.y * originalLossy.y / newLossy.y;
-                var scaleZ = currentLocal.z * originalLossy.z / newLossy.z;
-
-                transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                parent.transform.parent = hit.collider.gameObject.transform;
+                transform.parent = parent.transform;
 
                 var enemy = hit.collider.GetComponent<Enemy>();
                 if (enemy != null) {
