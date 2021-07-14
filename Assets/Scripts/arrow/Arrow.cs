@@ -1,4 +1,4 @@
-using enemy;
+using hittable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,9 +68,9 @@ namespace arrow {
                 parent.transform.parent = hit.collider.gameObject.transform;
                 transform.parent = parent.transform;
 
-                var enemy = hit.collider.GetComponent<Enemy>();
-                if (enemy != null) {
-                    enemy.ApplyDamage();
+                var hittable = hit.collider.GetComponent<IHittable>();
+                if(hittable != null) {
+                    hittable.ProcessHit(this, hit);
                 }
 
             }

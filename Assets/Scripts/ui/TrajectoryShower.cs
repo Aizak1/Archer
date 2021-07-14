@@ -36,9 +36,11 @@ namespace ui {
                 points[0].SetActive(false);
             }
 
+
             if (points == null) {
                 return;
             }
+
 
             if (Input.touches[0].phase == TouchPhase.Moved) {
 
