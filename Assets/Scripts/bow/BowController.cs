@@ -1,8 +1,6 @@
 using arrow;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace bow {
@@ -23,7 +21,7 @@ namespace bow {
         private float maxBowRotationAngle;
 
         [SerializeField]
-        private GameObject arrowSpawnGameObject;
+        private ArrowResource arrowResource;
 
         [SerializeField]
         private bool isSplitingMode;
@@ -32,6 +30,8 @@ namespace bow {
 
         [HideInInspector]
         public float pullAmount;
+        [HideInInspector]
+        public ArrowType instantiatedArrowType;
         [HideInInspector]
         public Arrow instantiatedArrow;
 
@@ -43,6 +43,10 @@ namespace bow {
 
             if (Input.touches[0].phase == TouchPhase.Began) {
 
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
+                    return;
+                }
+
                 startTouchPosition = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
                 startTouchPosition.z = maxPullTransform.position.z;
 
@@ -50,10 +54,14 @@ namespace bow {
                 var rot = arrowPlacementPoint.transform.rotation;
                 var parent = arrowPlacementPoint.transform;
 
-                var arrowGameObject = Instantiate(arrowSpawnGameObject, pos, rot, parent);
+                var arrowGameObjectToSpawn = arrowResource.arrowPrefabs[instantiatedArrowType];
+                var arrowGameObject = Instantiate(arrowGameObjectToSpawn, pos, rot, parent);
                 instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
             }
 
+            if (instantiatedArrow == null) {
+                return;
+            }
 
             if (Input.touches[0].phase == TouchPhase.Moved) {
 
@@ -86,6 +94,7 @@ namespace bow {
                 pullAmount = 0;
                 arrowPlacementPoint.transform.localPosition = minPullTransform.localPosition;
                 startTouchPosition = Vector3.zero;
+                instantiatedArrow = null;
 
             }
 

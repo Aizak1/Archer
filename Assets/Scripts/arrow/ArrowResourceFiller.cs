@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace arrow {
+    public class ArrowResourceFiller : MonoBehaviour {
+        [SerializeField]
+        private GameObject[] arrowPrefabs;
+        [SerializeField]
+        private ArrowResource resource;
+
+        private void Awake() {
+            for (int i = 0; i < arrowPrefabs.Length; i++) {
+                var arrowComponent = arrowPrefabs[i].GetComponentInChildren<Arrow>();
+
+                if(arrowComponent == null) {
+                    Debug.LogError("Invalid prefab");
+                    continue;
+                }
+
+                if (resource.arrowPrefabs.ContainsKey(arrowComponent.arrowType)) {
+                    Debug.LogError("Resources already has this type of arrow");
+                    continue;
+                }
+
+                resource.arrowPrefabs.Add(arrowComponent.arrowType, arrowPrefabs[i]);
+
+            }
+        }
+    }
+}
+

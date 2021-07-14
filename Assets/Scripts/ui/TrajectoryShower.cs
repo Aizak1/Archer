@@ -1,9 +1,6 @@
 using bow;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace ui {
     public class TrajectoryShower : MonoBehaviour {
@@ -26,6 +23,11 @@ namespace ui {
             }
 
             if (Input.touches[0].phase == TouchPhase.Began) {
+
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
+                    return;
+                }
+
                 points = new GameObject[numberOfPoitns];
                 for (int i = 0; i < numberOfPoitns; i++) {
                     var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
@@ -34,16 +36,23 @@ namespace ui {
                 points[0].SetActive(false);
             }
 
+            if (points == null) {
+                return;
+            }
+
             if (Input.touches[0].phase == TouchPhase.Moved) {
+
                 for (int i = 0; i < numberOfPoitns; i++) {
                     points[i].transform.position = CalculatePointPosition(i * spaceBetweenPoints);
                 }
             }
 
             if (Input.touches[0].phase == TouchPhase.Ended) {
+
                 for (int i = 0; i < numberOfPoitns; i++) {
                     Destroy(points[i]);
                 }
+                points = null;
             }
         }
 

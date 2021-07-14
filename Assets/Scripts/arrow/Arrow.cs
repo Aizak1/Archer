@@ -5,7 +5,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace arrow {
+
+    public enum ArrowType {
+        Normal,
+        Fast,
+        Slow
+    }
+
     public class Arrow : MonoBehaviour {
+
+        public ArrowType arrowType;
+
         public float speed;
         public bool isInAir;
 
