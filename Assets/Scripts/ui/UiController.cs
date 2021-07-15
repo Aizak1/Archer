@@ -13,21 +13,25 @@ namespace ui {
         private BowController bowController;
 
         private void Update() {
-            if (Input.touchCount <= 0) {
-                return;
-            }
 
-            if (Input.touches[0].phase == TouchPhase.Began) {
+            if (Input.GetMouseButtonDown(0)) {
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
-                    return;
+                if (Input.touchCount > 0) {
+                    int id = Input.touches[0].fingerId;
+                    if (EventSystem.current.IsPointerOverGameObject(id)) {
+                        return;
+                    }
+                } else {
+                    if (EventSystem.current.IsPointerOverGameObject()) {
+                        return;
+                    }
                 }
 
-                touchMarkUp.rectTransform.position = Input.touches[0].position;
+                touchMarkUp.rectTransform.position = Input.mousePosition;
                 touchMarkUp.gameObject.SetActive(true);
             }
 
-            if (Input.touches[0].phase == TouchPhase.Ended) {
+            if (Input.GetMouseButtonUp(0)) {
                 touchMarkUp.gameObject.SetActive(false);
             }
         }

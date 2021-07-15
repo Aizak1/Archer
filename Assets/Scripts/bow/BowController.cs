@@ -1,7 +1,6 @@
 using arrow;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -37,35 +36,39 @@ namespace bow {
 
 
         private void Update() {
-            if (Input.touchCount <= 0) {
-                return;
-            }
 
-            if (Input.touches[0].phase == TouchPhase.Began) {
+            if (Input.GetMouseButton(0)) {
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
+                if (Input.GetMouseButtonDown(0)) {
+
+                    if (Input.touchCount > 0) {
+                        int id = Input.touches[0].fingerId;
+                        if (EventSystem.current.IsPointerOverGameObject(id)) {
+                            return;
+                        }
+                    } else {
+                        if (EventSystem.current.IsPointerOverGameObject()) {
+                            return;
+                        }
+                    }
+
+                    startTouchPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                    startTouchPosition.z = maxPullTransform.position.z;
+
+                    var pos = arrowPlacementPoint.transform.position;
+                    var rot = arrowPlacementPoint.transform.rotation;
+                    var parent = arrowPlacementPoint.transform;
+
+                    var arrowGameObjectToSpawn = arrowResource.arrowPrefabs[instantiatedArrowType];
+                    var arrowGameObject = Instantiate(arrowGameObjectToSpawn, pos, rot, parent);
+                    instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
+                }
+
+                if (instantiatedArrow == null) {
                     return;
                 }
 
-                startTouchPosition = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
-                startTouchPosition.z = maxPullTransform.position.z;
-
-                var pos = arrowPlacementPoint.transform.position;
-                var rot = arrowPlacementPoint.transform.rotation;
-                var parent = arrowPlacementPoint.transform;
-
-                var arrowGameObjectToSpawn = arrowResource.arrowPrefabs[instantiatedArrowType];
-                var arrowGameObject = Instantiate(arrowGameObjectToSpawn, pos, rot, parent);
-                instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
-            }
-
-            if (instantiatedArrow == null) {
-                return;
-            }
-
-            if (Input.touches[0].phase == TouchPhase.Moved) {
-
-                var touchPosition = Input.touches[0].position;
+                var touchPosition = Input.mousePosition;
                 Vector3 pullPosition = Camera.main.ScreenToViewportPoint(touchPosition);
                 pullPosition.z = maxPullTransform.position.z;
 
@@ -81,10 +84,13 @@ namespace bow {
                 bowRotationPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
 
                 pullAmount = CalculatePullAmount(pullPosition);
-
             }
 
-            if (Input.touches[0].phase == TouchPhase.Ended) {
+            if (Input.GetMouseButtonUp(0)) {
+
+                if (instantiatedArrow == null) {
+                    return;
+                }
 
                 instantiatedArrow.transform.parent = null;
                 var direction = instantiatedArrow.transform.forward;
@@ -97,7 +103,6 @@ namespace bow {
                 instantiatedArrow = null;
 
             }
-
         }
 
         private float CalculatePullAmount(Vector3 pullPosition) {

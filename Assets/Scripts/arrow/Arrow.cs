@@ -20,7 +20,7 @@ namespace arrow {
         public bool isInAir;
 
         [SerializeField]
-        private Transform tip;
+        public Transform tip;
         [SerializeField]
         private new Rigidbody rigidbody;
 

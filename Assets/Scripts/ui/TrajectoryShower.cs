@@ -18,42 +18,51 @@ namespace ui {
         private GameObject[] points;
 
         private void Update() {
-            if (Input.touchCount <= 0) {
-                return;
-            }
 
-            if (Input.touches[0].phase == TouchPhase.Began) {
+            if (Input.GetMouseButton(0)) {
 
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
+                if (Input.GetMouseButtonDown(0)) {
+
+                    if (Input.touchCount > 0) {
+                        int id = Input.touches[0].fingerId;
+                        if (EventSystem.current.IsPointerOverGameObject(id)) {
+                            return;
+                        }
+                    } else {
+                        if (EventSystem.current.IsPointerOverGameObject()) {
+                            return;
+                        }
+                    }
+
+                    points = new GameObject[numberOfPoitns];
+
+                    for (int i = 0; i < numberOfPoitns; i++) {
+                        var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
+                        points[i] = Instantiate(pointPrefab, pointPos, Quaternion.identity);
+                    }
+
+                    points[0].SetActive(false);
+                }
+
+                if (points == null) {
                     return;
                 }
-
-                points = new GameObject[numberOfPoitns];
-                for (int i = 0; i < numberOfPoitns; i++) {
-                    var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
-                    points[i] = Instantiate(pointPrefab, pointPos , Quaternion.identity);
-                }
-                points[0].SetActive(false);
-            }
-
-
-            if (points == null) {
-                return;
-            }
-
-
-            if (Input.touches[0].phase == TouchPhase.Moved) {
 
                 for (int i = 0; i < numberOfPoitns; i++) {
                     points[i].transform.position = CalculatePointPosition(i * spaceBetweenPoints);
                 }
             }
 
-            if (Input.touches[0].phase == TouchPhase.Ended) {
+            if (Input.GetMouseButtonUp(0)) {
+
+                if (points == null) {
+                    return;
+                }
 
                 for (int i = 0; i < numberOfPoitns; i++) {
                     Destroy(points[i]);
                 }
+
                 points = null;
             }
         }
