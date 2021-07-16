@@ -23,6 +23,13 @@ namespace bow {
         private ArrowResource arrowResource;
 
         [SerializeField]
+        private AudioSource audioSource;
+        [SerializeField]
+        private AudioClip shootSound;
+        [SerializeField]
+        private AudioClip pullingSound;
+
+        [SerializeField]
         private bool isSplitingMode;
 
         private Vector3 startTouchPosition;
@@ -30,9 +37,10 @@ namespace bow {
         [HideInInspector]
         public float pullAmount;
         [HideInInspector]
-        public ArrowType instantiatedArrowType;
+        public ArrowType arrowTypeToInstantiate;
         [HideInInspector]
         public Arrow instantiatedArrow;
+
 
 
         private void Update() {
@@ -59,9 +67,10 @@ namespace bow {
                     var rot = arrowPlacementPoint.transform.rotation;
                     var parent = arrowPlacementPoint.transform;
 
-                    var arrowGameObjectToSpawn = arrowResource.arrowPrefabs[instantiatedArrowType];
-                    var arrowGameObject = Instantiate(arrowGameObjectToSpawn, pos, rot, parent);
+                    var arrowObjectToSpawn = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
+                    var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
                     instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
+                    audioSource.PlayOneShot(pullingSound);
                 }
 
                 if (instantiatedArrow == null) {
@@ -96,6 +105,10 @@ namespace bow {
                 var direction = instantiatedArrow.transform.forward;
                 var velocity = instantiatedArrow.speed * direction * pullAmount;
                 instantiatedArrow.Release(velocity, isSplitingMode);
+                if (audioSource.isPlaying) {
+                    audioSource.Stop();
+                }
+                audioSource.PlayOneShot(shootSound);
 
                 pullAmount = 0;
                 arrowPlacementPoint.transform.localPosition = minPullTransform.localPosition;
