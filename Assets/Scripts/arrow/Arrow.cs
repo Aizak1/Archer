@@ -36,6 +36,13 @@ namespace arrow {
         [SerializeField]
         private ParticleSystem splitVfx;
 
+        [SerializeField]
+        private AudioSource audioSource;
+        [SerializeField]
+        private AudioClip impactSound;
+        [SerializeField]
+        private AudioClip splitSound;
+
         private float splitTime;
         private bool isSplitArrow;
 
@@ -63,6 +70,7 @@ namespace arrow {
 
                 rigidbody.useGravity = false;
                 rigidbody.isKinematic = true;
+                audioSource.PlayOneShot(impactSound);
 
                 var parent = new GameObject();
                 parent.transform.position = hit.collider.gameObject.transform.position;
@@ -75,7 +83,7 @@ namespace arrow {
                 if(hittable != null) {
                     hittable.ProcessHit(this, hit);
                 }
-
+                return;
             }
 
             lastTipPosition = tip.position;
@@ -89,9 +97,9 @@ namespace arrow {
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
 
             float angle = - angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
-
+            Arrow instantiatedArrow = this;
             for (int i = 0; i < splitArrowsAmount; i++) {
-                var newArrow = Instantiate(this, transform.position, transform.rotation);
+                instantiatedArrow = Instantiate(this, transform.position, transform.rotation);
                 var velocity = rigidbody.velocity;
 
                 float radAngle = angle * Mathf.Deg2Rad;
@@ -101,11 +109,11 @@ namespace arrow {
 
                 var newVelocity = new Vector3(velocity.x, newY, newZ);
 
-                newArrow.Release(newVelocity, false);
+                instantiatedArrow.Release(newVelocity, false);
 
                 angle += angleBetweenSplitArrows;
             }
-
+            instantiatedArrow.audioSource.PlayOneShot(splitSound);
             Destroy(gameObject);
         }
 
