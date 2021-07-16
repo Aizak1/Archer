@@ -33,6 +33,9 @@ namespace arrow {
         [SerializeField]
         private float angleBetweenSplitArrows;
 
+        [SerializeField]
+        private ParticleSystem splitVfx;
+
         private float splitTime;
         private bool isSplitArrow;
 
@@ -79,6 +82,7 @@ namespace arrow {
 
             if (Time.time >= splitTime && isSplitArrow) {
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
+                Instantiate(splitVfx, transform.position, Quaternion.identity);
             }
         }
 
