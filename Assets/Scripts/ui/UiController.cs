@@ -38,7 +38,7 @@ namespace ui {
 
         public void SwitchArrowTypeButton() {
             var nextArrowType = bowController.arrowTypeToInstantiate + 1;
-            if((int)nextArrowType == Enum.GetNames(typeof(ArrowType)).Length) {
+            if ((int)nextArrowType == Enum.GetNames(typeof(ArrowType)).Length) {
                 nextArrowType = 0;
             }
             bowController.arrowTypeToInstantiate = nextArrowType;

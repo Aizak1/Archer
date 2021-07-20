@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace arrow {
@@ -13,7 +11,7 @@ namespace arrow {
             for (int i = 0; i < arrowPrefabs.Length; i++) {
                 var arrowComponent = arrowPrefabs[i].GetComponentInChildren<Arrow>();
 
-                if(arrowComponent == null) {
+                if (arrowComponent == null) {
                     Debug.LogError("Invalid prefab");
                     continue;
                 }

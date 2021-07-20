@@ -1,7 +1,4 @@
 using hittable;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace arrow {
@@ -91,32 +88,7 @@ namespace arrow {
                     transform.parent = parent.transform;
 
                     if (portalArrow != null) {
-                        var position = hit.point;
-                        var rotation = Quaternion.LookRotation(hit.normal);
-                        GameObject portal;
-                        if (portalArrow.isBlue) {
-
-                            var existPortal =
-                                GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
-
-                            if(existPortal!= null) {
-                                existPortal.GetComponent<Portal>().Close();
-                            }
-
-                            portal = Instantiate(portalArrow.bluePortal, position, rotation);
-                        } else {
-                            var existsPortal =
-                                GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
-
-                            if (existsPortal != null) {
-                                existsPortal.GetComponent<Portal>().Close();
-                            }
-
-                            portal = Instantiate(portalArrow.orangePortal, position, rotation);
-                        }
-                        portal.GetComponentInChildren<Portal>().Open();
-                        var offset = portal.transform.forward / 4.5f;
-                        portal.transform.position += offset ;
+                        CreatePortal(hit);
                         Destroy(gameObject);
                         return;
                     }
@@ -128,8 +100,8 @@ namespace arrow {
                     return;
                 } else {
                     var portal = hit.collider.GetComponent<Portal>();
-                    if(portal != null) {
-                        portal.MakeTeleport(GetComponent<PortalTraveller>());
+                    if (portal != null) {
+                        portal.MakeTeleport(gameObject);
                     }
                 }
             }
@@ -142,9 +114,38 @@ namespace arrow {
             }
         }
 
+        private void CreatePortal(RaycastHit hit) {
+            var position = hit.point;
+            var rotation = Quaternion.LookRotation(hit.normal);
+            GameObject portal;
+            if (portalArrow.isBlue) {
+
+                var existPortal =
+                    GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
+
+                if (existPortal != null) {
+                    existPortal.GetComponent<Portal>().Close();
+                }
+
+                portal = Instantiate(portalArrow.bluePortal, position, rotation);
+            } else {
+                var existsPortal =
+                    GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
+
+                if (existsPortal != null) {
+                    existsPortal.GetComponent<Portal>().Close();
+                }
+
+                portal = Instantiate(portalArrow.orangePortal, position, rotation);
+            }
+            portal.GetComponentInChildren<Portal>().Open();
+            var offset = portal.transform.forward / 8.7f;
+            portal.transform.position += offset;
+        }
+
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
 
-            float angle = - angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
+            float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
             Arrow instantiatedArrow = this;
             for (int i = 0; i < splitArrowsAmount; i++) {
                 instantiatedArrow = Instantiate(this, transform.position, transform.rotation);

@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 1851190763705419970}
   - component: {fileID: 4635934901314551946}
   - component: {fileID: 9196913921763422019}
-  - component: {fileID: 710854544241240276}
   m_Layer: 0
   m_Name: Main Arrow
   m_TagString: Untagged
@@ -269,18 +268,6 @@ MonoBehaviour:
   isBlue: 1
   bluePortal: {fileID: 8727921272806028875, guid: 305972242400cf44f8eaf80140afff97, type: 3}
   orangePortal: {fileID: 829068917622688132, guid: 0fec1c59b799e1048b2fede3dfdbebbc, type: 3}
---- !u!114 &710854544241240276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991164316996165318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b52a36e0e647945b883c899290abcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5897339726961812836
 GameObject:
   m_ObjectHideFlags: 0
