@@ -126,6 +126,11 @@ namespace arrow {
                         hittable.ProcessHit(this, hit);
                     }
                     return;
+                } else {
+                    var portal = hit.collider.GetComponent<Portal>();
+                    if(portal != null) {
+                        portal.MakeTeleport(GetComponent<PortalTraveller>());
+                    }
                 }
             }
 

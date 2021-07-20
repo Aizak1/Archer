@@ -19,11 +19,10 @@ public class Portal : MonoBehaviour
     public const string BLUE_PORTAL_TAG = "Blue Portal";
     public const string ORANGE_PORTAL_TAG = "Orange Portal";
 
-    private void OnTriggerExit(Collider other) {
+    public void MakeTeleport(PortalTraveller traveller) {
         if (!isReady) {
             return;
         }
-        var traveller = other.GetComponent<PortalTraveller>();
         if (traveller) {
             var linkedWorldMatrix = linkedPortal.transform.localToWorldMatrix;
             var localMatrix = transform.worldToLocalMatrix;

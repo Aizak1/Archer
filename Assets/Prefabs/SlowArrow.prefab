@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 5194487377624509044}
   - component: {fileID: 1851190763705419970}
   - component: {fileID: 4635934901314551946}
-  - component: {fileID: 6447665088580349045}
   - component: {fileID: 4131183509390712682}
   m_Layer: 0
   m_Name: Main Arrow
@@ -254,19 +253,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &6447665088580349045
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991164316996165318}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.03364697, y: 0.01698557, z: 0.014795184}
-  m_Center: {x: 0.0038654357, y: 0.0005984851, z: 0.4197834}
 --- !u!114 &4131183509390712682
 MonoBehaviour:
   m_ObjectHideFlags: 0
