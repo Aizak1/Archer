@@ -110,6 +110,12 @@ namespace bow {
                 }
                 audioSource.PlayOneShot(shootSound);
 
+                if (arrowTypeToInstantiate == ArrowType.Portal) {
+                    var portalArrowPrefab = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
+                    var portalArrow = portalArrowPrefab.GetComponentInChildren<PortalArrow>();
+                    portalArrow.isBlue = !portalArrow.isBlue;
+                }
+
                 pullAmount = 0;
                 arrowPlacementPoint.transform.localPosition = minPullTransform.localPosition;
                 startTouchPosition = Vector3.zero;

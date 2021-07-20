@@ -9,7 +9,8 @@ namespace arrow {
     public enum ArrowType {
         Normal,
         Fast,
-        Slow
+        Slow,
+        Portal
     }
 
     public class Arrow : MonoBehaviour {
@@ -47,6 +48,10 @@ namespace arrow {
         private bool isSplitArrow;
 
         private Vector3 lastTipPosition;
+        private const float TIP_POS_ACCURACY = 1;
+
+        [SerializeField]
+        private PortalArrow portalArrow;
 
         private void Start() {
             lastTipPosition = tip.transform.position;
@@ -63,27 +68,65 @@ namespace arrow {
 
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
 
-            if (Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
-                rigidbody.Sleep();
+            if ((lastTipPosition - tip.position).magnitude < TIP_POS_ACCURACY &&
+                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
 
-                isInAir = false;
+                if (!hit.collider.isTrigger) {
 
-                rigidbody.useGravity = false;
-                rigidbody.isKinematic = true;
-                audioSource.PlayOneShot(impactSound);
+                    rigidbody.Sleep();
 
-                var parent = new GameObject();
-                parent.transform.position = hit.collider.gameObject.transform.position;
-                parent.transform.rotation = hit.collider.gameObject.transform.rotation;
+                    isInAir = false;
 
-                parent.transform.parent = hit.collider.gameObject.transform;
-                transform.parent = parent.transform;
+                    rigidbody.useGravity = false;
+                    rigidbody.isKinematic = true;
 
-                var hittable = hit.collider.GetComponent<IHittable>();
-                if(hittable != null) {
-                    hittable.ProcessHit(this, hit);
+
+                    audioSource.PlayOneShot(impactSound);
+
+                    var parent = new GameObject();
+                    parent.transform.position = hit.collider.gameObject.transform.position;
+                    parent.transform.rotation = hit.collider.gameObject.transform.rotation;
+
+                    parent.transform.parent = hit.collider.gameObject.transform;
+                    transform.parent = parent.transform;
+
+                    if (portalArrow != null) {
+                        var position = hit.point;
+                        var rotation = Quaternion.LookRotation(hit.normal);
+                        GameObject portal;
+                        if (portalArrow.isBlue) {
+
+                            var existPortal =
+                                GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
+
+                            if(existPortal!= null) {
+                                existPortal.GetComponent<Portal>().Close();
+                            }
+
+                            portal = Instantiate(portalArrow.bluePortal, position, rotation);
+                        } else {
+                            var existsPortal =
+                                GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
+
+                            if (existsPortal != null) {
+                                existsPortal.GetComponent<Portal>().Close();
+                            }
+
+                            portal = Instantiate(portalArrow.orangePortal, position, rotation);
+                        }
+                        portal.GetComponentInChildren<Portal>().Open();
+                        var offset = portal.transform.forward / 4.5f;
+                        portal.transform.position += offset ;
+                        Destroy(gameObject);
+                        return;
+                    }
+
+                    var hittable = hit.collider.GetComponent<IHittable>();
+                    if (hittable != null) {
+                        hittable.ProcessHit(this, hit);
+                    }
+                    return;
                 }
-                return;
             }
 
             lastTipPosition = tip.position;
@@ -123,6 +166,7 @@ namespace arrow {
             rigidbody.isKinematic = false;
             this.isSplitArrow = isSplitArrow;
             rigidbody.velocity = velocity;
+
 
             if (isSplitArrow) {
                 splitTime = Time.time + timeBeforeSplit;
