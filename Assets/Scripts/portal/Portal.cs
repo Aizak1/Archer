@@ -14,6 +14,7 @@ namespace portal {
 
         private const float CLOSE_ANIMATION_TIME = 0.5f;
         private const int LAST_MATRIX_COLUMN = 3;
+        public const float PORTAL_SPAWN_OFFSET = 8.7f;
 
         private const string UNTAGGED = "Untagged";
         public const string BLUE_PORTAL_TAG = "Blue Portal";

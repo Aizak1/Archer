@@ -104,6 +104,10 @@ namespace arrow {
                     if (portal != null) {
                         portal.MakeTeleport(gameObject);
                     }
+                    var surface = hit.collider.GetComponent<RicochetSurface>();
+                    if(surface != null) {
+                        surface.Richochet(this);
+                    }
                 }
             }
 
@@ -140,7 +144,7 @@ namespace arrow {
                 portal = Instantiate(portalArrow.orangePortal, position, rotation);
             }
             portal.GetComponentInChildren<Portal>().Open();
-            var offset = portal.transform.forward / 8.7f;
+            var offset = portal.transform.forward / Portal.PORTAL_SPAWN_OFFSET;
             portal.transform.position += offset;
         }
 
@@ -174,6 +178,9 @@ namespace arrow {
             this.isSplitArrow = isSplitArrow;
             rigidbody.velocity = velocity;
 
+            if(splitArrowsAmount <= 1) {
+                isSplitArrow = false;
+            }
 
             if (isSplitArrow) {
                 splitTime = Time.time + timeBeforeSplit;
