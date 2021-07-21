@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1851190763705419970}
   - component: {fileID: 4635934901314551946}
   - component: {fileID: 9196913921763422019}
-  - component: {fileID: 5791410881061762423}
+  - component: {fileID: 1380187726592052734}
   m_Layer: 0
   m_Name: Main Arrow
   m_TagString: Untagged
@@ -269,7 +269,7 @@ MonoBehaviour:
   isBlue: 1
   bluePortal: {fileID: 8727921272806028875, guid: 305972242400cf44f8eaf80140afff97, type: 3}
   orangePortal: {fileID: 829068917622688132, guid: 0fec1c59b799e1048b2fede3dfdbebbc, type: 3}
---- !u!65 &5791410881061762423
+--- !u!65 &1380187726592052734
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,8 +280,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.01, z: 0.01}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.001, y: 0.001, z: 0.001}
+  m_Center: {x: 0, y: 0, z: 0.425}
 --- !u!1 &5897339726961812836
 GameObject:
   m_ObjectHideFlags: 0
