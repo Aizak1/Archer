@@ -22,6 +22,9 @@ namespace arrow {
                 }
 
                 resource.arrowPrefabs.Add(arrowComponent.arrowType, arrowPrefabs[i]);
+                resource.countToArrowType.Add(i, arrowComponent.arrowType);
+                resource.arrowTypeToCount.Add(arrowComponent.arrowType, i);
+
 
             }
         }

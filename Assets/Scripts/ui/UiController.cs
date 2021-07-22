@@ -11,6 +11,8 @@ namespace ui {
         private Image touchMarkUp;
         [SerializeField]
         private BowController bowController;
+        [SerializeField]
+        private ArrowResource resource;
 
         private void Update() {
 
@@ -37,11 +39,16 @@ namespace ui {
         }
 
         public void SwitchArrowTypeButton() {
-            var nextArrowType = bowController.arrowTypeToInstantiate + 1;
-            if ((int)nextArrowType == Enum.GetNames(typeof(ArrowType)).Length) {
-                nextArrowType = 0;
+            ArrowType currentArrowType = bowController.arrowTypeToInstantiate;
+            int currentTypeIndex = resource.arrowTypeToCount[currentArrowType];
+            int nextTypeIndex = currentTypeIndex + 1;
+
+            if(nextTypeIndex == resource.arrowTypeToCount.Count) {
+                nextTypeIndex = 0;
             }
-            bowController.arrowTypeToInstantiate = nextArrowType;
+
+            ArrowType nextType = resource.countToArrowType[nextTypeIndex];
+            bowController.arrowTypeToInstantiate = nextType;
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641567, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6357,6 +6357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchMarkUp: {fileID: 535061996}
   bowController: {fileID: 660293210}
+  resource: {fileID: 786763080}
 --- !u!4 &1949443090
 Transform:
   m_ObjectHideFlags: 0

@@ -41,7 +41,9 @@ namespace bow {
         [HideInInspector]
         public Arrow instantiatedArrow;
 
-
+        private void Start() {
+            arrowTypeToInstantiate = arrowResource.countToArrowType[0];
+        }
 
         private void Update() {
 
