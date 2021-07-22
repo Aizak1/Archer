@@ -14,7 +14,7 @@ namespace hittable {
         }
 
         public void ProcessHit(Arrow arrow, RaycastHit hit) {
-            Destroy(gameObject);
+            Destroy(this);
         }
 
         private void OnDestroy() {

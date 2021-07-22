@@ -23,6 +23,10 @@ namespace level {
         public void DecreaseEnemyCount() {
             enemiesCount--;
         }
+
+        public int PeelEnemiesCount() {
+            return enemiesCount;
+        }
     }
 }
 
