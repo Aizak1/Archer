@@ -47,9 +47,12 @@ namespace arrow {
 
         private Vector3 lastTipPosition;
         private const float TIP_POS_ACCURACY = 1;
+        private const string RAYCAST_LAYER = "Default";
 
         [SerializeField]
         private PortalArrow portalArrow;
+        [HideInInspector]
+        public bool isTeleporting;
 
         private void Start() {
             lastTipPosition = tip.transform.position;
@@ -65,14 +68,15 @@ namespace arrow {
             }
 
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
-
-            if ((lastTipPosition - tip.position).magnitude < TIP_POS_ACCURACY &&
-                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
+            var tipDistance = (lastTipPosition - tip.position).magnitude;
+            var mask = LayerMask.GetMask(RAYCAST_LAYER);
+            if (tipDistance < TIP_POS_ACCURACY && !isTeleporting &&
+                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit, mask)) {
 
                 if (!hit.collider.isTrigger) {
 
                     rigidbody.Sleep();
-
+                    GetComponent<Collider>().enabled = false;
                     isInAir = false;
 
                     rigidbody.useGravity = false;
@@ -100,17 +104,18 @@ namespace arrow {
                     }
                     return;
                 } else {
+
                     var portal = hit.collider.GetComponent<Portal>();
-                    if (portal != null) {
-                        portal.MakeTeleport(gameObject);
+                    if(portal != null) {
+                        portal.StartPortalTravelling(GetComponent<Collider>());
                     }
+
                     var surface = hit.collider.GetComponent<RicochetSurface>();
                     if(surface != null) {
                         surface.Richochet(this);
                     }
                 }
             }
-
             lastTipPosition = tip.position;
 
             if (Time.time >= splitTime && isSplitArrow) {
