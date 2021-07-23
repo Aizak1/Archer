@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using hittable;
 
@@ -11,7 +9,7 @@ namespace level {
         private int enemiesCount;
 
         private void Awake() {
-            enemiesCount = FindObjectsOfType<Enemy>().Length;
+            enemiesCount = FindObjectsOfType<Hittable>().Length;
         }
 
         private void Update() {

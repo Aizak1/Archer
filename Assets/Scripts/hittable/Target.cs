@@ -1,8 +1,7 @@
-using arrow;
 using UnityEngine;
 
 namespace hittable {
-    public class Target : MonoBehaviour, IHittable {
+    public class Target : MonoBehaviour{
         [SerializeField]
         private Transform center;
         [SerializeField]
@@ -39,7 +38,7 @@ namespace hittable {
             return default;
         }
 
-        public void ProcessHit(Arrow arrow, RaycastHit hit) {
+        public void ProcessHit(RaycastHit hit) {
             var points = CalculatePoints(hit.point);
             Debug.Log(points);
         }

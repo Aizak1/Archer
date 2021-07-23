@@ -1,24 +1,15 @@
-using arrow;
-using level;
 using UnityEngine;
 
 namespace hittable {
-    public class Enemy : MonoBehaviour, IHittable {
-        private LevelController levelController;
+    [RequireComponent(typeof(Hittable))]
+    public class Enemy : MonoBehaviour {
 
-        private void Start() {
-            levelController = FindObjectOfType<LevelController>();
-            if(levelController == null) {
-                Debug.LogError("Lack of Level Controller");
-            }
-        }
-
-        public void ProcessHit(Arrow arrow, RaycastHit hit) {
+        public void ProcessHit() {
             Destroy(this);
         }
 
         private void OnDestroy() {
-            levelController.DecreaseEnemyCount();
+            Destroy(GetComponent<Hittable>());
         }
     }
 }

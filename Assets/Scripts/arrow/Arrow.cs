@@ -98,7 +98,7 @@ namespace arrow {
                         return;
                     }
 
-                    var hittable = hit.collider.GetComponent<IHittable>();
+                    var hittable = hit.collider.GetComponent<Hittable>();
                     if (hittable != null) {
                         hittable.ProcessHit(this, hit);
                     }
