@@ -10,13 +10,23 @@ namespace ui {
         private BowController bowController;
         [SerializeField]
         private ArrowResource resource;
+
         [SerializeField]
         private LevelController levelController;
         [SerializeField]
         private Text enemyCountText;
 
+        [SerializeField]
+        private SceneLoader sceneLoader;
+
         private void Update() {
-            enemyCountText.text = levelController.PeelEnemiesCount().ToString();
+            if (enemyCountText != null && levelController != null) {
+                enemyCountText.text = levelController.PeelEnemiesCount().ToString();
+            }
+        }
+
+        public void LoadNextLevelButton() {
+            sceneLoader.LoadNextLevel();
         }
 
         public void SwitchArrowTypeButton() {
@@ -24,7 +34,7 @@ namespace ui {
             int currentTypeIndex = resource.arrowTypeToCount[currentArrowType];
             int nextTypeIndex = currentTypeIndex + 1;
 
-            if(nextTypeIndex == resource.arrowTypeToCount.Count) {
+            if (nextTypeIndex == resource.arrowTypeToCount.Count) {
                 nextTypeIndex = 0;
             }
 

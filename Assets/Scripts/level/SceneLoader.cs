@@ -14,6 +14,18 @@ namespace level {
         public void LoadLevel(int index) {
             SceneManager.LoadScene(index);
         }
+
+        public void LoadNextLevel() {
+            var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            if(nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
+                nextLevelIndex = 0;
+            }
+            LoadLevel(nextLevelIndex);
+        }
+
+        public void Quit() {
+            Application.Quit();
+        }
     }
 }
 

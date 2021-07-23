@@ -16,7 +16,7 @@ namespace level {
 
         private void Update() {
             if (enemiesCount == 0) {
-                sceneLoader.RestartLevel();
+                sceneLoader.LoadNextLevel();
             }
         }
 
