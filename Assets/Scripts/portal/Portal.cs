@@ -36,18 +36,14 @@ namespace portal {
         }
 
         private void LateUpdate() {
-            HandleTravellers();
-        }
-
-        private void HandleTravellers() {
-
             for (int i = 0; i < trackedTravellers.Count; i++) {
                 PortalTraveller traveller = trackedTravellers[i];
-                if(traveller == null) {
+                if (traveller == null) {
                     trackedTravellers.Remove(traveller);
                     i--;
                     continue;
                 }
+
                 Transform travellerTransform = traveller.transform;
                 var linkWorldMatrix = linkedPortal.transform.localToWorldMatrix;
                 var localMatrix = transform.worldToLocalMatrix;
@@ -84,6 +80,7 @@ namespace portal {
                 }
             }
         }
+
         public void PortalRenderer() {
             foreach (var traveller in trackedTravellers) {
                 UpdateSliceParams(traveller);
