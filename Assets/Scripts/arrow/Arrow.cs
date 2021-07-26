@@ -53,9 +53,14 @@ namespace arrow {
         private PortalArrow portalArrow;
         [HideInInspector]
         public bool isTeleporting;
-
-        private void Start() {
+        [HideInInspector]
+        public TrailRenderer trailRenderer;
+        public float trailTime;
+        private void Awake() {
             lastTipPosition = tip.transform.position;
+            trailRenderer = GetComponentInChildren<TrailRenderer>();
+            trailTime = trailRenderer.time;
+            trailRenderer.enabled = false;
         }
 
         private void FixedUpdate() {
@@ -75,13 +80,14 @@ namespace arrow {
 
                 if (!hit.collider.isTrigger) {
 
+                    trailRenderer.enabled = false;
+
                     rigidbody.Sleep();
                     GetComponent<Collider>().enabled = false;
                     isInAir = false;
 
                     rigidbody.useGravity = false;
                     rigidbody.isKinematic = true;
-
 
                     audioSource.PlayOneShot(impactSound);
 
@@ -107,6 +113,7 @@ namespace arrow {
 
                     var portal = hit.collider.GetComponent<Portal>();
                     if(portal != null) {
+                        trailRenderer.time = 0;
                         portal.StartPortalTravelling(GetComponent<Collider>());
                     }
 
@@ -118,7 +125,7 @@ namespace arrow {
             }
             lastTipPosition = tip.position;
 
-            if (Time.time >= splitTime && isSplitArrow) {
+            if (Time.time >= splitTime && isSplitArrow && !isTeleporting) {
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
             }
@@ -177,6 +184,7 @@ namespace arrow {
         }
 
         public void Release(Vector3 velocity, bool isSplitArrow) {
+            trailRenderer.enabled = true;
             isInAir = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;

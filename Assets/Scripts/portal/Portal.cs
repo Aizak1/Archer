@@ -87,13 +87,6 @@ namespace portal {
             }
         }
 
-        public void PostPortalRender() {
-            foreach (var traveller in trackedTravellers) {
-                UpdateSliceParams(traveller);
-            }
-        }
-
-
         private void UpdateSliceParams(PortalTraveller traveller) {
             int side = GetSideOfPortal(traveller.transform.position);
             Vector3 sliceNormal = transform.forward * -side;
@@ -159,6 +152,7 @@ namespace portal {
 
             if (arrow != null) {
                 arrow.isTeleporting = false;
+                arrow.trailRenderer.time = arrow.trailTime;
             }
         }
 
@@ -210,7 +204,7 @@ namespace portal {
             GetComponent<Collider>().enabled = false;
             tag = UNTAGGED;
             GetComponent<Animator>().SetTrigger(CLOSE_PORTAL_TRIGGER);
-            Destroy(gameObject, CLOSE_ANIMATION_TIME);
+            Destroy(transform.parent.gameObject, CLOSE_ANIMATION_TIME);
 
             if (cameraRenderer == null) {
                 Debug.LogError("Add Portal camera renderer");
