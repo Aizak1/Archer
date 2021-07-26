@@ -1,66 +1,176 @@
 fileFormatVersion: 2
 guid: 0749e30cf9ee8c6448bd2a82cd428c5f
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: bow_base
-    100002: bow_base_CTRL
-    100004: bow_base_CTRL_AnimNUL
-    100006: bow_base_CTRL_HmNUL
-    100008: bow_base_CTRL_SpaceNUL
-    100010: bow_noString
-    100012: btmArm0
-    100014: btmArm1
-    100016: btmArm2
-    100018: btmArm3
-    100020: //RootNode
-    100022: notch
-    100024: stringBtm
-    100026: stringBtmArc
-    100028: stringBtmNotch
-    100030: StringGeom
-    100032: stringTop
-    100034: stringTopArc
-    100036: stringTopNotch
-    100038: topArm0
-    100040: topArm1
-    100042: topArm2
-    100044: topArm3
-    400000: bow_base
-    400002: bow_base_CTRL
-    400004: bow_base_CTRL_AnimNUL
-    400006: bow_base_CTRL_HmNUL
-    400008: bow_base_CTRL_SpaceNUL
-    400010: bow_noString
-    400012: btmArm0
-    400014: btmArm1
-    400016: btmArm2
-    400018: btmArm3
-    400020: //RootNode
-    400022: notch
-    400024: stringBtm
-    400026: stringBtmArc
-    400028: stringBtmNotch
-    400030: StringGeom
-    400032: stringTop
-    400034: stringTopArc
-    400036: stringTopNotch
-    400038: topArm0
-    400040: topArm1
-    400042: topArm2
-    400044: topArm3
-    2100000: lambert2
-    2100002: stringLambert
-    2100004: notchLambert
-    4300000: bow_noString
-    4300002: StringGeom
-    7400000: Pull
-    9500000: //RootNode
-    13700000: bow_noString
-    13700002: StringGeom
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: bow_base
+  - first:
+      1: 100002
+    second: bow_base_CTRL
+  - first:
+      1: 100004
+    second: bow_base_CTRL_AnimNUL
+  - first:
+      1: 100006
+    second: bow_base_CTRL_HmNUL
+  - first:
+      1: 100008
+    second: bow_base_CTRL_SpaceNUL
+  - first:
+      1: 100010
+    second: bow_noString
+  - first:
+      1: 100012
+    second: btmArm0
+  - first:
+      1: 100014
+    second: btmArm1
+  - first:
+      1: 100016
+    second: btmArm2
+  - first:
+      1: 100018
+    second: btmArm3
+  - first:
+      1: 100020
+    second: //RootNode
+  - first:
+      1: 100022
+    second: notch
+  - first:
+      1: 100024
+    second: stringBtm
+  - first:
+      1: 100026
+    second: stringBtmArc
+  - first:
+      1: 100028
+    second: stringBtmNotch
+  - first:
+      1: 100030
+    second: StringGeom
+  - first:
+      1: 100032
+    second: stringTop
+  - first:
+      1: 100034
+    second: stringTopArc
+  - first:
+      1: 100036
+    second: stringTopNotch
+  - first:
+      1: 100038
+    second: topArm0
+  - first:
+      1: 100040
+    second: topArm1
+  - first:
+      1: 100042
+    second: topArm2
+  - first:
+      1: 100044
+    second: topArm3
+  - first:
+      4: 400000
+    second: bow_base
+  - first:
+      4: 400002
+    second: bow_base_CTRL
+  - first:
+      4: 400004
+    second: bow_base_CTRL_AnimNUL
+  - first:
+      4: 400006
+    second: bow_base_CTRL_HmNUL
+  - first:
+      4: 400008
+    second: bow_base_CTRL_SpaceNUL
+  - first:
+      4: 400010
+    second: bow_noString
+  - first:
+      4: 400012
+    second: btmArm0
+  - first:
+      4: 400014
+    second: btmArm1
+  - first:
+      4: 400016
+    second: btmArm2
+  - first:
+      4: 400018
+    second: btmArm3
+  - first:
+      4: 400020
+    second: //RootNode
+  - first:
+      4: 400022
+    second: notch
+  - first:
+      4: 400024
+    second: stringBtm
+  - first:
+      4: 400026
+    second: stringBtmArc
+  - first:
+      4: 400028
+    second: stringBtmNotch
+  - first:
+      4: 400030
+    second: StringGeom
+  - first:
+      4: 400032
+    second: stringTop
+  - first:
+      4: 400034
+    second: stringTopArc
+  - first:
+      4: 400036
+    second: stringTopNotch
+  - first:
+      4: 400038
+    second: topArm0
+  - first:
+      4: 400040
+    second: topArm1
+  - first:
+      4: 400042
+    second: topArm2
+  - first:
+      4: 400044
+    second: topArm3
+  - first:
+      21: 2100000
+    second: lambert2
+  - first:
+      21: 2100002
+    second: stringLambert
+  - first:
+      21: 2100004
+    second: notchLambert
+  - first:
+      43: 4300000
+    second: bow_noString
+  - first:
+      43: 4300002
+    second: StringGeom
+  - first:
+      74: 7400000
+    second: Pull
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: bow_noString
+  - first:
+      137: 13700002
+    second: StringGeom
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -89,6 +199,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Pull
       takeName: Take 001
+      internalID: 0
       firstFrame: 1
       lastFrame: 120
       wrapMode: 0
@@ -121,25 +232,32 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -148,10 +266,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -161,13 +279,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
