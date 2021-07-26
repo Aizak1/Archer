@@ -8,7 +8,8 @@ namespace arrow {
         Normal,
         Fast,
         Slow,
-        Portal
+        Portal,
+        Freeze
     }
 
     public class Arrow : MonoBehaviour {
