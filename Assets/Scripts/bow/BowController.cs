@@ -41,8 +41,11 @@ namespace bow {
         [HideInInspector]
         public Arrow instantiatedArrow;
 
+        private new Camera camera;
+
         private void Start() {
             arrowTypeToInstantiate = arrowResource.countToArrowType[0];
+            camera = Camera.main;
         }
 
         private void Update() {
@@ -62,7 +65,7 @@ namespace bow {
                         }
                     }
 
-                    startTouchPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                    startTouchPosition = camera.ScreenToViewportPoint(Input.mousePosition);
                     startTouchPosition.z = maxPullTransform.position.z;
 
                     var pos = arrowPlacementPoint.transform.position;
@@ -80,7 +83,7 @@ namespace bow {
                 }
 
                 var touchPosition = Input.mousePosition;
-                Vector3 pullPosition = Camera.main.ScreenToViewportPoint(touchPosition);
+                Vector3 pullPosition = camera.ScreenToViewportPoint(touchPosition);
                 pullPosition.z = maxPullTransform.position.z;
 
                 if (pullPosition.x > startTouchPosition.x) {
