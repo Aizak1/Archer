@@ -109,6 +109,7 @@ namespace arrow {
                     if (hittable != null) {
                         hittable.ProcessHit(this, hit);
                     }
+
                     return;
                 } else {
 

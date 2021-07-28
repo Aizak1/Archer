@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace hittable{
     public class Hittable : MonoBehaviour {
+
+        [SerializeField]
+        private ParticleSystem vfxEffect;
+
         [SerializeField]
         private Enemy enemy;
 
@@ -28,6 +32,10 @@ namespace hittable{
                 connectedTarget.ProcessHit();
             } else if (patrolingEnemy) {
                 patrolingEnemy.ProcessHit(arrow);
+            }
+
+            if (vfxEffect != null) {
+                vfxEffect.Play();
             }
         }
 

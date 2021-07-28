@@ -17,7 +17,7 @@ namespace ui {
 
         private GameObject[] points;
 
-        private void Update() {
+        private void LateUpdate() {
 
             if (Input.GetMouseButton(0)) {
 
