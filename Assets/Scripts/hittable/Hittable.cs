@@ -6,9 +6,6 @@ namespace hittable{
     public class Hittable : MonoBehaviour {
 
         [SerializeField]
-        private ParticleSystem vfxEffect;
-
-        [SerializeField]
         private Enemy enemy;
 
         [SerializeField]
@@ -32,10 +29,6 @@ namespace hittable{
                 connectedTarget.ProcessHit();
             } else if (patrolingEnemy) {
                 patrolingEnemy.ProcessHit(arrow);
-            }
-
-            if (vfxEffect != null) {
-                vfxEffect.Play();
             }
         }
 

@@ -34,6 +34,8 @@ namespace arrow {
         private float angleBetweenSplitArrows;
 
         [SerializeField]
+        private ParticleSystem hitVfx;
+        [SerializeField]
         private ParticleSystem splitVfx;
 
         [SerializeField]
@@ -103,6 +105,10 @@ namespace arrow {
                         CreatePortal(hit);
                         Destroy(gameObject);
                         return;
+                    }
+
+                    if(hitVfx != null) {
+                        Instantiate(hitVfx, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
                     var hittable = hit.collider.GetComponent<Hittable>();
