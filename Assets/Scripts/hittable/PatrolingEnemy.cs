@@ -22,6 +22,7 @@ public class PatrolingEnemy : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         freezeMaterial = meshRenderer.sharedMaterials[meshRenderer.sharedMaterials.Length - 1];
         freezeMaterial.SetFloat(SHADER_FREEZE_FIELD, -1);
+        originalAnimatorSpeed = animator.speed;
     }
 
     public void ProcessHit(Arrow arrow) {
@@ -29,7 +30,6 @@ public class PatrolingEnemy : MonoBehaviour
             return;
         }
         freezeMaterial.SetFloat(SHADER_FREEZE_FIELD, 1);
-        originalAnimatorSpeed = animator.speed;
         animator.speed = 0;
         unfreezeTime = Time.time + freezeTime;
     }
