@@ -1,5 +1,6 @@
 using arrow;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 
 namespace bow {
@@ -41,11 +42,23 @@ namespace bow {
         [HideInInspector]
         public Arrow instantiatedArrow;
 
+        [SerializeField]
+        private Rig[] archerRigs;
+
+        [SerializeField]
+        private Animator archerAnimator;
+
         private new Camera camera;
 
         private void Start() {
             arrowTypeToInstantiate = arrowResource.countToArrowType[0];
             camera = Camera.main;
+
+            foreach (var rig in archerRigs) {
+                rig.weight = 0;
+            }
+
+            archerAnimator.SetBool("isShooting", false);
         }
 
         private void Update() {
@@ -76,6 +89,12 @@ namespace bow {
                     var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
                     instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
                     audioSource.PlayOneShot(pullingSound);
+
+                    foreach (var rig in archerRigs) {
+                        rig.weight = 1;
+                    }
+
+                    archerAnimator.SetBool("isShooting", true);
                 }
 
                 if (instantiatedArrow == null) {
@@ -126,6 +145,11 @@ namespace bow {
                 startTouchPosition = Vector3.zero;
                 instantiatedArrow = null;
 
+                foreach (var rig in archerRigs) {
+                    rig.weight = 0;
+                }
+
+                archerAnimator.SetBool("isShooting", false);
             }
         }
 
