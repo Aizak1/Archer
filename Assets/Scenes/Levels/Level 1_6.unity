@@ -1503,6 +1503,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: arrowResource
+      value: 
+      objectReference: {fileID: 786763080}
     - target: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -1557,6 +1561,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+--- !u!114 &498590994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+  m_PrefabInstance: {fileID: 498590993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6941f1526c9224a8026d47ba9783c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &515518215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4208458315195486, guid: c96016c34e7be62488e588470988ef5b, type: 3}
@@ -2326,7 +2341,7 @@ MonoBehaviour:
   pointPrefab: {fileID: 7157998976322398984, guid: cf25a01974c3dc24bbb261675fb89967, type: 3}
   numberOfPoitns: 15
   spaceBetweenPoints: 0.025
-  bowController: {fileID: 941049015}
+  bowController: {fileID: 498590994}
 --- !u!4 &811174994
 Transform:
   m_ObjectHideFlags: 0
@@ -2631,17 +2646,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4457848601906800, guid: f661498175107c749a33d97304c423eb, type: 3}
   m_PrefabInstance: {fileID: 746402709}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &941049015 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-  m_PrefabInstance: {fileID: 498590993}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6941f1526c9224a8026d47ba9783c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &942665147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4836,10 +4840,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4221fb6a5776641886107b03adfc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowController: {fileID: 0}
+  bowController: {fileID: 498590994}
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 1285265514}
+  arrowTypeText: {fileID: 0}
+  arrowImage: {fileID: 0}
+  arrowImageTextures: []
   sceneLoader: {fileID: 132382903}
 --- !u!4 &1630437277
 Transform:

@@ -1717,6 +1717,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: arrowResource
+      value: 
+      objectReference: {fileID: 786763080}
     - target: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -3901,7 +3905,7 @@ MonoBehaviour:
   pointPrefab: {fileID: 7157998976322398984, guid: cf25a01974c3dc24bbb261675fb89967, type: 3}
   numberOfPoitns: 30
   spaceBetweenPoints: 0.025
-  bowController: {fileID: 1281684429}
+  bowController: {fileID: 1748639036}
 --- !u!4 &811174994
 Transform:
   m_ObjectHideFlags: 0
@@ -6170,17 +6174,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4183516897102132, guid: 7689b2d5def66f04eb3b0905d7b65084, type: 3}
   m_PrefabInstance: {fileID: 1183522281}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1281684429 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-  m_PrefabInstance: {fileID: 343750669}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6941f1526c9224a8026d47ba9783c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1288149205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4303765770703250, guid: 9f21020355643c74c88002634abcdabd, type: 3}
@@ -7583,10 +7576,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4221fb6a5776641886107b03adfc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowController: {fileID: 0}
+  bowController: {fileID: 1748639036}
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 1206215237}
+  arrowTypeText: {fileID: 0}
+  arrowImage: {fileID: 0}
+  arrowImageTextures: []
   sceneLoader: {fileID: 132382903}
 --- !u!4 &1630437277
 Transform:
@@ -7874,6 +7870,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1748639036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+  m_PrefabInstance: {fileID: 343750669}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6941f1526c9224a8026d47ba9783c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1759466840 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4607489187838822, guid: 00e2e59cbc04eab4a982218df54ce70b, type: 3}

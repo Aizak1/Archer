@@ -25,8 +25,16 @@ namespace ui {
         [SerializeField]
         private Texture[] arrowImageTextures;
 
-        public Dictionary<ArrowType, Texture> arrowTypeToTexture
+        [SerializeField]
+        private GameObject[] quiverGroups;
+
+        private  Dictionary<ArrowType, Texture> arrowTypeToTexture
           = new Dictionary<ArrowType, Texture>();
+
+        private Dictionary<ArrowType, GameObject> arrowTypeToQuiverGroup
+            = new Dictionary<ArrowType, GameObject>();
+
+
 
 
         [SerializeField]
@@ -42,13 +50,22 @@ namespace ui {
                 return;
             }
 
+            if (quiverGroups.Length < resource.countToArrowType.Count) {
+                Debug.LogError("Lack of Quiver groups");
+                return;
+            }
+
             for (int i = 0; i < resource.countToArrowType.Count; i++) {
                 arrowTypeToTexture.Add(resource.countToArrowType[i], arrowImageTextures[i]);
+
+                quiverGroups[i].SetActive(false);
+                arrowTypeToQuiverGroup.Add(resource.countToArrowType[i], quiverGroups[i]);
             }
 
             arrowTypeText.text = bowController.arrowTypeToInstantiate.ToString();
             var currentType = bowController.arrowTypeToInstantiate;
             arrowImage.texture = arrowTypeToTexture[currentType];
+            arrowTypeToQuiverGroup[currentType].SetActive(true);
         }
 
         private void Update() {
@@ -63,6 +80,7 @@ namespace ui {
 
         public void SwitchArrowTypeButton() {
             ArrowType currentArrowType = bowController.arrowTypeToInstantiate;
+            arrowTypeToQuiverGroup[currentArrowType].SetActive(false);
             int currentTypeIndex = resource.arrowTypeToCount[currentArrowType];
             int nextTypeIndex = currentTypeIndex + 1;
 
@@ -74,6 +92,8 @@ namespace ui {
             bowController.arrowTypeToInstantiate = nextType;
             arrowTypeText.text = nextType.ToString();
             arrowImage.texture = arrowTypeToTexture[nextType];
+            arrowTypeToQuiverGroup[nextType].SetActive(true);
+
         }
     }
 }
