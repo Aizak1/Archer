@@ -1,4 +1,6 @@
 using arrow;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
@@ -90,11 +92,8 @@ namespace bow {
                     instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
                     audioSource.PlayOneShot(pullingSound);
 
-                    foreach (var rig in archerRigs) {
-                        rig.weight = 1;
-                    }
-
                     archerAnimator.SetBool("isShooting", true);
+                    StartCoroutine(ChengeRigWeight());
                 }
 
                 if (instantiatedArrow == null) {
@@ -145,11 +144,25 @@ namespace bow {
                 startTouchPosition = Vector3.zero;
                 instantiatedArrow = null;
 
+                StopAllCoroutines();
+
                 foreach (var rig in archerRigs) {
                     rig.weight = 0;
                 }
 
                 archerAnimator.SetBool("isShooting", false);
+            }
+        }
+
+        private IEnumerator ChengeRigWeight() {
+
+            float weight = 0;
+            while (weight != 1) {
+                weight += 0.04f;
+                foreach (var rig in archerRigs) {
+                    rig.weight = weight;
+                }
+            yield return null;
             }
         }
 
