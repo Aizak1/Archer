@@ -4272,7 +4272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4632176470643508, guid: 08b7d3dcb8d6b9247b1800cd79905e16, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.071
+      value: 2.685
       objectReference: {fileID: 0}
     - target: {fileID: 4632176470643508, guid: 08b7d3dcb8d6b9247b1800cd79905e16, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8427,6 +8427,9 @@ MonoBehaviour:
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 220355226}
+  arrowTypeText: {fileID: 0}
+  arrowImage: {fileID: 0}
+  arrowImageTextures: []
   sceneLoader: {fileID: 0}
 --- !u!4 &1630437277
 Transform:
@@ -10834,7 +10837,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050533932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.09, z: 3.27}
+  m_LocalPosition: {x: 0, y: 0.867, z: 3.339}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1549789900}

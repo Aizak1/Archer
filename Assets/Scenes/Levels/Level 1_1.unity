@@ -4965,6 +4965,8 @@ MonoBehaviour:
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 1285265514}
+  arrowTypeText: {fileID: 0}
+  arrowTypeImage: {fileID: 0}
   sceneLoader: {fileID: 132382903}
 --- !u!4 &1630437277
 Transform:
@@ -6381,6 +6383,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefabs:
   - {fileID: 8542102953145869890, guid: 5c51937e899ec9443a1757aefe9d49cb, type: 3}
+  arrowsImageTextures:
+  - {fileID: 2800000, guid: 6876f63e8aa32514291bed054beefd05, type: 3}
   resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:
