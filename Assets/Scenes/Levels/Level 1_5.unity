@@ -2898,17 +2898,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4276324180339636, guid: 1aad01ae01d836647b215e40f1f4c1a7, type: 3}
   m_PrefabInstance: {fileID: 1710404595}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1285265514 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2766481620355029034, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
-  m_PrefabInstance: {fileID: 274291052}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1288716917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3073,6 +3062,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4631977158232566, guid: 6dcae7204dd466c4c862bc640ea7c02e, type: 3}
   m_PrefabInstance: {fileID: 1784709021}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1361005662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2098509701960147757, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+  m_PrefabInstance: {fileID: 274291052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1422676767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3582,10 +3582,11 @@ MonoBehaviour:
   bowController: {fileID: 2117717159}
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
-  enemyCountText: {fileID: 1285265514}
+  enemyCountText: {fileID: 1361005662}
   arrowTypeText: {fileID: 0}
   arrowImage: {fileID: 0}
   arrowImageTextures: []
+  quiverGroups: []
   sceneLoader: {fileID: 132382903}
 --- !u!4 &1630437277
 Transform:

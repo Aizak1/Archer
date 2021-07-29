@@ -16,7 +16,7 @@ namespace ui {
         [SerializeField]
         private LevelController levelController;
         [SerializeField]
-        private Text enemyCountText;
+        private TextMeshProUGUI enemyCountText;
 
         [SerializeField]
         private TextMeshProUGUI arrowTypeText;
