@@ -12,6 +12,8 @@ namespace ui {
         [SerializeField]
         private float spaceBetweenPoints;
 
+        private readonly Vector3 MIN_TRAJECTORY_OBJECT_SIZE = new Vector3(0.075f, 0.075f, 0.075f);
+
         [SerializeField]
         private BowController bowController;
 
@@ -35,10 +37,18 @@ namespace ui {
                     }
 
                     points = new GameObject[numberOfPoitns];
+                    var maxScale = pointPrefab.transform.localScale;
+                    var scaleStep = (maxScale - MIN_TRAJECTORY_OBJECT_SIZE) / numberOfPoitns;
 
                     for (int i = 0; i < numberOfPoitns; i++) {
                         var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
                         points[i] = Instantiate(pointPrefab, pointPos, Quaternion.identity);
+
+                        if (i > 0 && points[i - 1] != null) {
+                            var scale = points[i - 1].transform.localScale - scaleStep;
+                            points[i].transform.localScale = scale;
+                        }
+
                     }
 
                     points[0].SetActive(false);
