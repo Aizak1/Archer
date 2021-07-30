@@ -9,6 +9,8 @@ namespace level {
         private BowController bowController;
         [SerializeField]
         private Canvas winCanvas;
+        [SerializeField]
+        private Canvas gameCanvas;
 
         [SerializeField]
         private ParticleSystem winVfx;
@@ -41,6 +43,7 @@ namespace level {
             countOfArrowsForStar = enemiesCount + 1;
             starConditionsCompleteCount = 1;
             winCanvas.enabled = false;
+            Time.timeScale = 1;
         }
 
         private void Update() {
@@ -55,7 +58,9 @@ namespace level {
                     audioSource.PlayOneShot(sound);
                 }
 
+                gameCanvas.enabled = false;
                 winCanvas.enabled = true;
+
                 timeText.text = System.Math.Round(timeSinceStart, 2).ToString();
                 arrowsCountText.text = bowController.arrowsWasted.ToString();
 

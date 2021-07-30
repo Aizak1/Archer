@@ -11,7 +11,7 @@ public class HoldButtonEvent : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private UnityEvent unityEvent;
 
     [SerializeField]
-    private RawImage rawImage;
+    private Image image;
 
     [SerializeField]
     private Color holdColor;
@@ -21,16 +21,16 @@ public class HoldButtonEvent : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private bool isHold = false;
 
     private void Awake() {
-        originalColor = rawImage.color;
+        originalColor = image.color;
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        rawImage.color = holdColor;
+        image.color = holdColor;
         isHold = true;
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        rawImage.color = originalColor;
+        image.color = originalColor;
         isHold = false;
     }
 

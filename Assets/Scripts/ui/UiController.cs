@@ -28,8 +28,6 @@ namespace ui {
         [SerializeField]
         private TextMeshProUGUI spendedArrowsText;
         [SerializeField]
-        private TextMeshProUGUI arrowsForStarText;
-        [SerializeField]
         private TextMeshProUGUI timeText;
 
 
@@ -43,13 +41,13 @@ namespace ui {
             = new Dictionary<ArrowType, GameObject>();
 
 
-
+        private string arrowsForStar;
 
         [SerializeField]
         private SceneLoader sceneLoader;
 
         private void Start() {
-            arrowsForStarText.text = levelController.PeelCountOfArrowsForStar().ToString();
+            arrowsForStar = levelController.PeelCountOfArrowsForStar().ToString();
             if(arrowTypeText == null || arrowImage == null) {
                 return;
             }
@@ -80,7 +78,10 @@ namespace ui {
         private void Update() {
             if (enemyCountText != null && levelController != null) {
                 enemyCountText.text = levelController.PeelEnemiesCount().ToString();
-                spendedArrowsText.text = bowController.arrowsWasted.ToString() + " /";
+
+                string currentArrows = bowController.arrowsWasted.ToString();
+
+                spendedArrowsText.text = currentArrows + " / " + arrowsForStar;
 
 
                 var targetTime = levelController.PeelStarTime();

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641567, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -377,6 +377,11 @@ Transform:
   m_Father: {fileID: 1062727431}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &124261228 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2766481619728624504, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+  m_PrefabInstance: {fileID: 2766481620695926208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &148390024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,17 +1574,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272425258}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &337321896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7639168339048695520, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
-  m_PrefabInstance: {fileID: 2766481620695926208}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &338262300
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,7 +5836,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bowController: {fileID: 96814030}
   winCanvas: {fileID: 816688169}
+  gameCanvas: {fileID: 124261228}
   winVfx: {fileID: 0}
+  audioSource: {fileID: 0}
+  winSounds: []
   stars: []
   timeText: {fileID: 148773433}
   arrowsCountText: {fileID: 1609721739}
@@ -6298,7 +6295,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: ca476951a628f6b4791a9a1743edc0c9, type: 3}
   - {fileID: 2800000, guid: 0ac67f195c8524d4ea57762a0c7099e6, type: 3}
   spendedArrowsText: {fileID: 729459923}
-  arrowsForStarText: {fileID: 337321896}
   timeText: {fileID: 717936177}
   quiverGroups:
   - {fileID: 1996601095}

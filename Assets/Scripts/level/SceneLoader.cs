@@ -25,6 +25,7 @@ namespace level {
 
         public void LoadMenu() {
             SceneManager.LoadScene(0);
+            Time.timeScale = 1;
         }
 
         public void Quit() {
