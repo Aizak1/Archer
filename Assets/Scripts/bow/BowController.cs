@@ -46,13 +46,19 @@ namespace bow {
 
         [SerializeField]
         private Rig[] archerRigs;
-
         [SerializeField]
         private Animator archerAnimator;
+        private const float RIG_WEIGHT_STEP = 0.035f;
 
         private new Camera camera;
 
+        [HideInInspector]
+        public int arrowsWasted;
+
+
+
         private void Start() {
+            arrowsWasted = 0;
             arrowTypeToInstantiate = arrowResource.countToArrowType[0];
             camera = Camera.main;
 
@@ -132,6 +138,7 @@ namespace bow {
                     audioSource.Stop();
                 }
                 audioSource.PlayOneShot(shootSound);
+                arrowsWasted++;
 
                 if (arrowTypeToInstantiate == ArrowType.Portal) {
                     var portalArrowPrefab = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
@@ -158,7 +165,7 @@ namespace bow {
 
             float weight = 0;
             while (weight != 1) {
-                weight += 0.04f;
+                weight += RIG_WEIGHT_STEP;
                 foreach (var rig in archerRigs) {
                     rig.weight = weight;
                 }

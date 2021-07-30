@@ -5,11 +5,16 @@ namespace level {
     public class LevelController : MonoBehaviour {
         [SerializeField]
         private SceneLoader sceneLoader;
+        [SerializeField]
+        private float starTime;
 
         private int enemiesCount;
+        private int countOfArrowsForStar;
+
 
         private void Awake() {
             enemiesCount = FindObjectsOfType<Hittable>().Length;
+            countOfArrowsForStar = enemiesCount - 1;
         }
 
         private void Update() {
@@ -24,6 +29,13 @@ namespace level {
 
         public int PeelEnemiesCount() {
             return enemiesCount;
+        }
+        public int PeelCountOfArrowsForStar() {
+            return countOfArrowsForStar;
+        }
+
+        public float PeelStarTime() {
+            return starTime;
         }
     }
 }
