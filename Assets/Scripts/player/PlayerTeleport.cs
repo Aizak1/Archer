@@ -14,6 +14,11 @@ namespace player {
         private new MeshRenderer renderer;
         private new BoxCollider collider;
 
+        [SerializeField]
+        private ParticleSystem particle;
+
+        private bool isVisible = false;
+
         private void Start() {
             renderer = GetComponent<MeshRenderer>();
             collider = GetComponent<BoxCollider>();
@@ -29,8 +34,12 @@ namespace player {
                     return;
                 }
             }
-            renderer.enabled = true;
-            collider.enabled = true;
+            if (!isVisible) {
+                renderer.enabled = true;
+                collider.enabled = true;
+                particle.Play();
+                isVisible = true;
+            }
         }
 
         private void OnTriggerEnter(Collider other) {
@@ -45,6 +54,9 @@ namespace player {
                 Camera.main.transform.position += delta;
                 Destroy(gameObject);
             }
+        }
+
+        private void OnEnable() {
         }
     }
 }
