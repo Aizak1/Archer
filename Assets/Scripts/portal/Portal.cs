@@ -12,6 +12,11 @@ namespace portal {
 
         public bool isReady = false;
 
+        [SerializeField]
+        private AudioSource audioSource;
+        [SerializeField]
+        private AudioClip portalSound;
+
         private const string OPEN_PORTAL_TRIGGER = "Open";
         private const string CLOSE_PORTAL_TRIGGER = "Close";
 
@@ -197,7 +202,7 @@ namespace portal {
             }
             cameraRenderer.portals.Add(this);
 
-
+            audioSource.PlayOneShot(portalSound);
         }
 
         public void Close() {

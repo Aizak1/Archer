@@ -14,6 +14,11 @@ namespace level {
         private ParticleSystem winVfx;
 
         [SerializeField]
+        private AudioSource audioSource;
+        [SerializeField]
+        private AudioClip[] winSounds;
+
+        [SerializeField]
         private GameObject[] stars;
         [SerializeField]
         private TextMeshProUGUI timeText;
@@ -44,6 +49,10 @@ namespace level {
 
                 if(winVfx != null) {
                     Instantiate(winVfx, transform.position, Quaternion.identity);
+                }
+
+                foreach (var sound in winSounds) {
+                    audioSource.PlayOneShot(sound);
                 }
 
                 winCanvas.enabled = true;
