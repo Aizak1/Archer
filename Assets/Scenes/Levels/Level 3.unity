@@ -1430,6 +1430,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 524662421}
     m_Modifications:
+    - target: {fileID: 570166682, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 298268437792770217, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1506,7 +1510,8 @@ PrefabInstance:
       propertyPath: hittablesToDestroy.Array.data[1]
       value: 
       objectReference: {fileID: 1559885218}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 570166682, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
 --- !u!4 &182114001 stripped
 Transform:
@@ -2317,6 +2322,14 @@ PrefabInstance:
     - target: {fileID: 2766481619728624505, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195528975216644496, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -108.6001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195528975216644496, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -168.40002
       objectReference: {fileID: 0}
     - target: {fileID: 7914725340232777097, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
       propertyPath: m_AnchoredPosition.x
