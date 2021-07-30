@@ -23,6 +23,10 @@ namespace level {
             LoadLevel(nextLevelIndex);
         }
 
+        public void LoadMenu() {
+            SceneManager.LoadScene(0);
+        }
+
         public void Quit() {
             Application.Quit();
         }
