@@ -1900,6 +1900,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4276324180339636, guid: 1aad01ae01d836647b215e40f1f4c1a7, type: 3}
   m_PrefabInstance: {fileID: 1691601830}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &660869395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7639168339048695520, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+  m_PrefabInstance: {fileID: 274291052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &664863949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4792142742180158, guid: 4500da6a464da55408dd1ff2324163a7, type: 3}
@@ -2618,6 +2629,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &832888710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 463769052695365978, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+  m_PrefabInstance: {fileID: 274291052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &841001158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4415611076490568, guid: 94003cdd02bfa0849b07108d63f10e24, type: 3}
@@ -4587,6 +4609,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00e2e59cbc04eab4a982218df54ce70b, type: 3}
+--- !u!114 &1466671198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2245436888730525393, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+  m_PrefabInstance: {fileID: 274291052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1480384006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4607489187838822, guid: 00e2e59cbc04eab4a982218df54ce70b, type: 3}
@@ -4920,13 +4953,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4221fb6a5776641886107b03adfc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowController: {fileID: 0}
+  bowController: {fileID: 611643682}
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 56236331}
   arrowTypeText: {fileID: 0}
   arrowImage: {fileID: 0}
   arrowImageTextures: []
+  spendedArrowsText: {fileID: 832888710}
+  arrowsForStarText: {fileID: 660869395}
+  timeText: {fileID: 1466671198}
   quiverGroups: []
   sceneLoader: {fileID: 132382903}
 --- !u!4 &1630437277

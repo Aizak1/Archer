@@ -26,6 +26,14 @@ namespace ui {
         private Texture[] arrowImageTextures;
 
         [SerializeField]
+        private TextMeshProUGUI spendedArrowsText;
+        [SerializeField]
+        private TextMeshProUGUI arrowsForStarText;
+        [SerializeField]
+        private TextMeshProUGUI timeText;
+
+
+        [SerializeField]
         private GameObject[] quiverGroups;
 
         private  Dictionary<ArrowType, Texture> arrowTypeToTexture
@@ -41,6 +49,7 @@ namespace ui {
         private SceneLoader sceneLoader;
 
         private void Start() {
+            arrowsForStarText.text = levelController.PeelCountOfArrowsForStar().ToString();
             if(arrowTypeText == null || arrowImage == null) {
                 return;
             }
@@ -71,6 +80,19 @@ namespace ui {
         private void Update() {
             if (enemyCountText != null && levelController != null) {
                 enemyCountText.text = levelController.PeelEnemiesCount().ToString();
+                spendedArrowsText.text = bowController.arrowsWasted.ToString() + " /";
+
+
+                var targetTime = levelController.PeelStarTime();
+                var currentTime = levelController.PeelTimeSinceStart();
+                var timeRemain = Mathf.RoundToInt(targetTime - currentTime);
+
+                if(timeRemain <= 0) {
+                    timeText.text = "0";
+                    timeText.color = Color.red;
+                } else {
+                    timeText.text = timeRemain.ToString();
+                }
             }
         }
 

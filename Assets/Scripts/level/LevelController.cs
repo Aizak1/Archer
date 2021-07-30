@@ -82,6 +82,10 @@ namespace level {
         public float PeelStarTime() {
             return starTime;
         }
+
+        public float PeelTimeSinceStart() {
+            return timeSinceStart;
+        }
     }
 }
 
