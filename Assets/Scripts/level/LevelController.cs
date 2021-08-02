@@ -2,6 +2,7 @@ using UnityEngine;
 using hittable;
 using bow;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace level {
     public class LevelController : MonoBehaviour {
@@ -48,9 +49,10 @@ namespace level {
 
         private void Update() {
             timeSinceStart += Time.deltaTime;
+
             if (enemiesCount == 0) {
 
-                if(winVfx != null) {
+                if (winVfx != null) {
                     Instantiate(winVfx, transform.position, Quaternion.identity);
                 }
 
@@ -76,10 +78,31 @@ namespace level {
                     stars[i].SetActive(true);
                 }
 
+                var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+                if (nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
+                    nextLevelIndex = 0;
+                }
+                if (nextLevelIndex > PlayerPrefs.GetInt(LevelsManager.LEVEL_AT)) {
+                    PlayerPrefs.SetInt(LevelsManager.LEVEL_AT, nextLevelIndex);
+                }
+
+                var starsAtLevels = PlayerPrefs.GetString(LevelsManager.STARTS_AT_LEVELS);
+
+                if (nextLevelIndex - 1 > starsAtLevels.Length) {
+                    var value = starsAtLevels + $"{starConditionsCompleteCount}";
+                    PlayerPrefs.SetString(LevelsManager.STARTS_AT_LEVELS,value);
+                } else {
+                    char starsAtLevel = starsAtLevels[nextLevelIndex - 2];
+                    if (starConditionsCompleteCount > int.Parse(starsAtLevel.ToString())) {
+                        var newValue = starsAtLevels.Remove(nextLevelIndex - 2,1).Insert(nextLevelIndex - 2,starConditionsCompleteCount.ToString());
+                        PlayerPrefs.SetString(LevelsManager.STARTS_AT_LEVELS, newValue);
+                    }
+                }
+
                 bowController.enabled = false;
                 enabled = false;
-                return;
             }
+
         }
 
         public void DecreaseEnemyCount() {
