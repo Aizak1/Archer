@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using bow;
+using ui;
 
 public class Pauser : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Pauser : MonoBehaviour
 
     [SerializeField]
     private BowController bowController;
+    [SerializeField]
+    private TrajectoryShower trajectoryShower;
     [SerializeField]
     private TextMeshProUGUI currentLevelText;
 
@@ -27,14 +30,16 @@ public class Pauser : MonoBehaviour
     public void Pause() {
         gameCanvas.enabled = false;
         pauseCanvas.enabled = true;
+
+        trajectoryShower.enabled = false;
         bowController.enabled = false;
-        Time.timeScale = 0;
     }
 
     public void Resume() {
         pauseCanvas.enabled = false;
         bowController.enabled = true;
+
         gameCanvas.enabled = true;
-        Time.timeScale = 1;
+        trajectoryShower.enabled = true;
     }
 }

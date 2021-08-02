@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 namespace ui {
     public class UiController : MonoBehaviour {
+
+
         [SerializeField]
         private BowController bowController;
         [SerializeField]
@@ -118,6 +120,8 @@ namespace ui {
             arrowTypeToQuiverGroup[nextType].SetActive(true);
 
         }
+
+
     }
 }
 

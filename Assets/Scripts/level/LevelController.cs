@@ -44,11 +44,12 @@ namespace level {
             countOfArrowsForStar = enemiesCount + 1;
             starConditionsCompleteCount = 1;
             winCanvas.enabled = false;
-            Time.timeScale = 1;
         }
 
         private void Update() {
-            timeSinceStart += Time.deltaTime;
+            if (bowController.enabled) {
+                timeSinceStart += Time.deltaTime;
+            }
 
             if (enemiesCount == 0) {
 
