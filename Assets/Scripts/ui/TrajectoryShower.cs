@@ -12,16 +12,31 @@ namespace ui {
         [SerializeField]
         private float spaceBetweenPoints;
 
-        private readonly Vector3 MIN_TRAJECTORY_OBJECT_SIZE = new Vector3(0.075f, 0.075f, 0.075f);
+        private readonly Vector3 MIN_TRAJECTORY_OBJECT_SIZE = new Vector3(0.025f, 0.025f, 0.025f);
 
         [SerializeField]
         private BowController bowController;
 
         private GameObject[] points;
 
+        private LineRenderer lineRenderer;
+
+        [SerializeField]
+        private Color startColor;
+        private Color endColor;
+
+        [SerializeField]
+        private float endAlpha;
+
+        private void Start() {
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.positionCount = 0;
+            endColor = new Color(startColor.r, startColor.g, startColor.b, endAlpha);
+        }
+
         private void LateUpdate() {
 
-            if (Input.GetMouseButton(0)) {
+            if (Input.GetMouseButton(0) && bowController && bowController.instantiatedArrow) {
 
                 if (Input.GetMouseButtonDown(0)) {
 
@@ -52,15 +67,40 @@ namespace ui {
                     }
 
                     points[0].SetActive(false);
+                    if (lineRenderer) {
+                        lineRenderer.startWidth = points[0].transform.localScale.x;
+                        lineRenderer.endWidth = points[numberOfPoitns - 1].transform.localScale.x;
+
+                        lineRenderer.startColor = startColor;
+                        lineRenderer.endColor = endColor;
+
+                    }
+
                 }
 
                 if (points == null) {
                     return;
                 }
 
-                for (int i = 0; i < numberOfPoitns; i++) {
+                for (int i = 0; i < lineRenderer.positionCount; i++) {
                     points[i].transform.position = CalculatePointPosition(i * spaceBetweenPoints);
                 }
+
+                if (!lineRenderer) {
+                    return;
+                }
+
+                lineRenderer.positionCount = 0;
+                lineRenderer.transform.position = points[1].transform.position;
+                for (int i = 1; i < numberOfPoitns; i++) {
+                    var pos = points[i].transform.position;
+                    lineRenderer.positionCount++;
+                    lineRenderer.SetPosition(i - 1, pos);
+                }
+                lineRenderer.positionCount++;
+                var index = lineRenderer.positionCount - 1;
+                var position = points[points.Length - 1].transform.position;
+                lineRenderer.SetPosition(index, position);
             }
 
             if (Input.GetMouseButtonUp(0)) {
@@ -74,6 +114,11 @@ namespace ui {
                 }
 
                 points = null;
+
+                if (lineRenderer) {
+                    lineRenderer.positionCount = 0;
+                }
+
             }
         }
 

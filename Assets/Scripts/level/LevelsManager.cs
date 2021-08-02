@@ -13,7 +13,6 @@ namespace level {
         public const string STARTS_AT_LEVELS = "starsAtLevel";
 
         private void Start() {
-
             int levelAt = PlayerPrefs.GetInt(LEVEL_AT, 1);
             for (int i = levelAt; i < levelButtons.Length; i++) {
                 levelButtons[i].interactable = false;
