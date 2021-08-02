@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 namespace ui {
     public class Manual : MonoBehaviour {
         [SerializeField]
-        private Canvas manualCanvas;
-        [SerializeField]
         private Canvas gameCanvas;
 
         [SerializeField]
@@ -17,24 +15,41 @@ namespace ui {
         [SerializeField]
         private TrajectoryShower trajectoryShower;
 
-
+        [SerializeField]
+        private Canvas[] manualCanvases;
+        private int currentIndex;
 
         private void Start() {
             int currentScene = SceneManager.GetActiveScene().buildIndex;
-            if (PlayerPrefs.GetInt(LevelsManager.LEVEL_AT) <= currentScene) {
-                manualCanvas.enabled = true;
-                gameCanvas.enabled = false;
-
-                trajectoryShower.enabled = false;
-                bowController.enabled = false;
+            if (PlayerPrefs.GetInt(LevelsManager.LEVEL_AT) > currentScene) {
+                return;
             }
+
+            if (manualCanvases.Length == 0) {
+                return;
+            }
+
+            currentIndex = 0;
+
+            manualCanvases[currentIndex].enabled = true;
+            gameCanvas.enabled = false;
+
+            trajectoryShower.enabled = false;
+            bowController.enabled = false;
         }
 
         public void CloseManual() {
-            manualCanvas.enabled = false;
-            gameCanvas.enabled = true;
-            trajectoryShower.enabled = true;
-            bowController.enabled = true;
+            manualCanvases[currentIndex].enabled = false;
+
+            currentIndex++;
+
+            if (currentIndex >= manualCanvases.Length) {
+                gameCanvas.enabled = true;
+                trajectoryShower.enabled = true;
+                bowController.enabled = true;
+            } else {
+                manualCanvases[currentIndex].enabled = true;
+            }
         }
     }
 }

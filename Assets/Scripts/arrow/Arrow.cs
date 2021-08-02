@@ -5,11 +5,12 @@ using UnityEngine;
 namespace arrow {
 
     public enum ArrowType {
-        Normal,
+        Wooden,
+        Double,
         Fast,
         Slow,
         Portal,
-        Freeze
+        Freeze,
     }
 
     public class Arrow : MonoBehaviour {
@@ -46,7 +47,7 @@ namespace arrow {
         private AudioClip splitSound;
 
         private float splitTime;
-        private bool isSplitArrow;
+        private bool isSplit;
 
         private Vector3 lastTipPosition;
         private const float TIP_POS_ACCURACY = 1;
@@ -133,7 +134,7 @@ namespace arrow {
             }
             lastTipPosition = tip.position;
 
-            if (Time.time >= splitTime && isSplitArrow && !isTeleporting) {
+            if (Time.time >= splitTime && isSplit && !isTeleporting) {
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
             }
@@ -183,7 +184,7 @@ namespace arrow {
 
                 var newVelocity = new Vector3(velocity.x, newY, newZ);
 
-                instantiatedArrow.Release(newVelocity, false);
+                instantiatedArrow.Release(newVelocity,false);
 
                 angle += angleBetweenSplitArrows;
             }
@@ -191,19 +192,19 @@ namespace arrow {
             Destroy(gameObject);
         }
 
-        public void Release(Vector3 velocity, bool isSplitArrow) {
+        public void Release(Vector3 velocity, bool isSplit) {
             trailRenderer.enabled = true;
             isInAir = true;
+            this.isSplit = isSplit;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
-            this.isSplitArrow = isSplitArrow;
             rigidbody.velocity = velocity;
 
-            if(splitArrowsAmount <= 1) {
-                isSplitArrow = false;
+            if (splitArrowsAmount <= 1) {
+                isSplit = false;
             }
 
-            if (isSplitArrow) {
+            if (isSplit) {
                 splitTime = Time.time + timeBeforeSplit;
             }
         }

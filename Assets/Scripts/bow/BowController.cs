@@ -32,9 +32,6 @@ namespace bow {
         [SerializeField]
         private AudioClip pullingSound;
 
-        [SerializeField]
-        private bool isSplitingMode;
-
         private Vector3 startTouchPosition;
 
         [HideInInspector]
@@ -133,7 +130,7 @@ namespace bow {
                 instantiatedArrow.transform.parent = null;
                 var direction = instantiatedArrow.transform.forward;
                 var velocity = instantiatedArrow.speed * direction * pullAmount;
-                instantiatedArrow.Release(velocity, isSplitingMode);
+                instantiatedArrow.Release(velocity, true);
                 if (audioSource.isPlaying) {
                     audioSource.Stop();
                 }

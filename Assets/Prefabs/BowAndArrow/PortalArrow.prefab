@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2c96ea3bc23b6489add09a977d8795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowType: 3
+  arrowType: 4
   speed: 10
   isInAir: 0
   tip: {fileID: 8386148805111352677}
@@ -154,12 +154,15 @@ MonoBehaviour:
   splitArrowsAmount: 1
   timeBeforeSplit: 1
   angleBetweenSplitArrows: 0
+  hitVfx: {fileID: 0}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
   audioSource: {fileID: 4635934901314551946}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
   portalArrow: {fileID: 9196913921763422019}
   isTeleporting: 0
+  trailRenderer: {fileID: 0}
+  trailTime: 0
 --- !u!82 &4635934901314551946
 AudioSource:
   m_ObjectHideFlags: 0
