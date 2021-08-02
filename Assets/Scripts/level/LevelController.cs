@@ -94,7 +94,9 @@ namespace level {
                 } else {
                     char starsAtLevel = starsAtLevels[nextLevelIndex - 2];
                     if (starConditionsCompleteCount > int.Parse(starsAtLevel.ToString())) {
-                        var newValue = starsAtLevels.Remove(nextLevelIndex - 2,1).Insert(nextLevelIndex - 2,starConditionsCompleteCount.ToString());
+                        int index = nextLevelIndex - 2;
+                        var value = starConditionsCompleteCount.ToString();
+                        var newValue = starsAtLevels.Remove(index,1).Insert(index,value);
                         PlayerPrefs.SetString(LevelsManager.STARTS_AT_LEVELS, newValue);
                     }
                 }
