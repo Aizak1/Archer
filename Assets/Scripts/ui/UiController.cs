@@ -9,7 +9,6 @@ using System.Collections.Generic;
 namespace ui {
     public class UiController : MonoBehaviour {
 
-
         [SerializeField]
         private BowController bowController;
         [SerializeField]
@@ -41,7 +40,6 @@ namespace ui {
 
         private Dictionary<ArrowType, GameObject> arrowTypeToQuiverGroup
             = new Dictionary<ArrowType, GameObject>();
-
 
         private string arrowsForStar;
 
@@ -120,8 +118,5 @@ namespace ui {
             arrowTypeToQuiverGroup[nextType].SetActive(true);
 
         }
-
-
     }
 }
-

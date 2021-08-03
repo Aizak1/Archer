@@ -38,7 +38,6 @@ namespace level {
 
         private float timeSinceStart;
 
-
         private void Awake() {
             enemiesCount = FindObjectsOfType<Hittable>().Length;
             countOfArrowsForStar = enemiesCount + 1;

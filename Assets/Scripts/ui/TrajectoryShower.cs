@@ -125,10 +125,8 @@ namespace ui {
         private Vector3 CalculatePointPosition(float t) {
             var arrowTransform = bowController.instantiatedArrow.transform;
             var direction = arrowTransform.forward;
-            var vO = direction * bowController.pullAmount * bowController.instantiatedArrow.speed;
+            var vO = bowController.instantiatedArrow.speed * bowController.pullAmount * direction;
             return arrowTransform.position + (vO * t) + 0.5f * Physics.gravity * (t * t);
         }
     }
 }
-
-

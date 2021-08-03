@@ -34,6 +34,7 @@ namespace player {
                     return;
                 }
             }
+
             if (!isVisible) {
                 renderer.enabled = true;
                 collider.enabled = true;
@@ -54,9 +55,6 @@ namespace player {
                 Camera.main.transform.position += delta;
                 Destroy(gameObject);
             }
-        }
-
-        private void OnEnable() {
         }
     }
 }

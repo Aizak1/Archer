@@ -1,5 +1,6 @@
 using hittable;
 using portal;
+using ricochet;
 using UnityEngine;
 
 namespace arrow {
@@ -59,7 +60,9 @@ namespace arrow {
         public bool isTeleporting;
         [HideInInspector]
         public TrailRenderer trailRenderer;
+        [HideInInspector]
         public float trailTime;
+
         private void Awake() {
             lastTipPosition = tip.transform.position;
             trailRenderer = GetComponentInChildren<TrailRenderer>();
@@ -210,4 +213,3 @@ namespace arrow {
         }
     }
 }
-

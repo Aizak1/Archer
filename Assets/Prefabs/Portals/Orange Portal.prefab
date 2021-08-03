@@ -135,6 +135,8 @@ MonoBehaviour:
   isOrange: 1
   linkedPortal: {fileID: 0}
   isReady: 0
+  audioSource: {fileID: 0}
+  portalSound: {fileID: 0}
 --- !u!95 &3743706048315822668
 Animator:
   serializedVersion: 3
@@ -200,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1584799146038205376
 Transform:
   m_ObjectHideFlags: 0
@@ -4954,7 +4956,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2e34a28cb2848d74e9d4a4a399bd73a2, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9771,7 +9772,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2e34a28cb2848d74e9d4a4a399bd73a2, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9833,7 +9833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6923891320304642536
 Transform:
   m_ObjectHideFlags: 0
@@ -14681,7 +14681,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 71b8203f78bb2ac439b4355219b0474e, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

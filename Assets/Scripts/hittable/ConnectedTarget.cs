@@ -13,7 +13,7 @@ namespace hittable {
         [HideInInspector]
         public float hitTime;
 
-        private const float START_TIME = -1000;
+        private const float START_TIME = float.MinValue;
 
         private void Start() {
             hitTime = START_TIME;

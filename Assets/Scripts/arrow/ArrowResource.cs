@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace arrow {
     public class ArrowResource : MonoBehaviour {
@@ -12,4 +11,3 @@ namespace arrow {
         public Dictionary<ArrowType, int> arrowTypeToCount = new Dictionary<ArrowType, int>();
     }
 }
-

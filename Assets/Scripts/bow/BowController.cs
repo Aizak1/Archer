@@ -1,6 +1,5 @@
 using arrow;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
@@ -51,8 +50,6 @@ namespace bow {
 
         [HideInInspector]
         public int arrowsWasted;
-
-
 
         private void Start() {
             arrowsWasted = 0;
@@ -129,8 +126,9 @@ namespace bow {
 
                 instantiatedArrow.transform.parent = null;
                 var direction = instantiatedArrow.transform.forward;
-                var velocity = instantiatedArrow.speed * direction * pullAmount;
+                var velocity = instantiatedArrow.speed * pullAmount * direction;
                 instantiatedArrow.Release(velocity, true);
+
                 if (audioSource.isPlaying) {
                     audioSource.Stop();
                 }
@@ -163,10 +161,12 @@ namespace bow {
             float weight = 0;
             while (weight != 1) {
                 weight += RIG_WEIGHT_STEP;
+
                 foreach (var rig in archerRigs) {
                     rig.weight = weight;
                 }
-            yield return null;
+
+                yield return null;
             }
         }
 
@@ -182,4 +182,3 @@ namespace bow {
         }
     }
 }
-
