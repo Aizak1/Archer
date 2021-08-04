@@ -151,7 +151,7 @@ MonoBehaviour:
   tip: {fileID: 8386148805111352677}
   rigidbody: {fileID: 5194487377624509044}
   splitArrowsAmount: 2
-  timeBeforeSplit: 1
+  timeBeforeSplit: 0.75
   angleBetweenSplitArrows: 30
   hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
@@ -159,7 +159,6 @@ MonoBehaviour:
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
   portalArrow: {fileID: 0}
-  isTeleporting: 0
   trailRenderer: {fileID: 0}
   trailTime: 0
 --- !u!82 &7394638532809229645
@@ -275,6 +274,8 @@ MonoBehaviour:
   previousOffsetFromPortal: {x: 0, y: 0, z: 0}
   originalMaterials: []
   cloneMaterials: []
+  rigidbody: {fileID: 0}
+  sign: 0
 --- !u!65 &3577048291114291362
 BoxCollider:
   m_ObjectHideFlags: 0
