@@ -10,8 +10,6 @@ namespace ui {
 
         [SerializeField]
         private BowController bowController;
-        [SerializeField]
-        private TrajectoryShower trajectoryShower;
 
         [SerializeField]
         private Canvas[] manualCanvases;
@@ -32,7 +30,6 @@ namespace ui {
             manualCanvases[currentIndex].enabled = true;
             gameCanvas.enabled = false;
 
-            trajectoryShower.enabled = false;
             bowController.enabled = false;
         }
 
@@ -43,7 +40,6 @@ namespace ui {
 
             if (currentIndex >= manualCanvases.Length) {
                 gameCanvas.enabled = true;
-                trajectoryShower.enabled = true;
                 bowController.enabled = true;
             } else {
                 manualCanvases[currentIndex].enabled = true;

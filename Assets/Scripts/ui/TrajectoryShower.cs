@@ -93,10 +93,10 @@ namespace ui {
 
         public void SetSettings(TrajectorySettings settings) {
             trajectorySettup = settings;
-            AplySettings();
+            ApplySettings();
         }
 
-        private void AplySettings() {
+        private void ApplySettings() {
             lineRenderer.colorGradient = trajectorySettup.Gradient;
             var XTille = trajectorySettup.XTille;
             lineRenderer.material.SetTextureScale(MAIN_TEXTURE, new Vector2(XTille, 1));

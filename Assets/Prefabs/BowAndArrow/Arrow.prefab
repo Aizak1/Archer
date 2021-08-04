@@ -151,8 +151,8 @@ MonoBehaviour:
   tip: {fileID: 8386148805111352677}
   rigidbody: {fileID: 5194487377624509044}
   splitArrowsAmount: 2
-  timeBeforeSplit: 0.75
-  angleBetweenSplitArrows: 30
+  timeBeforeSplit: 0.65
+  angleBetweenSplitArrows: 60
   hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
   audioSource: {fileID: 7394638532809229645}
@@ -161,6 +161,7 @@ MonoBehaviour:
   portalArrow: {fileID: 0}
   trailRenderer: {fileID: 0}
   trailTime: 0
+  isTeleporting: 0
 --- !u!82 &7394638532809229645
 AudioSource:
   m_ObjectHideFlags: 0
