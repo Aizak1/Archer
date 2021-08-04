@@ -20,6 +20,7 @@ namespace arrow {
 
         public float speed;
         public bool isInAir;
+        public bool isFiered;
 
         [SerializeField]
         public Transform tip;
@@ -46,6 +47,8 @@ namespace arrow {
         private AudioClip impactSound;
         [SerializeField]
         private AudioClip splitSound;
+        [SerializeField]
+        private Transform VFXContainer;
 
         private float splitTime;
         private bool isSplit;
@@ -71,6 +74,10 @@ namespace arrow {
         }
 
         private void FixedUpdate() {
+            if (isFiered && !isInAir && VFXContainer != null) {
+                FlyVFX(false);
+            }
+
             if (!isInAir) {
                 return;
             }
@@ -78,6 +85,8 @@ namespace arrow {
             if (rigidbody.velocity == Vector3.zero) {
                 return;
             }
+
+
 
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
             var tipDistance = (lastTipPosition - tip.position).magnitude;
@@ -198,6 +207,8 @@ namespace arrow {
         public void Release(Vector3 velocity, bool isSplit) {
             trailRenderer.enabled = true;
             isInAir = true;
+            isFiered = true;
+            FlyVFX(true);
             this.isSplit = isSplit;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
@@ -210,6 +221,10 @@ namespace arrow {
             if (isSplit) {
                 splitTime = Time.time + timeBeforeSplit;
             }
+        }
+
+        private void FlyVFX(bool isActive) {
+            VFXContainer.gameObject.SetActive(isActive);
         }
     }
 }
