@@ -23,7 +23,7 @@ namespace ui {
             lineRenderer.positionCount = 0;
         }
 
-        private void LateUpdate() {
+        private void Update() {
             if (Input.GetMouseButton(0) && bowController && bowController.instantiatedArrow) {
 
                 if (Input.GetMouseButtonDown(0)) {

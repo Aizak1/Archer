@@ -71,7 +71,7 @@ namespace arrow {
             isTeleporting = false;
         }
 
-        private void FixedUpdate() {
+        private void Update() {
             if (!isInAir) {
                 return;
             }
@@ -81,6 +81,17 @@ namespace arrow {
             }
 
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
+        }
+
+        private void FixedUpdate() {
+            if (!isInAir) {
+                return;
+            }
+
+            if (rigidbody.velocity == Vector3.zero) {
+                return;
+            }
+
             var tipDistance = (lastTipPosition - tip.position).magnitude;
             var mask = LayerMask.GetMask(RAYCAST_LAYER);
             if (tipDistance < TIP_POS_ACCURACY &&

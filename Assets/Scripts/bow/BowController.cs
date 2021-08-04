@@ -44,7 +44,6 @@ namespace bow {
         private Rig[] archerRigs;
         [SerializeField]
         private Animator archerAnimator;
-        private const float RIG_WEIGHT_STEP = 0.035f;
 
         private new Camera camera;
 
@@ -93,7 +92,10 @@ namespace bow {
                     audioSource.PlayOneShot(pullingSound);
 
                     archerAnimator.SetBool("isShooting", true);
-                    StartCoroutine(ChengeRigWeight());
+
+                    foreach (var rig in archerRigs) {
+                        rig.weight = 1;
+                    }
                 }
 
                 if (instantiatedArrow == null) {
@@ -146,27 +148,11 @@ namespace bow {
                 startTouchPosition = Vector3.zero;
                 instantiatedArrow = null;
 
-                StopAllCoroutines();
-
                 foreach (var rig in archerRigs) {
                     rig.weight = 0;
                 }
 
                 archerAnimator.SetBool("isShooting", false);
-            }
-        }
-
-        private IEnumerator ChengeRigWeight() {
-
-            float weight = 0;
-            while (weight != 1) {
-                weight += RIG_WEIGHT_STEP;
-
-                foreach (var rig in archerRigs) {
-                    rig.weight = weight;
-                }
-
-                yield return null;
             }
         }
 

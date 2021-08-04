@@ -418,6 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3176465753457872173}
   bowController: {fileID: 660293210}
+  maxPull: 0.92
 --- !u!114 &660293210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,10 +441,12 @@ MonoBehaviour:
   audioSource: {fileID: 1077114271}
   shootSound: {fileID: 8300000, guid: 7aac9bf5cea2c634babcaf382197bd44, type: 3}
   pullingSound: {fileID: 8300000, guid: 2e03a0352afc71d4e94d59eac1d74ecb, type: 3}
-  isSplitingMode: 0
   pullAmount: 0
   arrowTypeToInstantiate: 0
   instantiatedArrow: {fileID: 0}
+  archerRigs: []
+  archerAnimator: {fileID: 0}
+  arrowsWasted: 0
 --- !u!82 &1077114271
 AudioSource:
   m_ObjectHideFlags: 0
