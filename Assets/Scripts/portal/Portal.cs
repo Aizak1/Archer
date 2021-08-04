@@ -157,6 +157,7 @@ namespace portal {
 
             if (arrow != null) {
                 arrow.trailRenderer.enabled = true;
+                arrow.isTeleporting = false;
             }
         }
 

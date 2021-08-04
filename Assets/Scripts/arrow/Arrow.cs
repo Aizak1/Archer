@@ -60,12 +60,15 @@ namespace arrow {
         public TrailRenderer trailRenderer;
         [HideInInspector]
         public float trailTime;
+        [HideInInspector]
+        public bool isTeleporting;
 
         private void Awake() {
             lastTipPosition = tip.transform.position;
             trailRenderer = GetComponentInChildren<TrailRenderer>();
             trailTime = trailRenderer.time;
             trailRenderer.enabled = false;
+            isTeleporting = false;
         }
 
         private void FixedUpdate() {
@@ -127,6 +130,7 @@ namespace arrow {
                     if(portal != null) {
                         trailRenderer.Clear();
                         trailRenderer.enabled = false;
+                        isTeleporting = true;
                         portal.StartPortalTravelling(GetComponent<Collider>());
                     }
 
@@ -138,7 +142,7 @@ namespace arrow {
             }
             lastTipPosition = tip.position;
 
-            if (Time.time >= splitTime && isSplit) {
+            if (Time.time >= splitTime && isSplit && !isTeleporting) {
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
             }
