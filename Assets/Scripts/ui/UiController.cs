@@ -10,6 +10,8 @@ namespace ui {
     public class UiController : MonoBehaviour {
 
         [SerializeField]
+        private TrajectoryShower trajectoryShower;
+        [SerializeField]
         private BowController bowController;
         [SerializeField]
         private ArrowResource resource;
@@ -23,15 +25,16 @@ namespace ui {
         private TextMeshProUGUI arrowTypeText;
         [SerializeField]
         private RawImage arrowImage;
-        [SerializeField]
-        private Texture[] arrowImageTextures;
 
         [SerializeField]
         private TextMeshProUGUI spendedArrowsText;
         [SerializeField]
         private TextMeshProUGUI timeText;
 
-
+        [SerializeField]
+        private Texture[] arrowImageTextures;
+        [SerializeField]
+        private TrajectorySettings[] arrowTrajectorySettings;
         [SerializeField]
         private GameObject[] quiverGroups;
 
@@ -73,6 +76,7 @@ namespace ui {
             var currentType = bowController.arrowTypeToInstantiate;
             arrowImage.texture = arrowTypeToTexture[currentType];
             arrowTypeToQuiverGroup[currentType].SetActive(true);
+            trajectoryShower.SetSettings(arrowTrajectorySettings[((int)currentType)]);
         }
 
         private void Update() {
@@ -82,8 +86,6 @@ namespace ui {
                 string currentArrows = bowController.arrowsWasted.ToString();
 
                 spendedArrowsText.text = currentArrows + " / " + arrowsForStar;
-
-
                 var targetTime = levelController.PeelStarTime();
                 var currentTime = levelController.PeelTimeSinceStart();
                 var timeRemain = Mathf.RoundToInt(targetTime - currentTime);
@@ -116,6 +118,7 @@ namespace ui {
             arrowTypeText.text = nextType.ToString();
             arrowImage.texture = arrowTypeToTexture[nextType];
             arrowTypeToQuiverGroup[nextType].SetActive(true);
+            trajectoryShower.SetSettings(arrowTrajectorySettings[nextTypeIndex]);
 
         }
     }

@@ -2830,12 +2830,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c924add2c338b34b9a0c8b429620502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointPrefab: {fileID: 7157998976322398984, guid: cf25a01974c3dc24bbb261675fb89967, type: 3}
-  numberOfPoitns: 20
-  spaceBetweenPoints: 0.025
   bowController: {fileID: 611643682}
-  startColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
-  endAlpha: 0.5
+  trajectorySettup:
+    Gradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    XTille: 50
+    StartWidth: 0.08
+    EndWidth: 0.02
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 25
 --- !u!4 &811174994
 Transform:
   m_ObjectHideFlags: 0
@@ -2869,7 +2899,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f86507da46e974c46a97d4a33f8a2978, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5516,16 +5546,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4221fb6a5776641886107b03adfc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trajectoryShower: {fileID: 811174993}
   bowController: {fileID: 611643682}
   resource: {fileID: 786763080}
   levelController: {fileID: 1451289434}
   enemyCountText: {fileID: 56236331}
   arrowTypeText: {fileID: 1404750168}
   arrowImage: {fileID: 864533814}
-  arrowImageTextures:
-  - {fileID: 2800000, guid: 458d109a0fa0a3e42b02a0e77966ff8d, type: 3}
   spendedArrowsText: {fileID: 832888710}
   timeText: {fileID: 1466671198}
+  arrowImageTextures:
+  - {fileID: 2800000, guid: 458d109a0fa0a3e42b02a0e77966ff8d, type: 3}
+  arrowTrajectorySettings:
+  - Gradient:
+      serializedVersion: 2
+      key0: {r: 0, g: 0.46226418, b: 0.15587755, a: 0.5882353}
+      key1: {r: 0.46226418, g: 0.4417769, b: 0.085039176, a: 1}
+      key2: {r: 1, g: 0.92988515, b: 0, a: 1}
+      key3: {r: 1, g: 1, b: 1, a: 0.22352941}
+      key4: {r: 0.81592, g: 0.19406372, b: 0.8396226, a: 0.25882354}
+      key5: {r: 1, g: 1, b: 1, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 36044
+      ctime2: 56090
+      ctime3: 65535
+      ctime4: 60716
+      ctime5: 65535
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 15227
+      atime2: 41827
+      atime3: 56476
+      atime4: 65535
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 5
+    XTille: 50
+    StartWidth: 0.08
+    EndWidth: 0.02
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 15
   quiverGroups:
   - {fileID: 2041834433}
   sceneLoader: {fileID: 132382903}
