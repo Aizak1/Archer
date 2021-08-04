@@ -76,7 +76,8 @@ namespace ui {
             var currentType = bowController.arrowTypeToInstantiate;
             arrowImage.texture = arrowTypeToTexture[currentType];
             arrowTypeToQuiverGroup[currentType].SetActive(true);
-            trajectoryShower.SetSettings(arrowTrajectorySettings[((int)currentType)]);
+            int currentTypeIndex = resource.arrowTypeToCount[currentType];
+            trajectoryShower.SetSettings(arrowTrajectorySettings[currentTypeIndex]);
         }
 
         private void Update() {
