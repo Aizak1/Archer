@@ -49,6 +49,11 @@ namespace portal {
                     continue;
                 }
 
+                if (traveller.rigidbody.velocity == Vector3.zero) {
+                    ExitTeleport(traveller);
+                    return;
+                }
+
                 Transform travellerTransform = traveller.transform;
                 var linkWorldMatrix = linkedPortal.transform.localToWorldMatrix;
                 var localMatrix = transform.worldToLocalMatrix;
@@ -58,31 +63,10 @@ namespace portal {
 
                 Vector3 offsetFromPortal = travellerTransform.position - transform.position;
 
-                var dot = Vector3.Dot(offsetFromPortal, transform.forward);
-                int portalSide = Math.Sign(dot);
-
-                var prevDot = Vector3.Dot(traveller.previousOffsetFromPortal, transform.forward);
-                int portalSideOld = Math.Sign(prevDot);
-
-                if (portalSide != portalSideOld) {
-                    var positionOld = travellerTransform.position;
-                    var rotOld = travellerTransform.rotation;
-
-                    var pos = matrix.GetColumn(LAST_MATRIX_COLUMN);
-                    var rot = matrix.rotation;
-
-                    traveller.Teleport(transform, linkedPortal.transform, pos, rot);
-                    traveller.graphicsClone.transform.SetPositionAndRotation(positionOld, rotOld);
-                    linkedPortal.ProcessTravellerEnterPortal(traveller);
-                    trackedTravellers.RemoveAt(i);
-                    i--;
-
-                } else {
-                    var pos = matrix.GetColumn(LAST_MATRIX_COLUMN);
-                    var rot = matrix.rotation;
-                    traveller.graphicsClone.transform.SetPositionAndRotation(pos, rot);
-                    traveller.previousOffsetFromPortal = offsetFromPortal;
-                }
+                var pos = matrix.GetColumn(LAST_MATRIX_COLUMN);
+                var rot = matrix.rotation;
+                traveller.graphicsClone.transform.SetPositionAndRotation(pos, rot);
+                traveller.previousOffsetFromPortal = offsetFromPortal;
             }
         }
 
@@ -93,9 +77,9 @@ namespace portal {
         }
 
         private void UpdateSliceParams(PortalTraveller traveller) {
-            int side = GetSideOfPortal(traveller.transform.position);
-            Vector3 sliceNormal = transform.forward * -side;
-            Vector3 cloneSliceNormal = linkedPortal.transform.forward * side;
+            int side = GetSideOfPortal(traveller);
+            Vector3 sliceNormal = transform.forward * side;
+            Vector3 cloneSliceNormal = linkedPortal.transform.forward * -side;
 
             Vector3 slicePos = transform.position;
             Vector3 cloneSlicePos = linkedPortal.transform.position;
@@ -111,13 +95,12 @@ namespace portal {
                 traveller.cloneMaterials[i].SetVector(SLICE_CENTER, cloneSlicePos);
                 traveller.cloneMaterials[i].SetVector(SLICE_NORMAL, cloneSliceNormal);
                 traveller.cloneMaterials[i].SetFloat(SLICE_OFFSET_DST, cloneSliceOffsetDst);
-
             }
-
         }
 
         private void ProcessTravellerEnterPortal(PortalTraveller traveller) {
             if (!trackedTravellers.Contains(traveller)) {
+                traveller.sign = Math.Sign(Vector3.Dot(traveller.transform.position - transform.position, transform.forward));
                 traveller.EnterPortalThreshold();
                 var offset = traveller.transform.position - transform.position;
                 traveller.previousOffsetFromPortal = offset;
@@ -134,35 +117,55 @@ namespace portal {
             if (traveller == null) {
                 return;
             }
-            var arrow = traveller.GetComponent<Arrow>();
 
-            if (arrow != null) {
-                arrow.isTeleporting = true;
-            }
+            Transform travellerTransform = traveller.transform;
+            var linkWorldMatrix = linkedPortal.transform.localToWorldMatrix;
+            var localMatrix = transform.worldToLocalMatrix;
+            var travellerWorldMatrix = travellerTransform.localToWorldMatrix;
 
-            ProcessTravellerEnterPortal(traveller);
+            var matrix = linkWorldMatrix * localMatrix * travellerWorldMatrix;
+
+            var positionOld = travellerTransform.position;
+            var rotOld = travellerTransform.rotation;
+
+            var pos = matrix.GetColumn(LAST_MATRIX_COLUMN);
+            var rot = matrix.rotation;
+
+            traveller.Teleport(transform, linkedPortal.transform, pos, rot);
+            traveller.EnterPortalThreshold();
+            traveller.graphicsClone.transform.SetPositionAndRotation(positionOld, rotOld);
+
+            linkedPortal.ProcessTravellerEnterPortal(traveller);
         }
 
         private void OnTriggerExit(Collider other) {
             if (!isReady) {
                 return;
             }
-
             var traveller = other.GetComponent<PortalTraveller>();
+            if (traveller) {
+                ExitTeleport(traveller);
+            }
+        }
+
+        private void ExitTeleport(PortalTraveller traveller) {
             if (traveller && trackedTravellers.Contains(traveller)) {
                 traveller.ExitPortalThreshold();
                 trackedTravellers.Remove(traveller);
             }
-            var arrow = other.GetComponent<Arrow>();
+            var arrow = traveller.GetComponent<Arrow>();
 
             if (arrow != null) {
-                arrow.isTeleporting = false;
-                arrow.trailRenderer.time = arrow.trailTime;
+                arrow.trailRenderer.enabled = true;
             }
         }
 
-        private int GetSideOfPortal(Vector3 pos) {
-            return Math.Sign(Vector3.Dot(pos - transform.position, transform.forward));
+        private int GetSideOfPortal(PortalTraveller traveller) {
+            if (isOrange) {
+                return 1 * traveller.sign;
+            } else {
+                return -1 * traveller.sign;
+            }
         }
 
         private void CheckSecondPortal() {

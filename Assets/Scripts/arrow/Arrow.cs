@@ -57,8 +57,6 @@ namespace arrow {
         [SerializeField]
         private PortalArrow portalArrow;
         [HideInInspector]
-        public bool isTeleporting;
-        [HideInInspector]
         public TrailRenderer trailRenderer;
         [HideInInspector]
         public float trailTime;
@@ -82,7 +80,7 @@ namespace arrow {
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
             var tipDistance = (lastTipPosition - tip.position).magnitude;
             var mask = LayerMask.GetMask(RAYCAST_LAYER);
-            if (tipDistance < TIP_POS_ACCURACY && !isTeleporting &&
+            if (tipDistance < TIP_POS_ACCURACY &&
                 Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit, mask)) {
 
                 if (!hit.collider.isTrigger) {
@@ -120,12 +118,15 @@ namespace arrow {
                         hittable.ProcessHit(this, hit);
                     }
 
+                    trailRenderer.enabled = false;
+
                     return;
                 } else {
 
                     var portal = hit.collider.GetComponent<Portal>();
                     if(portal != null) {
-                        trailRenderer.time = 0;
+                        trailRenderer.Clear();
+                        trailRenderer.enabled = false;
                         portal.StartPortalTravelling(GetComponent<Collider>());
                     }
 
@@ -137,7 +138,7 @@ namespace arrow {
             }
             lastTipPosition = tip.position;
 
-            if (Time.time >= splitTime && isSplit && !isTeleporting) {
+            if (Time.time >= splitTime && isSplit) {
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
             }

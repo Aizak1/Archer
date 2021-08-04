@@ -17,11 +17,20 @@ namespace portal {
         [HideInInspector]
         public Material[] cloneMaterials;
 
+        [HideInInspector]
+        public new Rigidbody rigidbody;
+
+        [HideInInspector]
+        public int sign;
+
+        private void Start() {
+            rigidbody = GetComponent<Rigidbody>();
+        }
+
         public void Teleport(Transform portal, Transform toPortal, Vector3 pos, Quaternion rot) {
             transform.position = pos;
             transform.rotation = rot;
 
-            var rigidbody = GetComponent<Rigidbody>();
             if (rigidbody == null) {
                 return;
             }
