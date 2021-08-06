@@ -1,5 +1,6 @@
 using arrow;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
@@ -48,10 +49,16 @@ namespace bow {
         private new Camera camera;
 
         [HideInInspector]
-        public int arrowsWasted;
+        public int shotsCount;
+
+        public const int MAX_ARROWS_COUNT = 17;
+
+        [HideInInspector]
+        public Queue<GameObject> arrowsOnLevel;
 
         private void Start() {
-            arrowsWasted = 0;
+            shotsCount = 0;
+            arrowsOnLevel = new Queue<GameObject>();
             arrowTypeToInstantiate = arrowResource.countToArrowType[0];
             camera = Camera.main;
 
@@ -129,13 +136,13 @@ namespace bow {
                 instantiatedArrow.transform.parent = null;
                 var direction = instantiatedArrow.transform.forward;
                 var velocity = instantiatedArrow.speed * pullAmount * direction;
-                instantiatedArrow.Release(velocity, true);
+                instantiatedArrow.Release(velocity, true, this);
 
                 if (audioSource.isPlaying) {
                     audioSource.Stop();
                 }
                 audioSource.PlayOneShot(shootSound);
-                arrowsWasted++;
+                shotsCount++;
 
                 if (arrowTypeToInstantiate == ArrowType.Portal) {
                     var portalArrowPrefab = arrowResource.arrowPrefabs[arrowTypeToInstantiate];

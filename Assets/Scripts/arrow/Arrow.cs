@@ -1,6 +1,7 @@
 using hittable;
 using portal;
 using ricochet;
+using bow;
 using UnityEngine;
 
 namespace arrow {
@@ -62,6 +63,8 @@ namespace arrow {
         public float trailTime;
         [HideInInspector]
         public bool isTeleporting;
+
+        private BowController bowController;
 
         private void Awake() {
             lastTipPosition = tip.transform.position;
@@ -137,9 +140,19 @@ namespace arrow {
                         freezable.ProcessHit(this);
                     }
 
+                    if(freezable == null && hittable == null) {
+                        this.bowController.arrowsOnLevel.Enqueue(gameObject);
+                    }
+
+                    if (bowController.arrowsOnLevel.Count > BowController.MAX_ARROWS_COUNT) {
+                        var arrow = bowController.arrowsOnLevel.Dequeue();
+                        Destroy(arrow);
+                    }
+
                     trailRenderer.enabled = false;
 
                     return;
+
                 } else {
 
                     var portal = hit.collider.GetComponent<Portal>();
@@ -195,6 +208,7 @@ namespace arrow {
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
 
+
             float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
             Arrow instantiatedArrow = this;
             for (int i = 0; i < splitArrowsAmount; i++) {
@@ -208,7 +222,7 @@ namespace arrow {
 
                 var newVelocity = new Vector3(velocity.x, newY, newZ);
 
-                instantiatedArrow.Release(newVelocity,false);
+                instantiatedArrow.Release(newVelocity,false,bowController);
 
                 angle += angleBetweenSplitArrows;
             }
@@ -216,7 +230,10 @@ namespace arrow {
             Destroy(gameObject);
         }
 
-        public void Release(Vector3 velocity, bool isSplit) {
+        public void Release(Vector3 velocity, bool isSplit,BowController bowController) {
+
+            this.bowController = bowController;
+
             trailRenderer.enabled = true;
             isInAir = true;
             this.isSplit = isSplit;

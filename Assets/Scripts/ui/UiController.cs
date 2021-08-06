@@ -84,7 +84,7 @@ namespace ui {
             if (enemyCountText != null && levelController != null) {
                 enemyCountText.text = levelController.PeelEnemiesCount().ToString();
 
-                string currentArrows = bowController.arrowsWasted.ToString();
+                string currentArrows = bowController.shotsCount.ToString();
 
                 spendedArrowsText.text = currentArrows + " / " + arrowsForStar;
                 var targetTime = levelController.PeelStarTime();

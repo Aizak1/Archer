@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641567, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -190,7 +190,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1201280136, guid: 9437be881ad682348bd31aa228922027, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9437be881ad682348bd31aa228922027, type: 3}
 --- !u!1 &115613413
 GameObject:
@@ -561,9 +562,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 204605318}
-  freezeTime: 5
-  audioSource: {fileID: 204605325}
-  freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
 --- !u!114 &204605320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,7 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 204605319}
+  movingTarget: {fileID: 0}
 --- !u!135 &204605321
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3378,7 +3376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 950622389}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 0}
+  movingTarget: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4016,7 +4014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1200844373}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 0}
+  movingTarget: {fileID: 0}
 --- !u!4 &1201280140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4720941400279188, guid: 9437be881ad682348bd31aa228922027, type: 3}
@@ -4145,7 +4143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1238875893}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 0}
+  movingTarget: {fileID: 0}
 --- !u!1 &1263833683
 GameObject:
   m_ObjectHideFlags: 0
@@ -5331,7 +5329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1675145644}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 0}
+  movingTarget: {fileID: 0}
 --- !u!114 &1678604995 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2423528970969943450, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
@@ -5931,7 +5929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1939308116}
   connectedTarget: {fileID: 0}
-  patrolingEnemy: {fileID: 0}
+  movingTarget: {fileID: 0}
 --- !u!1 &1949443088
 GameObject:
   m_ObjectHideFlags: 0

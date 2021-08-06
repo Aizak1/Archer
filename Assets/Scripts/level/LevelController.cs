@@ -64,9 +64,9 @@ namespace level {
                 winCanvas.enabled = true;
 
                 timeText.text = System.Math.Round(timeSinceStart, 2).ToString();
-                arrowsCountText.text = bowController.arrowsWasted.ToString();
+                arrowsCountText.text = bowController.shotsCount.ToString();
 
-                if(bowController.arrowsWasted <= countOfArrowsForStar) {
+                if(bowController.shotsCount <= countOfArrowsForStar) {
                     starConditionsCompleteCount++;
                 }
 
