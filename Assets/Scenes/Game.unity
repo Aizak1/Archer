@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641567, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -519,10 +519,9 @@ GameObject:
   - component: {fileID: 204605323}
   - component: {fileID: 204605322}
   - component: {fileID: 204605321}
-  - component: {fileID: 204605320}
-  - component: {fileID: 204605319}
   - component: {fileID: 204605318}
   - component: {fileID: 204605325}
+  - component: {fileID: 204605319}
   m_Layer: 0
   m_Name: Patroller
   m_TagString: Untagged
@@ -558,25 +557,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 204605317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b168cf71b97386340be5ff9c10f771b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 31e08a498ec18f7409771b98d53875c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 204605318}
---- !u!114 &204605320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204605317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  connectedTarget: {fileID: 0}
-  movingTarget: {fileID: 0}
+  freezzeController: {fileID: 974442217}
 --- !u!135 &204605321
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3483,6 +3467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974442216}
+  - component: {fileID: 974442217}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -3505,6 +3490,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &974442217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974442215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d309cc91b2165e64b98513bfbaa28f9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 204605318}
+  freezeMaterials:
+  - {fileID: 2100000, guid: f0260eceaac4ad2499a5095c7ca819dd, type: 2}
+  freezeTime: 5
+  audioSource: {fileID: 204605325}
+  freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
 --- !u!1 &1032855951
 GameObject:
   m_ObjectHideFlags: 0
@@ -5379,6 +5382,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1071809767569913870, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290649557652101980, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -6041,6 +6052,142 @@ MonoBehaviour:
     EndWidth: 0.04
     spaceBetweenPoints: 0.025
     numberOfPoitns: 30
+  - Gradient:
+      serializedVersion: 2
+      key0: {r: 0.0048110485, g: 1, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 32960
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 32960
+      atime2: 64186
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
+    XTille: 50
+    StartWidth: 0.16
+    EndWidth: 0.04
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 30
+  - Gradient:
+      serializedVersion: 2
+      key0: {r: 0.0048110485, g: 1, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 32960
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 32960
+      atime2: 64186
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
+    XTille: 50
+    StartWidth: 0.16
+    EndWidth: 0.04
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 30
+  - Gradient:
+      serializedVersion: 2
+      key0: {r: 0.0048110485, g: 1, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 32960
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 32960
+      atime2: 64186
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
+    XTille: 50
+    StartWidth: 0.16
+    EndWidth: 0.04
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 30
+  - Gradient:
+      serializedVersion: 2
+      key0: {r: 0.0048110485, g: 1, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 32960
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 32960
+      atime2: 64186
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
+    XTille: 50
+    StartWidth: 0.16
+    EndWidth: 0.04
+    spaceBetweenPoints: 0.025
+    numberOfPoitns: 30
   quiverGroups:
   - {fileID: 245445314}
   - {fileID: 494177862}
@@ -6092,11 +6239,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefabs:
-  - {fileID: 8542102953145869890, guid: 5c51937e899ec9443a1757aefe9d49cb, type: 3}
-  - {fileID: 8542102953145869890, guid: bec2687c5ed83924da41eb53266b6277, type: 3}
-  - {fileID: 8542102953145869890, guid: d9f6b93789fef134d8eae22c799088e9, type: 3}
-  - {fileID: 8542102953145869890, guid: e6f01c99a25e6f242b63c18c5b3ffe9d, type: 3}
-  - {fileID: 8542102953145869890, guid: e6ffb7a54f3bf3a4985ea5b1e518a234, type: 3}
+  - {fileID: 8542102953145869890, guid: 32034e7e5ff026a48b8c5cedce36871d, type: 3}
+  - {fileID: 8542102953145869890, guid: 175065d1989f5b844a598d351b85314f, type: 3}
+  - {fileID: 8542102953145869890, guid: ca4bc27e4eb229c4cb8ca3d81f394939, type: 3}
+  - {fileID: 8542102953145869890, guid: 6ade732e9fe6f344fbb4cecfa38d56eb, type: 3}
+  - {fileID: 8542102953145869890, guid: 5fc0190837e2aca498f83eb4834d5fa0, type: 3}
   resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:

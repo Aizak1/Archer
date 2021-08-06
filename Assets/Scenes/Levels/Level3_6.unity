@@ -2570,7 +2570,7 @@ PrefabInstance:
     - target: {fileID: 3235591381573931086, guid: 379ec48843d627644b331db949d46f66, type: 3}
       propertyPath: trajectoryShower
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2016220519}
     - target: {fileID: 4305087145361037069, guid: 379ec48843d627644b331db949d46f66, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -3321,6 +3321,7 @@ MonoBehaviour:
   timeText: {fileID: 1891742249}
   arrowsCountText: {fileID: 1891742248}
   starTime: 25
+  starScaleSpeed: 0.5
 --- !u!4 &1451289435
 Transform:
   m_ObjectHideFlags: 0
@@ -5967,7 +5968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefabs:
-  - {fileID: 8542102953145869890, guid: e6ffb7a54f3bf3a4985ea5b1e518a234, type: 3}
+  - {fileID: 8542102953145869890, guid: 5fc0190837e2aca498f83eb4834d5fa0, type: 3}
   resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:

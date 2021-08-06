@@ -37,9 +37,13 @@ namespace arrow {
         private float angleBetweenSplitArrows;
 
         [SerializeField]
+        private GameObject mainVfx;
+        [SerializeField]
         private ParticleSystem hitVfx;
         [SerializeField]
         private ParticleSystem splitVfx;
+
+        private const float VFX_LIFE_AFTER_HIT = 0.3f;
 
         [SerializeField]
         private AudioSource audioSource;
@@ -103,6 +107,9 @@ namespace arrow {
                 if (!hit.collider.isTrigger) {
 
                     trailRenderer.enabled = false;
+                    if(mainVfx != null) {
+                        Destroy(mainVfx,VFX_LIFE_AFTER_HIT);
+                    }
 
                     rigidbody.Sleep();
                     GetComponent<Collider>().enabled = false;

@@ -81,6 +81,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2833009730906670885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2833009730906670886}
+  m_Layer: 0
+  m_Name: VFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2833009730906670886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833009730906670885}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7545134859327952227}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3991164316996165318
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 418952160164968101}
+  - {fileID: 2833009730906670886}
   m_Father: {fileID: 5832823175582339433}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,15 +184,16 @@ MonoBehaviour:
   splitArrowsAmount: 1
   timeBeforeSplit: 1
   angleBetweenSplitArrows: 30
+  mainVfx: {fileID: 2833009730906670885}
   hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
   audioSource: {fileID: 7394638532809229645}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
   portalArrow: {fileID: 0}
-  isTeleporting: 0
   trailRenderer: {fileID: 0}
   trailTime: 0
+  isTeleporting: 0
 --- !u!82 &7394638532809229645
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,6 +307,8 @@ MonoBehaviour:
   previousOffsetFromPortal: {x: 0, y: 0, z: 0}
   originalMaterials: []
   cloneMaterials: []
+  rigidbody: {fileID: 0}
+  sign: 0
 --- !u!65 &3577048291114291362
 BoxCollider:
   m_ObjectHideFlags: 0
