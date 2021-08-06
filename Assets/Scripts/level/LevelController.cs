@@ -3,6 +3,7 @@ using hittable;
 using bow;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 namespace level {
     public class LevelController : MonoBehaviour {
@@ -37,6 +38,9 @@ namespace level {
         private int starConditionsCompleteCount;
 
         private float timeSinceStart;
+
+        [SerializeField]
+        private float starScaleSpeed = 0.5f;
 
         private void Awake() {
             enemiesCount = FindObjectsOfType<Hittable>().Length;
@@ -76,6 +80,9 @@ namespace level {
 
                 for (int i = 0; i < starConditionsCompleteCount; i++) {
                     stars[i].SetActive(true);
+                    var transform = stars[i].GetComponent<RectTransform>();
+                    transform.localScale = Vector3.zero;
+                    transform.DOScale(Vector3.one, starScaleSpeed);
                 }
 
                 var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;

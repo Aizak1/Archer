@@ -4651,6 +4651,7 @@ MonoBehaviour:
   timeText: {fileID: 1720479409}
   arrowsCountText: {fileID: 644774520}
   starTime: 60
+  starScaleSpeed: 0.5
 --- !u!4 &1451289435
 Transform:
   m_ObjectHideFlags: 0
@@ -5160,7 +5161,7 @@ MonoBehaviour:
     StartWidth: 0.09
     EndWidth: 0.03
     spaceBetweenPoints: 0.025
-    numberOfPoitns: 15
+    numberOfPoitns: 22
   quiverGroups:
   - {fileID: 1192953658}
   sceneLoader: {fileID: 132382903}
