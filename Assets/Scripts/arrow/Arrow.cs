@@ -132,6 +132,11 @@ namespace arrow {
                         hittable.ProcessHit(this, hit);
                     }
 
+                    var freezable = hit.collider.GetComponent<FreezableObject>();
+                    if (freezable != null) {
+                        freezable.ProcessHit(this);
+                    }
+
                     trailRenderer.enabled = false;
 
                     return;

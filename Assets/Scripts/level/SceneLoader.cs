@@ -30,5 +30,9 @@ namespace level {
         public void Quit() {
             Application.Quit();
         }
+
+        public void Reset() {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }

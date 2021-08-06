@@ -11,7 +11,7 @@ namespace hittable{
         [SerializeField]
         private ConnectedTarget connectedTarget;
         [SerializeField]
-        private PatrolingEnemy patrolingEnemy;
+        private MovingTarget movingTarget;
 
         private LevelController levelController;
 
@@ -25,10 +25,17 @@ namespace hittable{
         public void ProcessHit(Arrow arrow, RaycastHit hit) {
             if (enemy) {
                 enemy.ProcessHit();
-            } else if (connectedTarget) {
+                return;
+            }
+
+            if (connectedTarget) {
                 connectedTarget.ProcessHit();
-            } else if (patrolingEnemy) {
-                patrolingEnemy.ProcessHit(arrow);
+                return;
+            }
+
+            if (movingTarget) {
+                movingTarget.ProcessHit();
+                return;
             }
         }
 
