@@ -150,7 +150,9 @@ namespace arrow {
                         freezable.ProcessHit(this);
                     } else if (burnable) {
                         burnable.ProcessHit(this);
-                        fireVfx.SetActive(true);
+                        if (fireVfx) {
+                            fireVfx.SetActive(true);
+                        }
                     } else {
                         bowController.arrowsOnLevel.Enqueue(gameObject);
                     }
