@@ -43,6 +43,8 @@ namespace arrow {
         private ParticleSystem hitVfx;
         [SerializeField]
         private ParticleSystem splitVfx;
+        [SerializeField]
+        private GameObject fireVfx;
 
         private const float VFX_LIFE_AFTER_HIT = 0.3f;
 
@@ -128,27 +130,28 @@ namespace arrow {
                     parent.transform.parent = hit.collider.gameObject.transform;
                     transform.parent = parent.transform;
 
-                    if (portalArrow != null) {
+                    if (portalArrow) {
                         CreatePortal(hit);
                         Destroy(gameObject);
                         return;
                     }
 
-                    if (hitVfx != null) {
+                    if (hitVfx) {
                         Instantiate(hitVfx, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
                     var hittable = hit.collider.GetComponent<Hittable>();
-                    if (hittable != null) {
-                        hittable.ProcessHit(this, hit);
-                    }
-
                     var freezable = hit.collider.GetComponent<FreezableObject>();
-                    if (freezable != null) {
-                        freezable.ProcessHit(this);
-                    }
+                    var burnable = hit.collider.GetComponent<BurnableObject>();
 
-                    if (freezable == null && hittable == null) {
+                    if (hittable) {
+                        hittable.ProcessHit(this, hit);
+                    } else if (freezable) {
+                        freezable.ProcessHit(this);
+                    } else if (burnable) {
+                        burnable.ProcessHit(this);
+                        fireVfx.SetActive(true);
+                    } else {
                         bowController.arrowsOnLevel.Enqueue(gameObject);
                     }
 
@@ -164,7 +167,7 @@ namespace arrow {
                 } else {
 
                     var portal = hit.collider.GetComponent<Portal>();
-                    if (portal != null) {
+                    if (portal) {
                         trailRenderer.Clear();
                         trailRenderer.enabled = false;
                         isTeleporting = true;
@@ -172,7 +175,7 @@ namespace arrow {
                     }
 
                     var surface = hit.collider.GetComponent<RicochetSurface>();
-                    if (surface != null) {
+                    if (surface) {
                         surface.Richochet(this);
                     }
                 }
@@ -192,23 +195,18 @@ namespace arrow {
 
             if (portalArrow.isBlue) {
 
-                var existPortal =
-                    GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
-
-                if (existPortal != null) {
+                var existPortal = GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
+                if (existPortal) {
                     existPortal.GetComponent<Portal>().Close();
                 }
-
                 portal = Instantiate(portalArrow.bluePortal, position, rotation);
 
             } else {
 
                 var existsPortal = GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
-
-                if (existsPortal != null) {
+                if (existsPortal) {
                     existsPortal.GetComponent<Portal>().Close();
                 }
-
                 portal = Instantiate(portalArrow.orangePortal, position, rotation);
             }
 
