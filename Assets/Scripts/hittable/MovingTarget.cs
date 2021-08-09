@@ -1,5 +1,6 @@
 using UnityEngine;
 using hittable;
+using arrow;
 
 [RequireComponent(typeof(Hittable))]
 public class MovingTarget : MonoBehaviour
@@ -10,5 +11,9 @@ public class MovingTarget : MonoBehaviour
     public void ProcessHit() {
         animator.speed = 0;
         Destroy(this);
+    }
+
+    private void OnDestroy() {
+        Destroy(GetComponent<Hittable>());
     }
 }
