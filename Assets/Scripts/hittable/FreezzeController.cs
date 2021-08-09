@@ -18,6 +18,9 @@ namespace hittable {
         [SerializeField]
         private AudioClip freezeSound;
 
+        [SerializeField]
+        private bool isFreezeFromStart;
+
         private const string SHADER_FREEZE_FIELD = "_IceSlider";
         private const float FREEZE_MIN = 0f;
         private const float FREEZE_MAX = 1f;
@@ -30,13 +33,15 @@ namespace hittable {
                 return;
             }
 
-            for (int i = 0; i < freezeMaterials.Length; i++) {
-                freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MIN);
+            if (isFreezeFromStart) {
+                Freeze();
+            } else {
+                Unfreeze();
             }
         }
 
         private void Update() {
-            if (animator.speed != 0) {
+            if (animator.speed != 0 || isFreezeFromStart) {
                 return;
             }
 
@@ -51,16 +56,27 @@ namespace hittable {
                 return;
             }
 
-            animator.speed = originalAnimatorSpeed;
-            for (int i = 0; i < freezeMaterials.Length; i++) {
-                freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MIN);
-            }
+            Unfreeze();
         }
 
         public void Freeze() {
             audioSource.PlayOneShot(freezeSound);
             animator.speed = 0;
             unfreezeTime = Time.time + freezeTime;
+
+            for (int i = 0; i < freezeMaterials.Length; i++) {
+                freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MAX);
+            }
+        }
+
+        public void Unfreeze() {
+            animator.speed = originalAnimatorSpeed;
+
+            for (int i = 0; i < freezeMaterials.Length; i++) {
+                freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MIN);
+            }
+
+            isFreezeFromStart = false;
         }
 
         private void OnDestroy() {

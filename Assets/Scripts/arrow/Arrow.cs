@@ -13,6 +13,7 @@ namespace arrow {
         Slow,
         Portal,
         Freeze,
+        Fire
     }
 
     public class Arrow : MonoBehaviour {
@@ -107,7 +108,7 @@ namespace arrow {
                 if (!hit.collider.isTrigger) {
 
                     trailRenderer.enabled = false;
-                    if(mainVfx != null) {
+                    if (mainVfx != null) {
                         Destroy(mainVfx,VFX_LIFE_AFTER_HIT);
                     }
 
@@ -133,7 +134,7 @@ namespace arrow {
                         return;
                     }
 
-                    if(hitVfx != null) {
+                    if (hitVfx != null) {
                         Instantiate(hitVfx, hit.point, Quaternion.LookRotation(hit.normal));
                     }
 
@@ -147,8 +148,8 @@ namespace arrow {
                         freezable.ProcessHit(this);
                     }
 
-                    if(freezable == null && hittable == null) {
-                        this.bowController.arrowsOnLevel.Enqueue(gameObject);
+                    if (freezable == null && hittable == null) {
+                        bowController.arrowsOnLevel.Enqueue(gameObject);
                     }
 
                     if (bowController.arrowsOnLevel.Count > BowController.MAX_ARROWS_COUNT) {
@@ -163,7 +164,7 @@ namespace arrow {
                 } else {
 
                     var portal = hit.collider.GetComponent<Portal>();
-                    if(portal != null) {
+                    if (portal != null) {
                         trailRenderer.Clear();
                         trailRenderer.enabled = false;
                         isTeleporting = true;
@@ -171,7 +172,7 @@ namespace arrow {
                     }
 
                     var surface = hit.collider.GetComponent<RicochetSurface>();
-                    if(surface != null) {
+                    if (surface != null) {
                         surface.Richochet(this);
                     }
                 }
@@ -188,6 +189,7 @@ namespace arrow {
             var position = hit.point;
             var rotation = Quaternion.LookRotation(hit.normal);
             GameObject portal;
+
             if (portalArrow.isBlue) {
 
                 var existPortal =
@@ -198,9 +200,10 @@ namespace arrow {
                 }
 
                 portal = Instantiate(portalArrow.bluePortal, position, rotation);
+
             } else {
-                var existsPortal =
-                    GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
+
+                var existsPortal = GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
 
                 if (existsPortal != null) {
                     existsPortal.GetComponent<Portal>().Close();
@@ -208,6 +211,7 @@ namespace arrow {
 
                 portal = Instantiate(portalArrow.orangePortal, position, rotation);
             }
+
             portal.GetComponentInChildren<Portal>().Open();
             var offset = portal.transform.forward / Portal.PORTAL_SPAWN_OFFSET;
             portal.transform.position += offset;
@@ -215,9 +219,9 @@ namespace arrow {
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
 
-
             float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
             Arrow instantiatedArrow = this;
+
             for (int i = 0; i < splitArrowsAmount; i++) {
                 instantiatedArrow = Instantiate(this, transform.position, transform.rotation);
                 var velocity = rigidbody.velocity;
@@ -233,11 +237,12 @@ namespace arrow {
 
                 angle += angleBetweenSplitArrows;
             }
+
             instantiatedArrow.audioSource.PlayOneShot(splitSound);
             Destroy(gameObject);
         }
 
-        public void Release(Vector3 velocity, bool isSplit,BowController bowController) {
+        public void Release(Vector3 velocity, bool isSplit, BowController bowController) {
 
             this.bowController = bowController;
 

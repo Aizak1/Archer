@@ -8,11 +8,15 @@ namespace hittable {
         private FreezzeController freezzeController;
 
         public void ProcessHit(Arrow arrow) {
-            if (arrow.arrowType != ArrowType.Freeze) {
+            if (arrow.arrowType == ArrowType.Freeze) {
+                freezzeController.Freeze();
                 return;
             }
 
-            freezzeController.Freeze();
+            if (arrow.arrowType == ArrowType.Fire) {
+                freezzeController.Unfreeze();
+                return;
+            }
         }
     }
 }
