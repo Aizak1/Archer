@@ -77,7 +77,7 @@ namespace portal {
         }
 
         private void UpdateSliceParams(PortalTraveller traveller) {
-            int side = GetSideOfPortal(traveller);
+            int side = traveller.sign;
             Vector3 sliceNormal = transform.forward * side;
             Vector3 cloneSliceNormal = linkedPortal.transform.forward * -side;
 
@@ -158,14 +158,6 @@ namespace portal {
             if (arrow != null) {
                 arrow.trailRenderer.enabled = true;
                 arrow.isTeleporting = false;
-            }
-        }
-
-        private int GetSideOfPortal(PortalTraveller traveller) {
-            if (isOrange) {
-                return 1 * traveller.sign;
-            } else {
-                return -1 * traveller.sign;
             }
         }
 
