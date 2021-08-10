@@ -275,6 +275,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4449381028269529464, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4449381028269529464, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -330,9 +334,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 6657187416046719874, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657187416046719874, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657187416046719874, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657187416046719874, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_Lightmapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657187416046719874, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 215
+      objectReference: {fileID: 0}
     - target: {fileID: 6710245384639570982, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
       propertyPath: m_CollisionDetection
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013211016130000157, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7013211016130000157, guid: 3d18f40841a31264d912311b6db4036a, type: 3}
       propertyPath: m_StaticEditorFlags
