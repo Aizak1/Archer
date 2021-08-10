@@ -3449,6 +3449,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4682969225725253425, guid: 53bf495069ed34e48a7873912e2f025c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.55551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682969225725253425, guid: 53bf495069ed34e48a7873912e2f025c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.55551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682969225725253425, guid: 53bf495069ed34e48a7873912e2f025c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682969225725253425, guid: 53bf495069ed34e48a7873912e2f025c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.43
+      objectReference: {fileID: 0}
     - target: {fileID: 5082738544510104873, guid: 53bf495069ed34e48a7873912e2f025c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -7802,6 +7818,7 @@ MonoBehaviour:
   timeText: {fileID: 1837039806}
   arrowsCountText: {fileID: 1837039805}
   starTime: 65
+  countOfArrowsForStar: 0
   starScaleSpeed: 0.5
 --- !u!4 &1451289435
 Transform:

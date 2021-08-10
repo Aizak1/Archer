@@ -31,9 +31,10 @@ namespace level {
 
         [SerializeField]
         private float starTime;
-
-        private int enemiesCount;
+        [SerializeField]
         private int countOfArrowsForStar;
+        private int enemiesCount;
+
 
         private int starConditionsCompleteCount;
 
@@ -44,7 +45,9 @@ namespace level {
 
         private void Awake() {
             enemiesCount = FindObjectsOfType<Hittable>().Length;
-            countOfArrowsForStar = enemiesCount + 1;
+            if(countOfArrowsForStar == 0) {
+                countOfArrowsForStar = enemiesCount + 1;
+            }
             starConditionsCompleteCount = 1;
             winCanvas.enabled = false;
         }
