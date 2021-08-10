@@ -134,6 +134,18 @@ namespace bow {
                 }
 
                 instantiatedArrow.transform.parent = null;
+
+                var x = bowRotationPivot.transform.parent.transform.position.x;
+                var y = instantiatedArrow.transform.position.y;
+                var z = instantiatedArrow.transform.position.z;
+
+                instantiatedArrow.transform.position = new Vector3(x, y, z);
+
+                var rot = instantiatedArrow.transform.rotation;
+                rot.y = 0;
+                rot.z = 0;
+                instantiatedArrow.transform.rotation = rot;
+
                 var direction = instantiatedArrow.transform.forward;
                 var velocity = instantiatedArrow.speed * pullAmount * direction;
                 instantiatedArrow.Release(velocity, true, this);

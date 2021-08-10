@@ -192,7 +192,9 @@ namespace arrow {
 
         private void CreatePortal(RaycastHit hit) {
             var position = hit.point;
-            var rotation = Quaternion.LookRotation(hit.normal);
+            var normal = hit.normal;
+            normal.x = 0;
+            var rotation = Quaternion.LookRotation(normal);
             GameObject portal;
 
             if (portalArrow.isBlue) {
@@ -213,7 +215,8 @@ namespace arrow {
             }
 
             portal.GetComponentInChildren<Portal>().Open();
-            var offset = portal.transform.forward / Portal.PORTAL_SPAWN_OFFSET;
+            var offset = portal.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
+            offset.x = 0;
             portal.transform.position += offset;
         }
 
