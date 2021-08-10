@@ -36,6 +36,11 @@ namespace hittable {
         }
 
         public void ProcessHit(Arrow arrow) {
+
+            if (isBurning) {
+                return;
+            }
+
             if (arrow.arrowType != ArrowType.Fire) {
                 return;
             }

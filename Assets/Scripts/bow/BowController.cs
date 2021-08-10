@@ -51,7 +51,7 @@ namespace bow {
         [HideInInspector]
         public int shotsCount;
 
-        public const int MAX_ARROWS_COUNT = 17;
+        public const int MAX_ARROWS_COUNT = 13;
 
         [HideInInspector]
         public Queue<GameObject> arrowsOnLevel;
