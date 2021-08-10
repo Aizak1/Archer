@@ -186,8 +186,9 @@ MonoBehaviour:
   timeBeforeSplit: 0.5
   angleBetweenSplitArrows: 43
   mainVfx: {fileID: 5784429852992521224}
-  hitVfx: {fileID: 0}
+  hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
+  fireVfx: {fileID: 0}
   audioSource: {fileID: 5095481841051152993}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
@@ -374,7 +375,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: aedfeaac7799b8f47b2961f642cf6761, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1388,7 +1389,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 4
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1831,7 +1832,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -1942,8 +1943,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 3
+    tilesY: 3
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -5259,7 +5260,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 1
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -5300,7 +5301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784429851831037734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.377}
+  m_LocalPosition: {x: 0, y: 0, z: 0.406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5784429852992521227}
@@ -6693,7 +6694,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -6804,8 +6805,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 3
+    tilesY: 3
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -10131,7 +10132,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -6527452185787713029, guid: 8ef58f5e855ca064b9a23001173cee29, type: 3}
+  m_Mesh: {fileID: -6527452185787713029, guid: cfe507699a4fc05439f2a5093ad54fcc, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -10251,8 +10252,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.2
+      scalar: 0.15
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11497,7 +11498,7 @@ ParticleSystem:
         m_NumAlphaKeys: 8
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -11608,8 +11609,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 3
+    tilesY: 3
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -14894,7 +14895,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3210121d9c36a9744af15434cf815323, type: 2}
+  - {fileID: 2100000, guid: 2a02590595937784fa4d98e59f52e6eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14925,7 +14926,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 1
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -14966,7 +14967,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784429852850184115}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.571}
+  m_LocalPosition: {x: 0, y: 0, z: 0.658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5784429852992521227}
@@ -15055,8 +15056,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.8
-      minScalar: 0.6
+      scalar: 0.4
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15979,31 +15980,31 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.0013961792
+          time: 0.0031738281
           value: 0.061538696
-          inSlope: 1.4373436
-          outSlope: 1.4373436
+          inSlope: 0.57809514
+          outSlope: 0.57809514
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.18291257
+          outWeight: 0.13737248
         - serializedVersion: 3
-          time: 0.4456915
-          value: 0.13927364
-          inSlope: -0.071423724
-          outSlope: -0.071423724
+          time: 0.69247437
+          value: 0.13045573
+          inSlope: -0.4590304
+          outSlope: -0.4590304
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.27033946
-          outWeight: 0.2781689
+          inWeight: 0.23766285
+          outWeight: 0.15922403
         - serializedVersion: 3
           time: 1
-          value: 0.01351352
-          inSlope: -0.100831434
-          outSlope: -0.100831434
+          value: 0
+          inSlope: -0.47526374
+          outSlope: -0.47526374
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.24178006
+          inWeight: 0.21006124
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -16368,7 +16369,7 @@ ParticleSystem:
         m_NumAlphaKeys: 7
   UVModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -16479,8 +16480,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 1
-    tilesY: 1
+    tilesX: 3
+    tilesY: 3
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -16601,8 +16602,8 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -1.5
-      minScalar: -2.5
+      scalar: -8
+      minScalar: -4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -19796,7 +19797,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 2
+  m_RenderAlignment: 1
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -19806,7 +19807,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -8803937527578110353, guid: fbec22c399b90a0438b1edfe9feff6bd, type: 3}
+  m_Mesh: {fileID: -8803937527578110353, guid: 2a0c73926a0c44b4cad0c020b53b7af9, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -19872,7 +19873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784429853451065213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.3484}
+  m_LocalPosition: {x: 0, y: 0, z: 0.315}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5784429852992521227}
@@ -24662,7 +24663,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 091713b77cdb42b4f9ecb6883e87c78e, type: 2}
+  - {fileID: 2100000, guid: bc4d8603bdbee504cb10a3ff62f4dbf4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24703,7 +24704,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -6527452185787713029, guid: 8ef58f5e855ca064b9a23001173cee29, type: 3}
+  m_Mesh: {fileID: -6527452185787713029, guid: cfe507699a4fc05439f2a5093ad54fcc, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

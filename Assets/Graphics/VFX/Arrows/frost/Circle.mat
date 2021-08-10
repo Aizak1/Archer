@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Circle
-  m_Shader: {fileID: 4800000, guid: 0e837607504b1624a9e61a91a4833c0e, type: 3}
+  m_Shader: {fileID: 4800000, guid: c0443bcc8219b364d87021563f027fdd, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 0e269a3181540cf4ca07ab921dfcd523, type: 3}
+        m_Texture: {fileID: 2800000, guid: 072c50657f1a57546abda69d492f4ecb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -28,8 +28,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - __dirty: 1
+    - _TrashHold: 0
+    - _TrashHold1: 0.3
+    - __dirty: 0
     m_Colors:
-    - _Color0: {r: 0, g: 47.937256, b: 47.937256, a: 0}
+    - _Color0: {r: 0, g: 6.4725366, b: 6.498019, a: 0}
     - _color1: {r: 0, g: 1.2211916, b: 1.319508, a: 1}
+    - _colorMasin: {r: 1.4635813, g: 6.791017, b: 11.181761, a: 1}
+    - _colorMasin1: {r: 0.6724853, g: 10.894262, b: 12.844469, a: 1}
+    - _secondary: {r: 0, g: 2.3443835, b: 12.38446, a: 1}
+    - _secondary1: {r: 0, g: 2.3443835, b: 12.38446, a: 1}
   m_BuildTextureStacks: []

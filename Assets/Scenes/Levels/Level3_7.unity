@@ -706,6 +706,7 @@ MonoBehaviour:
   freezeTime: 5
   audioSource: {fileID: 235457685}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
+  isFreezeFromStart: 0
 --- !u!82 &235457685
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1998,6 +1999,7 @@ MonoBehaviour:
   freezeTime: 5
   audioSource: {fileID: 837009272}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
+  isFreezeFromStart: 0
 --- !u!82 &837009272
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2184,6 +2186,7 @@ MonoBehaviour:
   freezeTime: 5
   audioSource: {fileID: 884899442}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
+  isFreezeFromStart: 0
 --- !u!82 &884899442
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3059,6 +3062,7 @@ MonoBehaviour:
   timeText: {fileID: 1891742249}
   arrowsCountText: {fileID: 1891742248}
   starTime: 25
+  countOfArrowsForStar: 0
   starScaleSpeed: 0.5
 --- !u!4 &1451289435
 Transform:
@@ -5031,6 +5035,7 @@ MonoBehaviour:
   freezeTime: 5
   audioSource: {fileID: 1864411423}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
+  isFreezeFromStart: 0
 --- !u!82 &1864411423
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5423,7 +5428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefabs:
-  - {fileID: 8542102953145869890, guid: 5fc0190837e2aca498f83eb4834d5fa0, type: 3}
+  - {fileID: 8542102953145869890, guid: b1404f21f0052df4c98c211e8e3823ae, type: 3}
   resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:

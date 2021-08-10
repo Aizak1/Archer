@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641567, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3508,6 +3508,7 @@ MonoBehaviour:
   freezeTime: 5
   audioSource: {fileID: 204605325}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
+  isFreezeFromStart: 0
 --- !u!1 &1032855951
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,6 +5672,7 @@ MonoBehaviour:
   timeText: {fileID: 148773433}
   arrowsCountText: {fileID: 1609721739}
   starTime: 60
+  countOfArrowsForStar: 0
   starScaleSpeed: 0.5
 --- !u!4 &1758598140
 Transform:
@@ -6240,10 +6242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefabs:
   - {fileID: 8542102953145869890, guid: 32034e7e5ff026a48b8c5cedce36871d, type: 3}
-  - {fileID: 8542102953145869890, guid: 175065d1989f5b844a598d351b85314f, type: 3}
+  - {fileID: 8542102953145869890, guid: 9cfeb2ffe4f079a499dc934bf3cb2df2, type: 3}
   - {fileID: 8542102953145869890, guid: ca4bc27e4eb229c4cb8ca3d81f394939, type: 3}
   - {fileID: 8542102953145869890, guid: 6ade732e9fe6f344fbb4cecfa38d56eb, type: 3}
-  - {fileID: 8542102953145869890, guid: 5fc0190837e2aca498f83eb4834d5fa0, type: 3}
+  - {fileID: 8542102953145869890, guid: b1404f21f0052df4c98c211e8e3823ae, type: 3}
   resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ProjectileMain
-  m_Shader: {fileID: 4800000, guid: f4c027c19462d164d8e198d1bc858190, type: 3}
+  m_Shader: {fileID: 4800000, guid: 77153566431cee643a21e63260de1bb7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -24,7 +24,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskSecondary:
-        m_Texture: {fileID: 2800000, guid: 06ecb414344c0034b81d23de5ca61cd6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 463f146628e8c4e47ac438d1f532f853, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 463f146628e8c4e47ac438d1f532f853, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -32,8 +36,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - __dirty: 1
+    - _TrashHold2: 0.497
+    - __dirty: 0
     m_Colors:
-    - _Color: {r: 0.20483541, g: 2.6082377, b: 2.4989922, a: 1}
-    - _Color02: {r: 0.4324512, g: 1.8739551, b: 3.4415908, a: 1}
+    - _Color: {r: 0.0013864839, g: 0.016551152, b: 0.015857909, a: 1}
+    - _Color02: {r: 0.3513666, g: 1.0090528, b: 1.7207954, a: 1}
+    - _color1: {r: 0, g: 0, b: 0, a: 0}
+    - _color2: {r: 0, g: 0, b: 0, a: 0}
+    - _colorMasin2: {r: 1.4635813, g: 6.791017, b: 11.181761, a: 1}
+    - _secondary2: {r: 0.1302005, g: 1.0578368, b: 3.0669465, a: 1}
   m_BuildTextureStacks: []

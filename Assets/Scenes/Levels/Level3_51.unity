@@ -644,6 +644,7 @@ MonoBehaviour:
   timeText: {fileID: 1264359819}
   arrowsCountText: {fileID: 1264359818}
   starTime: 25
+  countOfArrowsForStar: 0
   starScaleSpeed: 0.5
 --- !u!82 &147049011
 AudioSource:
@@ -4472,7 +4473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefabs:
   - {fileID: 8542102953145869890, guid: d1597c1377a100a4b98ce2ce24f2d5eb, type: 3}
-  - {fileID: 8542102953145869890, guid: 1e09de13b7b50ad458555ef18af0b458, type: 3}
+  - {fileID: 8542102953145869890, guid: 41fe5aac9a5f67b44b5817e3e3ac23d8, type: 3}
   resource: {fileID: 1084114304}
 --- !u!4 &1361071590
 Transform:
@@ -5056,7 +5057,7 @@ PrefabInstance:
     - target: {fileID: 2128641785487256470, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 2800000, guid: 0e585d8e95523e44fac81b4f83b168e4, type: 3}
+      objectReference: {fileID: 2800000, guid: 69c5384b219757e46986b90cbcc1fce3, type: 3}
     - target: {fileID: 2128641785841236390, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Name
       value: ManualCanvas
@@ -5147,6 +5148,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2128641785841236394, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128641785841236395, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2128641786244022540, guid: add5d3f8f15ae604984c932749c8affb, type: 3}

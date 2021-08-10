@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FirePreojectileHead
-  m_Shader: {fileID: 4800000, guid: f4c027c19462d164d8e198d1bc858190, type: 3}
+  m_Shader: {fileID: 4800000, guid: 77153566431cee643a21e63260de1bb7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -63,6 +63,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 86814882a6d7c8b429459e93ae67c9c6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -82,6 +86,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _TrashHold2: 0.874
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
@@ -89,4 +94,6 @@ Material:
     - _Color: {r: 1.8745098, g: 0.59607846, b: 0, a: 1}
     - _Color02: {r: 2.686682, g: 0.41607907, b: 0.41607907, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _colorMasin2: {r: 2.6082377, g: 0.45063794, b: 0, a: 1}
+    - _secondary2: {r: 8.47419, g: 2.1296391, b: 0, a: 1}
   m_BuildTextureStacks: []
