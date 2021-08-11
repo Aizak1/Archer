@@ -916,10 +916,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 507620701962620184, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: 'Important : Potion appears after destroying the first part of the level'
+      objectReference: {fileID: 0}
+    - target: {fileID: 507620701962620184, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_characterSpacing
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002287789817566418, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -263
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002287789817566418, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -71
+      objectReference: {fileID: 0}
     - target: {fileID: 2128641785487256470, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 2800000, guid: d8fd2d74b92fcdf49852d93e6869ba85, type: 3}
+      objectReference: {fileID: 2800000, guid: 9c57b32cc4bb3754b85fbbf6bfdb765e, type: 3}
     - target: {fileID: 2128641785841236390, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Name
       value: ManualCanvas
@@ -1008,6 +1024,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2128641785841236395, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2128641786244022540, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1019,6 +1039,103 @@ PrefabInstance:
     - target: {fileID: 2128641786244022540, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ui.Manual, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934250435724883928, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -256.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953826300317792984, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 36804a46970da5d4b8f4648b2ef7f424, type: 3}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.50998574
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.40805966
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.47185946
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9937635
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.011349079
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.10961932
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.01699636
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -292
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.506
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -12.566
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1.794
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959179801627903988, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: When you destroy this potion it teleports you to the next part of the
+        level
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959179801627903988, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_lineSpacing
+      value: -51.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959179801627903988, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_characterSpacing
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395019537536337456, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: Some more information about world features
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395019537536337456, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_fontSize
+      value: 37.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395019537536337456, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 37.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465365441572478141, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626207544083985198, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: Teleport Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768589384243698593, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768589384243698593, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 224
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add5d3f8f15ae604984c932749c8affb, type: 3}

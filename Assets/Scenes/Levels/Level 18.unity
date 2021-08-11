@@ -5505,10 +5505,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 507620701962620184, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: 'Special Abilities : Fire'
+      objectReference: {fileID: 0}
+    - target: {fileID: 507620701962620184, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_lineSpacing
+      value: -47.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 507620701962620184, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_characterSpacing
+      value: -4.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002287789817566418, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -265
+      objectReference: {fileID: 0}
     - target: {fileID: 2128641785487256470, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Texture
       value: 
-      objectReference: {fileID: 2800000, guid: 69c5384b219757e46986b90cbcc1fce3, type: 3}
+      objectReference: {fileID: 2800000, guid: f0a0979e3dcf37840898bf20b07a4a5f, type: 3}
     - target: {fileID: 2128641785841236390, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_Name
       value: ManualCanvas
@@ -5616,6 +5632,64 @@ PrefabInstance:
     - target: {fileID: 2128641786244022540, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ui.Manual, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934250435724883928, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -307
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953826300317792984, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 74fc4a52d42e43b49a311de69ad4c413, type: 3}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3108182
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.24869788
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2875816
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -296
+      objectReference: {fileID: 0}
+    - target: {fileID: 5570842995384704870, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959179801627903988, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: Defrosts frozen objects.Burns small wooden objects
+      objectReference: {fileID: 0}
+    - target: {fileID: 5959179801627903988, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395019537536337456, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: Tap to the arrow icon to switch between arrows
+      objectReference: {fileID: 0}
+    - target: {fileID: 7395019537536337456, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_lineSpacing
+      value: -44.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465365441572478141, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: 'Speed : 7
+
+        Distance : 65m'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626207544083985198, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_text
+      value: Fire Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768589384243698593, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 246
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add5d3f8f15ae604984c932749c8affb, type: 3}
