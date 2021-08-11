@@ -197,13 +197,19 @@ namespace arrow {
             var rotation = Quaternion.LookRotation(normal);
             GameObject portal;
 
+            var parent = new GameObject();
+            parent.transform.position = hit.collider.gameObject.transform.position;
+            parent.transform.rotation = hit.collider.gameObject.transform.rotation;
+
+            parent.transform.parent = hit.collider.gameObject.transform;
+
             if (portalArrow.isBlue) {
 
                 var existPortal = GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
                 if (existPortal) {
                     existPortal.GetComponent<Portal>().Close();
                 }
-                portal = Instantiate(portalArrow.bluePortal, position, rotation);
+                portal = Instantiate(portalArrow.bluePortal, position, rotation, parent.transform);
 
             } else {
 
@@ -211,7 +217,7 @@ namespace arrow {
                 if (existsPortal) {
                     existsPortal.GetComponent<Portal>().Close();
                 }
-                portal = Instantiate(portalArrow.orangePortal, position, rotation);
+                portal = Instantiate(portalArrow.orangePortal, position, rotation, parent.transform);
             }
 
             portal.GetComponentInChildren<Portal>().Open();
