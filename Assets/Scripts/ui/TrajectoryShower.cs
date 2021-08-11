@@ -18,6 +18,10 @@ namespace ui {
         private LineRenderer lineRenderer;
 
         private const string MAIN_TEXTURE = "_MainTex";
+
+        private int index;
+        private Vector3 position;
+
         private void Start() {
             lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.positionCount = 0;
@@ -39,7 +43,7 @@ namespace ui {
                         }
                     }
 
-                    pointList = new List<Vector3>();
+                    pointList = new List<Vector3>(trajectorySettup.numberOfPoitns);
 
                     for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
                         float spaceBetweenPoints = trajectorySettup.spaceBetweenPoints;
@@ -51,6 +55,17 @@ namespace ui {
                         lineRenderer.startWidth = trajectorySettup.StartWidth;
                         lineRenderer.endWidth = trajectorySettup.EndWidth;
                     }
+
+                    for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
+                        position = pointList[i];
+                        lineRenderer.positionCount++;
+                        lineRenderer.SetPosition(i - 1, position);
+                    }
+
+                    lineRenderer.positionCount++;
+                    index = lineRenderer.positionCount - 1;
+                    position = pointList[pointList.Count - 1];
+                    lineRenderer.SetPosition(index, position);
                 }
 
                 if (pointList == null) {
@@ -65,16 +80,13 @@ namespace ui {
                     return;
                 }
 
-                lineRenderer.positionCount = 0;
                 for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
                     var pos = pointList[i];
-                    lineRenderer.positionCount++;
                     lineRenderer.SetPosition(i - 1, pos);
                 }
 
-                lineRenderer.positionCount++;
-                var index = lineRenderer.positionCount - 1;
-                var position = pointList[pointList.Count - 1];
+                index = lineRenderer.positionCount - 1;
+                position = pointList[pointList.Count - 1];
                 lineRenderer.SetPosition(index, position);
             }
 
@@ -105,8 +117,8 @@ namespace ui {
         private Vector3 CalculatePointPosition(float t) {
             var arrowTransform = bowController.instantiatedArrow.transform;
             var direction = arrowTransform.forward;
-            var vO = direction * bowController.pullAmount * bowController.instantiatedArrow.speed;
-            return arrowTransform.position + (vO * t) + 0.5f * Physics.gravity * (t * t);
+            var vO = bowController.instantiatedArrow.speed * bowController.pullAmount * direction;
+            return arrowTransform.position + (vO * t) + (t * t) * 0.5f * Physics.gravity;
         }
     }
 
