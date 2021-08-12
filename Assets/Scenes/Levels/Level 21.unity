@@ -1038,7 +1038,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7586093321368119862, guid: 4b437f1c2454a2c409b1b7f35e69d661, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7586093321435195190, guid: 4b437f1c2454a2c409b1b7f35e69d661, type: 3}
       propertyPath: m_Range
@@ -1885,6 +1885,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2537369443200237728, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -55.100098
+      objectReference: {fileID: 0}
     - target: {fileID: 2766481619728624501, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
       propertyPath: m_Name
       value: GameCanvas
@@ -2000,6 +2004,14 @@ PrefabInstance:
     - target: {fileID: 5312557988729940694, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914725340232777097, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -62.399902
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914725340232777097, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -145.80005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad2d30ff8f6fd254da6fa3e8184266e7, type: 3}
@@ -5241,15 +5253,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1068427482, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1068427484, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1068427484, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
       propertyPath: m_Shadows.m_Type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1260601816, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260601818, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1434045326, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1434045328, guid: 06b9d15b7d33e854cb23fe58a33238aa, type: 3}
       propertyPath: m_Enabled
