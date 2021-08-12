@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -75,15 +76,10 @@ namespace bow {
 
                 if (Input.GetMouseButtonDown(0)) {
 
-                    if (Input.touchCount > 0) {
-                        int id = Input.touches[0].fingerId;
-                        if (EventSystem.current.IsPointerOverGameObject(id)) {
-                            return;
-                        }
-                    } else {
-                        if (EventSystem.current.IsPointerOverGameObject()) {
-                            return;
-                        }
+                    var uiObject = EventSystem.current.currentSelectedGameObject;
+
+                    if (uiObject && uiObject.GetComponent<Button>()) {
+                        return;
                     }
 
                     startTouchPosition = camera.ScreenToViewportPoint(Input.mousePosition);

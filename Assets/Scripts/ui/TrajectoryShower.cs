@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ui {
     public class TrajectoryShower : MonoBehaviour {
@@ -32,15 +33,10 @@ namespace ui {
 
                 if (Input.GetMouseButtonDown(0)) {
 
-                    if (Input.touchCount > 0) {
-                        int id = Input.touches[0].fingerId;
-                        if (EventSystem.current.IsPointerOverGameObject(id)) {
-                            return;
-                        }
-                    } else {
-                        if (EventSystem.current.IsPointerOverGameObject()) {
-                            return;
-                        }
+                    var uiObject = EventSystem.current.currentSelectedGameObject;
+
+                    if (uiObject && uiObject.GetComponent<Button>()) {
+                        return;
                     }
 
                     pointList = new List<Vector3>(trajectorySettup.numberOfPoitns);

@@ -15,6 +15,9 @@ namespace ui {
         private Canvas[] manualCanvases;
         private int currentIndex;
 
+        [SerializeField]
+        private HintController hintController;
+
         private void Start() {
             int currentScene = SceneManager.GetActiveScene().buildIndex;
             if (PlayerPrefs.GetInt(LevelsManager.LEVEL_AT) > currentScene) {
@@ -39,8 +42,14 @@ namespace ui {
             currentIndex++;
 
             if (currentIndex >= manualCanvases.Length) {
-                gameCanvas.enabled = true;
                 bowController.enabled = true;
+
+                if (hintController) {
+                    hintController.gameCanvas = gameCanvas;
+                    hintController.enabled = true;
+                } else {
+                    gameCanvas.enabled = true;
+                }
             } else {
                 manualCanvases[currentIndex].enabled = true;
             }

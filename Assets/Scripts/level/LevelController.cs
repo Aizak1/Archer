@@ -62,7 +62,7 @@ namespace level {
         }
 
         private void Update() {
-            if (bowController.enabled) {
+            if (gameCanvas.enabled) {
                 timeSinceStart += Time.deltaTime;
             }
 
