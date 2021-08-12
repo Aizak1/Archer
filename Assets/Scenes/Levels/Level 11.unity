@@ -5130,6 +5130,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5216,6 +5217,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolution: {x: 1920, y: 1080}
   widthOrHeight: 0.5
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 84698e404f9596f4b9fa3143614cbc43, type: 2}
 --- !u!1001 &968065633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7724,6 +7738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bowController: {fileID: 1287120855}
   winCanvas: {fileID: 1837039804}
+  failCanvas: {fileID: 0}
   gameCanvas: {fileID: 413353296}
   winVfx: {fileID: 198790815957012618, guid: 172998df67304734aaab369580dd9b98, type: 3}
   audioSource: {fileID: 1451289436}
@@ -7736,9 +7751,12 @@ MonoBehaviour:
   - {fileID: 1837039807}
   timeText: {fileID: 1837039806}
   arrowsCountText: {fileID: 1837039805}
+  failTimeText: {fileID: 0}
+  failArrowsCountText: {fileID: 0}
   starTime: 65
   countOfArrowsForStar: 0
   starScaleSpeed: 0.5
+  isFailed: 0
 --- !u!4 &1451289435
 Transform:
   m_ObjectHideFlags: 0
