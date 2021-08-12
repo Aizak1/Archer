@@ -4186,7 +4186,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBurning: 0
-  burnTime: 2
+  burnTime: 1.5
+  burnMaterial: {fileID: 2100000, guid: 22b9dd633dffab645b882b12b237ac38, type: 2}
 --- !u!65 &780532339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5478,6 +5479,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5577,6 +5579,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portals: []
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 477227387bb2fbf46998586410b270d0, type: 2}
 --- !u!1001 &964980717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8262,7 +8277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBurning: 0
-  burnTime: 2
+  burnTime: 1.5
+  burnMaterial: {fileID: 2100000, guid: efd54dd8361cddf4f96bd878e175d5a5, type: 2}
 --- !u!1001 &1461302878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9206,7 +9222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBurning: 0
-  burnTime: 2
+  burnTime: 1.5
+  burnMaterial: {fileID: 2100000, guid: efd54dd8361cddf4f96bd878e175d5a5, type: 2}
 --- !u!65 &1591651742
 BoxCollider:
   m_ObjectHideFlags: 0

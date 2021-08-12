@@ -9,13 +9,17 @@ namespace hittable {
 
         [SerializeField]
         private float burnTime;
-
         private float burnStartTime;
-        private Material material;
+
+        private new MeshRenderer renderer;
+
+        [SerializeField]
+        private Material burnMaterial;
+
+        private const string FIRE_RALETIVE_HEIGHT = "_FireRelativeheight";
 
         private void Start() {
-            var renderer = GetComponent<MeshRenderer>();
-            material = renderer.material;
+            renderer = GetComponent<MeshRenderer>();
         }
 
         private void Update() {
@@ -32,7 +36,7 @@ namespace hittable {
 
             float percent = (time - burnStartTime) / burnTime;
 
-            // use percent for disolve shader;
+            burnMaterial.SetFloat(FIRE_RALETIVE_HEIGHT, 1 - percent);
         }
 
         public void ProcessHit(Arrow arrow) {
@@ -45,8 +49,14 @@ namespace hittable {
                 return;
             }
 
+            Destroy(arrow.gameObject);
+
             burnStartTime = Time.time;
             isBurning = true;
+
+            burnMaterial.SetFloat(FIRE_RALETIVE_HEIGHT, 1);
+
+            renderer.material = burnMaterial;
         }
     }
 }
