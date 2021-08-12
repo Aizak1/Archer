@@ -12,6 +12,8 @@ namespace level {
         [SerializeField]
         private Canvas winCanvas;
         [SerializeField]
+        private Canvas failCanvas;
+        [SerializeField]
         private Canvas gameCanvas;
 
         [SerializeField]
@@ -28,6 +30,10 @@ namespace level {
         private TextMeshProUGUI timeText;
         [SerializeField]
         private TextMeshProUGUI arrowsCountText;
+        [SerializeField]
+        private TextMeshProUGUI failTimeText;
+        [SerializeField]
+        private TextMeshProUGUI failArrowsCountText;
 
         [SerializeField]
         private float starTime;
@@ -43,8 +49,11 @@ namespace level {
         [SerializeField]
         private float starScaleSpeed = 0.5f;
 
+        public bool isFailed;
+
         private void Awake() {
             enemiesCount = FindObjectsOfType<Hittable>().Length;
+            isFailed = false;
             if(countOfArrowsForStar == 0) {
                 countOfArrowsForStar = enemiesCount + 1;
             }
@@ -112,6 +121,21 @@ namespace level {
                 }
 
                 bowController.enabled = false;
+                enabled = false;
+            }
+
+            if (isFailed) {
+
+                if(failCanvas == null || failTimeText == null || failArrowsCountText == null) {
+                    return;
+                }
+
+                failCanvas.enabled = true;
+                failTimeText.text = System.Math.Round(timeSinceStart, 2).ToString();
+                failArrowsCountText.text = bowController.shotsCount.ToString();
+
+                bowController.enabled = false;
+                gameCanvas.enabled = false;
                 enabled = false;
             }
 

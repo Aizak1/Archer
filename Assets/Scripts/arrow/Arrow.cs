@@ -2,6 +2,7 @@ using hittable;
 using portal;
 using ricochet;
 using bow;
+using player;
 using UnityEngine;
 
 namespace arrow {
@@ -143,6 +144,7 @@ namespace arrow {
                     var hittable = hit.collider.GetComponent<Hittable>();
                     var freezable = hit.collider.GetComponent<FreezableObject>();
                     var burnable = hit.collider.GetComponent<BurnableObject>();
+                    var player = hit.collider.GetComponent<Player>();
 
                     if (hittable) {
                         hittable.ProcessHit(this, hit);
@@ -153,6 +155,9 @@ namespace arrow {
                         if (fireVfx) {
                             fireVfx.SetActive(true);
                         }
+                    } else if (player) {
+                        player.ProcessHit(hit);
+
                     } else {
                         bowController.arrowsOnLevel.Enqueue(gameObject);
                     }

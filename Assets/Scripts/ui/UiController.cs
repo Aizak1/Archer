@@ -31,6 +31,7 @@ namespace ui {
         [SerializeField]
         private TextMeshProUGUI timeText;
 
+
         [SerializeField]
         private Texture[] arrowImageTextures;
         [SerializeField]
