@@ -16,19 +16,19 @@ namespace cameraMover {
 
         public void MoveLeft() {
             var transform = Camera.main.transform.position;
-            var vector = new Vector3(transform.x, transform.y, transform.z - step);
+            var pos = new Vector3(transform.x, transform.y, transform.z - step * Time.deltaTime);
 
-            if (vector.z >= startPos.z) {
-                Camera.main.transform.position = vector;
+            if (pos.z >= startPos.z) {
+                Camera.main.transform.position = pos;
             }
         }
 
         public void MoveRight() {
             var transform = Camera.main.transform.position;
-            var vector = new Vector3(transform.x, transform.y, transform.z + step);
+            var pos = new Vector3(transform.x, transform.y, transform.z + step * Time.deltaTime);
 
-            if (vector.z <= maxPos.position.z) {
-                Camera.main.transform.position = vector;
+            if (pos.z <= maxPos.position.z) {
+                Camera.main.transform.position = pos;
             }
         }
     }
