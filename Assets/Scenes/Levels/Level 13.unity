@@ -6065,6 +6065,7 @@ MonoBehaviour:
   bowController: {fileID: 1168934789}
   manualCanvases:
   - {fileID: 453489258}
+  hintController: {fileID: 0}
 --- !u!4 &985063614
 Transform:
   m_ObjectHideFlags: 0
@@ -9211,6 +9212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bowController: {fileID: 1168934789}
   winCanvas: {fileID: 1891742244}
+  failCanvas: {fileID: 0}
   gameCanvas: {fileID: 274291053}
   winVfx: {fileID: 198790815957012618, guid: 172998df67304734aaab369580dd9b98, type: 3}
   audioSource: {fileID: 1451289436}
@@ -9223,9 +9225,12 @@ MonoBehaviour:
   - {fileID: 560850439}
   timeText: {fileID: 1891742249}
   arrowsCountText: {fileID: 1891742248}
+  failTimeText: {fileID: 0}
+  failArrowsCountText: {fileID: 0}
   starTime: 25
   countOfArrowsForStar: 0
   starScaleSpeed: 0.5
+  isFailed: 0
 --- !u!4 &1451289435
 Transform:
   m_ObjectHideFlags: 0
@@ -11401,6 +11406,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 934083566, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565118659, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006796550, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884921936973065367, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2423528970969943449, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -136.3999
@@ -11499,6 +11520,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2423528972027296223, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313979301710754140, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904137081014952052, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
