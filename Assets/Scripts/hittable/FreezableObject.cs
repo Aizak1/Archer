@@ -14,7 +14,7 @@ namespace hittable {
             }
 
             if (arrow.arrowType == ArrowType.Fire) {
-                freezzeController.Unfreeze();
+                freezzeController.UnfreezeDueBurn();
                 return;
             }
         }

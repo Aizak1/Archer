@@ -79,6 +79,11 @@ namespace hittable {
             isFreezeFromStart = false;
         }
 
+        public void UnfreezeDueBurn() {
+            isFreezeFromStart = false;
+            unfreezeTime = Time.time + freezeTime / 2;
+        }
+
         private void OnDestroy() {
             for (int i = 0; i < freezeMaterials.Length; i++) {
                 freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MIN);
