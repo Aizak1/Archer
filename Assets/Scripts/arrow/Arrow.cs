@@ -262,7 +262,6 @@ namespace arrow {
 
             trailRenderer.enabled = true;
             isInAir = true;
-            this.isSplit = isSplit;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
             rigidbody.velocity = velocity;
@@ -271,8 +270,17 @@ namespace arrow {
                 isSplit = false;
             }
 
-            if (isSplit) {
+            this.isSplit = isSplit;
+
+            if (this.isSplit) {
                 splitTime = Time.time + timeBeforeSplit;
+            }
+
+        }
+
+        private void OnDestroy() {
+            if(transform.parent != null) {
+                Destroy(transform.parent.gameObject);
             }
         }
     }

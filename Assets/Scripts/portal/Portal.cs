@@ -152,12 +152,13 @@ namespace portal {
             if (traveller && trackedTravellers.Contains(traveller)) {
                 traveller.ExitPortalThreshold();
                 trackedTravellers.Remove(traveller);
-            }
-            var arrow = traveller.GetComponent<Arrow>();
 
-            if (arrow != null) {
-                arrow.trailRenderer.enabled = true;
-                arrow.isTeleporting = false;
+                var arrow = traveller.GetComponent<Arrow>();
+
+                if (arrow != null) {
+                    arrow.trailRenderer.enabled = true;
+                    arrow.isTeleporting = false;
+                }
             }
         }
 
