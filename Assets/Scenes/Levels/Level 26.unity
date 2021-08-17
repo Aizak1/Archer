@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.4498756, g: 0.49718785, b: 0.5608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: bbc90f27944eb5c4f8c53d8b0f893ada, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ca851dc4455898145ab5d8c1ec754989, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 1d2755e1c23e99b45a93e79fd1fb479f, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -7570,7 +7570,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 934083567, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 934083569, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_Texture
@@ -7578,11 +7578,11 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: ca476951a628f6b4791a9a1743edc0c9, type: 3}
     - target: {fileID: 1565118660, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2006796551, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2006796553, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_Texture
@@ -7594,7 +7594,7 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 8a3626c477293814d8193c29b9584bf2, type: 3}
     - target: {fileID: 2224536343011270917, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2423528970969943451, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -7694,11 +7694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3065878088431750697, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5453237208210738199, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7904137081014952052, guid: 64a6189921bd6224ab7748a55e06c2e5, type: 3}
       propertyPath: m_IsActive
