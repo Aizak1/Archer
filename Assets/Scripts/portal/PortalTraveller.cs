@@ -62,17 +62,6 @@ namespace portal {
             }
         }
 
-        public void SetSliceOffsetDst(float dst, bool clone) {
-            for (int i = 0; i < originalMaterials.Length; i++) {
-                if (clone) {
-                    cloneMaterials[i].SetFloat(Portal.SLICE_OFFSET_DST, dst);
-                } else {
-                    originalMaterials[i].SetFloat(Portal.SLICE_OFFSET_DST, dst);
-                }
-
-            }
-        }
-
         private Material[] GetMaterials(GameObject gameObject) {
             var renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
             var matList = new List<Material>();

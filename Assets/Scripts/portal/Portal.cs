@@ -28,9 +28,9 @@ namespace portal {
         public const string BLUE_PORTAL_TAG = "Blue Portal";
         public const string ORANGE_PORTAL_TAG = "Orange Portal";
 
-        public const string SLICE_CENTER = "sliceCentre";
-        public const string SLICE_NORMAL = "sliceNormal";
-        public const string SLICE_OFFSET_DST = "sliceOffsetDst";
+        public const string SLICE_CENTER = "_MinMax";
+        public const string SLICE_NORMAL = "_V3SliceLocalDirection";
+        public const string SLICE_OFFSET_DST = "_SliceStage";
 
         private List<PortalTraveller> trackedTravellers;
         private PortalCameraRenderer cameraRenderer;
