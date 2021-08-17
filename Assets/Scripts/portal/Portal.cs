@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using arrow;
 
@@ -28,9 +27,8 @@ namespace portal {
         public const string BLUE_PORTAL_TAG = "Blue Portal";
         public const string ORANGE_PORTAL_TAG = "Orange Portal";
 
-        public const string SLICE_CENTER = "_MinMax";
-        public const string SLICE_NORMAL = "_V3SliceLocalDirection";
-        public const string SLICE_OFFSET_DST = "_SliceStage";
+        public const string SLICE_DIRECTION = "_V3SliceLocalDirection";
+        public const string SLICE_STAGE = "_SliceStage";
 
         private List<PortalTraveller> trackedTravellers;
         private PortalCameraRenderer cameraRenderer;
@@ -61,50 +59,42 @@ namespace portal {
 
                 var matrix = linkWorldMatrix * localMatrix * travellerWorldMatrix;
 
-                Vector3 offsetFromPortal = travellerTransform.position - transform.position;
-
                 var pos = matrix.GetColumn(LAST_MATRIX_COLUMN);
                 var rot = matrix.rotation;
                 traveller.graphicsClone.transform.SetPositionAndRotation(pos, rot);
-                traveller.previousOffsetFromPortal = offsetFromPortal;
             }
         }
 
         public void PortalRenderer() {
-            foreach (var traveller in trackedTravellers) {
-                UpdateSliceParams(traveller);
+            for (int i = 0; i < trackedTravellers.Count; i++) {
+                if (trackedTravellers[i]) {
+                    UpdateSliceParams(trackedTravellers[i]);
+                }
             }
         }
 
         private void UpdateSliceParams(PortalTraveller traveller) {
-            int side = traveller.sign;
-            Vector3 sliceNormal = transform.forward * side;
-            Vector3 cloneSliceNormal = linkedPortal.transform.forward * -side;
 
-            Vector3 slicePos = transform.position;
-            Vector3 cloneSlicePos = linkedPortal.transform.position;
+            float dst = (transform.position - traveller.tailTransform.position).magnitude;
+            float stage = dst / traveller.length;
 
-            float sliceOffsetDst = 0;
-            float cloneSliceOffsetDst = 0;
+            if (stage <= 0.8f) {
+                ExitTeleport(traveller);
+                return;
+            }
 
             for (int i = 0; i < traveller.originalMaterials.Length; i++) {
-                traveller.originalMaterials[i].SetVector(SLICE_CENTER, slicePos);
-                traveller.originalMaterials[i].SetVector(SLICE_NORMAL, sliceNormal);
-                traveller.originalMaterials[i].SetFloat(SLICE_OFFSET_DST, sliceOffsetDst);
+                traveller.originalMaterials[i].SetFloat(SLICE_STAGE, stage);
 
-                traveller.cloneMaterials[i].SetVector(SLICE_CENTER, cloneSlicePos);
-                traveller.cloneMaterials[i].SetVector(SLICE_NORMAL, cloneSliceNormal);
-                traveller.cloneMaterials[i].SetFloat(SLICE_OFFSET_DST, cloneSliceOffsetDst);
+                traveller.cloneMaterials[i].SetFloat(SLICE_STAGE, 1 - stage);
             }
         }
 
         private void ProcessTravellerEnterPortal(PortalTraveller traveller) {
             if (!trackedTravellers.Contains(traveller)) {
-                traveller.sign = Math.Sign(Vector3.Dot(traveller.transform.position - transform.position, transform.forward));
                 traveller.EnterPortalThreshold();
-                var offset = traveller.transform.position - transform.position;
-                traveller.previousOffsetFromPortal = offset;
                 trackedTravellers.Add(traveller);
+                PortalRenderer();
             }
         }
 
@@ -150,6 +140,13 @@ namespace portal {
 
         private void ExitTeleport(PortalTraveller traveller) {
             if (traveller && trackedTravellers.Contains(traveller)) {
+
+                for (int i = 0; i < traveller.originalMaterials.Length; i++) {
+                    traveller.originalMaterials[i].SetFloat(SLICE_STAGE, 0);
+
+                    traveller.cloneMaterials[i].SetFloat(SLICE_STAGE, 1);
+                }
+
                 traveller.ExitPortalThreshold();
                 trackedTravellers.Remove(traveller);
 

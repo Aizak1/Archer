@@ -5,11 +5,14 @@ namespace portal {
     public class PortalTraveller : MonoBehaviour {
         public GameObject graphicsObject;
 
-        [HideInInspector]
-        public GameObject graphicsClone;
+        public Transform tipTransform;
+        public Transform tailTransform;
 
         [HideInInspector]
-        public Vector3 previousOffsetFromPortal;
+        public float length;
+
+        [HideInInspector]
+        public GameObject graphicsClone;
 
         [HideInInspector]
         public Material[] originalMaterials;
@@ -20,11 +23,13 @@ namespace portal {
         [HideInInspector]
         public new Rigidbody rigidbody;
 
-        [HideInInspector]
-        public int sign;
+        private Vector3 originalSliceDirection = new Vector3(0, -1, 0);
+        private Vector3 cloneSliceDirection = new Vector3(0, 1, 0);
 
         private void Start() {
             rigidbody = GetComponent<Rigidbody>();
+
+            length = (tipTransform.position - tailTransform.position).magnitude;
         }
 
         public void Teleport(Transform portal, Transform toPortal, Vector3 pos, Quaternion rot) {
@@ -50,6 +55,11 @@ namespace portal {
                 graphicsClone.transform.localScale = graphicsObject.transform.localScale;
                 originalMaterials = GetMaterials(graphicsObject);
                 cloneMaterials = GetMaterials(graphicsClone);
+
+                for (int i = 0; i < originalMaterials.Length; i++) {
+                    originalMaterials[i].SetVector(Portal.SLICE_DIRECTION, originalSliceDirection);
+                    cloneMaterials[i].SetVector(Portal.SLICE_DIRECTION, cloneSliceDirection);
+                }
             } else {
                 graphicsClone.SetActive(true);
             }
@@ -58,7 +68,7 @@ namespace portal {
         public virtual void ExitPortalThreshold() {
             graphicsClone.SetActive(false);
             for (int i = 0; i < originalMaterials.Length; i++) {
-                originalMaterials[i].SetVector(Portal.SLICE_NORMAL, Vector3.zero);
+                originalMaterials[i].SetVector(Portal.SLICE_DIRECTION, Vector3.zero);
             }
         }
 
