@@ -36,11 +36,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaClipTreshold2: 0.01
+    - _AlphaCutoff: 0.5
     - _TrashHold2: 0.446
     - __dirty: 0
     m_Colors:
     - _Color: {r: 0.0013864839, g: 0.016551152, b: 0.015857909, a: 1}
     - _Color02: {r: 0.3513666, g: 1.0090528, b: 1.7207954, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _color1: {r: 0, g: 0, b: 0, a: 0}
     - _color2: {r: 0, g: 0, b: 0, a: 0}
     - _colorMasin2: {r: 2.433572, g: 2.433572, b: 0, a: 1}

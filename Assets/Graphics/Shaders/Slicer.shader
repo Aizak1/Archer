@@ -1,16 +1,18 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "RotateParticle"
+Shader "Slicer"
 {
 	Properties
 	{
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
-		[ASEBegin]_TextureSample0("Texture Sample 0", 2D) = "white" {}
-		[HDR]_color2("color2", Color) = (0,0,0,0)
-		[HDR]_color1("color1", Color) = (0,0,0,0)
-		_AlphaClipTreshold2("AlphaClipTreshold", Range( 0 , 1)) = 0
-		[ASEEnd][Toggle(_WITHEMISOION1_ON)] _WithEmisoion1("WithEmiso\ion", Float) = 0
+		[ASEBegin]_V3SliceLocalDirection("V3SliceLocalDirection", Vector) = (0,0,0,0)
+		_SliceStage("SliceStage", Range( 0 , 1)) = 0
+		_TextureSample0("Texture Sample 0", 2D) = "white" {}
+		_MinMax("MinMax", Vector) = (0,0,0,0)
+		[Toggle(_USECOLOR_ON)] _UseColor("UseColor", Float) = 0
+		[ASEEnd][HDR]_AlbedoColor("AlbedoColor", Color) = (0,0,0,0)
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
 		//_TransStrength( "Trans Strength", Range( 0, 50 ) ) = 1
@@ -34,7 +36,7 @@ Shader "RotateParticle"
 		
 
 		Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
-		Cull Back
+		Cull Off
 		AlphaToMask Off
 		HLSLINCLUDE
 		#pragma target 2.0
@@ -167,7 +169,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -205,7 +206,8 @@ Shader "RotateParticle"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#pragma shader_feature_local _WITHEMISOION1_ON
+			#define ASE_NEEDS_FRAG_POSITION
+			#pragma shader_feature_local _USECOLOR_ON
 
 
 			struct VertexInput
@@ -234,14 +236,17 @@ Shader "RotateParticle"
 				float4 screenPos : TEXCOORD6;
 				#endif
 				float4 ase_texcoord7 : TEXCOORD7;
+				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -265,27 +270,7 @@ Shader "RotateParticle"
 			sampler2D _TextureSample0;
 
 
-			//https://www.shadertoy.com/view/XdXGW8
-			float2 GradientNoiseDir( float2 x )
-			{
-				const float2 k = float2( 0.3183099, 0.3678794 );
-				x = x * k + k.yx;
-				return -1.0 + 2.0 * frac( 16.0 * k * frac( x.x * x.y * ( x.x + x.y ) ) );
-			}
 			
-			float GradientNoise( float2 UV, float Scale )
-			{
-				float2 p = UV * Scale;
-				float2 i = floor( p );
-				float2 f = frac( p );
-				float2 u = f * f * ( 3.0 - 2.0 * f );
-				return lerp( lerp( dot( GradientNoiseDir( i + float2( 0.0, 0.0 ) ), f - float2( 0.0, 0.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 0.0 ) ), f - float2( 1.0, 0.0 ) ), u.x ),
-						lerp( dot( GradientNoiseDir( i + float2( 0.0, 1.0 ) ), f - float2( 0.0, 1.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 1.0 ) ), f - float2( 1.0, 1.0 ) ), u.x ), u.y );
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -294,6 +279,7 @@ Shader "RotateParticle"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord7.xy = v.texcoord.xy;
+				o.ase_texcoord8 = v.vertex;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.zw = 0;
@@ -482,32 +468,25 @@ Shader "RotateParticle"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 texCoord2 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
-				float2 texCoord7 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float gradientNoise5 = GradientNoise(texCoord7,10.0);
-				gradientNoise5 = gradientNoise5*0.5 + 0.5;
-				float4 lerpResult10 = lerp( _color2 , _color1 , gradientNoise5);
-				float4 temp_output_11_0 = ( tex2DNode4 * lerpResult10 );
-				
-				#ifdef _WITHEMISOION1_ON
-				float4 staticSwitch21 = temp_output_11_0;
+				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				#ifdef _USECOLOR_ON
+				float4 staticSwitch36 = _AlbedoColor;
 				#else
-				float4 staticSwitch21 = float4( 0,0,0,0 );
+				float4 staticSwitch36 = tex2D( _TextureSample0, uv_TextureSample0 );
 				#endif
 				
-				float3 Albedo = temp_output_11_0.rgb;
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord8.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord8.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord8.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
+				
+				float3 Albedo = staticSwitch36.rgb;
 				float3 Normal = float3(0, 0, 1);
-				float3 Emission = staticSwitch21.rgb;
+				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -678,7 +657,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -693,13 +671,14 @@ Shader "RotateParticle"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -718,9 +697,11 @@ Shader "RotateParticle"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -741,8 +722,7 @@ Shader "RotateParticle"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _TextureSample0;
-
+			
 
 			
 			float3 _LightDirection;
@@ -754,10 +734,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				o.ase_texcoord2.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord2.zw = 0;
+				o.ase_texcoord2 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -800,8 +777,7 @@ Shader "RotateParticle"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -818,7 +794,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				
 				return o;
 			}
 
@@ -857,7 +833,7 @@ Shader "RotateParticle"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -903,14 +879,11 @@ Shader "RotateParticle"
 					#endif
 				#endif
 
-				float2 texCoord2 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord2.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord2.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord2.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
 				
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 				float AlphaClipThresholdShadow = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -954,7 +927,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -969,13 +941,14 @@ Shader "RotateParticle"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -994,9 +967,11 @@ Shader "RotateParticle"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1017,8 +992,7 @@ Shader "RotateParticle"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _TextureSample0;
-
+			
 
 			
 			VertexOutput VertexFunction( VertexInput v  )
@@ -1028,10 +1002,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord2.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord2.zw = 0;
+				o.ase_texcoord2 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1067,8 +1038,7 @@ Shader "RotateParticle"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1085,7 +1055,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				
 				return o;
 			}
 
@@ -1124,7 +1094,7 @@ Shader "RotateParticle"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1169,14 +1139,11 @@ Shader "RotateParticle"
 					#endif
 				#endif
 
-				float2 texCoord2 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord2.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord2.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord2.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
 				
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
 				#endif
@@ -1213,7 +1180,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -1228,7 +1194,8 @@ Shader "RotateParticle"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			#pragma shader_feature_local _WITHEMISOION1_ON
+			#define ASE_NEEDS_FRAG_POSITION
+			#pragma shader_feature_local _USECOLOR_ON
 
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -1253,14 +1220,17 @@ Shader "RotateParticle"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1284,27 +1254,7 @@ Shader "RotateParticle"
 			sampler2D _TextureSample0;
 
 
-			//https://www.shadertoy.com/view/XdXGW8
-			float2 GradientNoiseDir( float2 x )
-			{
-				const float2 k = float2( 0.3183099, 0.3678794 );
-				x = x * k + k.yx;
-				return -1.0 + 2.0 * frac( 16.0 * k * frac( x.x * x.y * ( x.x + x.y ) ) );
-			}
 			
-			float GradientNoise( float2 UV, float Scale )
-			{
-				float2 p = UV * Scale;
-				float2 i = floor( p );
-				float2 f = frac( p );
-				float2 u = f * f * ( 3.0 - 2.0 * f );
-				return lerp( lerp( dot( GradientNoiseDir( i + float2( 0.0, 0.0 ) ), f - float2( 0.0, 0.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 0.0 ) ), f - float2( 1.0, 0.0 ) ), u.x ),
-						lerp( dot( GradientNoiseDir( i + float2( 0.0, 1.0 ) ), f - float2( 0.0, 1.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 1.0 ) ), f - float2( 1.0, 1.0 ) ), u.x ), u.y );
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1313,6 +1263,7 @@ Shader "RotateParticle"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
+				o.ase_texcoord3 = v.vertex;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord2.zw = 0;
@@ -1450,28 +1401,21 @@ Shader "RotateParticle"
 					#endif
 				#endif
 
-				float2 texCoord2 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
-				float2 texCoord7 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float gradientNoise5 = GradientNoise(texCoord7,10.0);
-				gradientNoise5 = gradientNoise5*0.5 + 0.5;
-				float4 lerpResult10 = lerp( _color2 , _color1 , gradientNoise5);
-				float4 temp_output_11_0 = ( tex2DNode4 * lerpResult10 );
-				
-				#ifdef _WITHEMISOION1_ON
-				float4 staticSwitch21 = temp_output_11_0;
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				#ifdef _USECOLOR_ON
+				float4 staticSwitch36 = _AlbedoColor;
 				#else
-				float4 staticSwitch21 = float4( 0,0,0,0 );
+				float4 staticSwitch36 = tex2D( _TextureSample0, uv_TextureSample0 );
 				#endif
 				
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord3.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord3.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord3.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
 				
-				float3 Albedo = temp_output_11_0.rgb;
-				float3 Emission = staticSwitch21.rgb;
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				
+				float3 Albedo = staticSwitch36.rgb;
+				float3 Emission = 0;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 
 				#ifdef _ALPHATEST_ON
 					clip(Alpha - AlphaClipThreshold);
@@ -1506,7 +1450,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -1522,7 +1465,9 @@ Shader "RotateParticle"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			
-			
+			#define ASE_NEEDS_FRAG_POSITION
+			#pragma shader_feature_local _USECOLOR_ON
+
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1544,14 +1489,17 @@ Shader "RotateParticle"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1575,27 +1523,7 @@ Shader "RotateParticle"
 			sampler2D _TextureSample0;
 
 
-			//https://www.shadertoy.com/view/XdXGW8
-			float2 GradientNoiseDir( float2 x )
-			{
-				const float2 k = float2( 0.3183099, 0.3678794 );
-				x = x * k + k.yx;
-				return -1.0 + 2.0 * frac( 16.0 * k * frac( x.x * x.y * ( x.x + x.y ) ) );
-			}
 			
-			float GradientNoise( float2 UV, float Scale )
-			{
-				float2 p = UV * Scale;
-				float2 i = floor( p );
-				float2 f = frac( p );
-				float2 u = f * f * ( 3.0 - 2.0 * f );
-				return lerp( lerp( dot( GradientNoiseDir( i + float2( 0.0, 0.0 ) ), f - float2( 0.0, 0.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 0.0 ) ), f - float2( 1.0, 0.0 ) ), u.x ),
-						lerp( dot( GradientNoiseDir( i + float2( 0.0, 1.0 ) ), f - float2( 0.0, 1.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 1.0 ) ), f - float2( 1.0, 1.0 ) ), u.x ), u.y );
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1604,6 +1532,7 @@ Shader "RotateParticle"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
+				o.ase_texcoord3 = v.vertex;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord2.zw = 0;
@@ -1738,21 +1667,20 @@ Shader "RotateParticle"
 					#endif
 				#endif
 
-				float2 texCoord2 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
-				float2 texCoord7 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float gradientNoise5 = GradientNoise(texCoord7,10.0);
-				gradientNoise5 = gradientNoise5*0.5 + 0.5;
-				float4 lerpResult10 = lerp( _color2 , _color1 , gradientNoise5);
-				float4 temp_output_11_0 = ( tex2DNode4 * lerpResult10 );
+				float2 uv_TextureSample0 = IN.ase_texcoord2.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				#ifdef _USECOLOR_ON
+				float4 staticSwitch36 = _AlbedoColor;
+				#else
+				float4 staticSwitch36 = tex2D( _TextureSample0, uv_TextureSample0 );
+				#endif
+				
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord3.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord3.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord3.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
 				
 				
-				float3 Albedo = temp_output_11_0.rgb;
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float3 Albedo = staticSwitch36.rgb;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 
 				half4 color = half4( Albedo, Alpha );
 
@@ -1784,7 +1712,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -1799,13 +1726,14 @@ Shader "RotateParticle"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1825,9 +1753,11 @@ Shader "RotateParticle"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1848,8 +1778,7 @@ Shader "RotateParticle"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _TextureSample0;
-
+			
 
 			
 			VertexOutput VertexFunction( VertexInput v  )
@@ -1859,10 +1788,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				o.ase_texcoord3.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord3.zw = 0;
+				o.ase_texcoord3 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1901,8 +1827,7 @@ Shader "RotateParticle"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1919,7 +1844,7 @@ Shader "RotateParticle"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				o.ase_texcoord = v.ase_texcoord;
+				
 				return o;
 			}
 
@@ -1958,7 +1883,7 @@ Shader "RotateParticle"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2003,14 +1928,11 @@ Shader "RotateParticle"
 					#endif
 				#endif
 
-				float2 texCoord2 = IN.ase_texcoord3.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord3.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord3.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord3.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
 				
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
 				#endif
@@ -2053,7 +1975,6 @@ Shader "RotateParticle"
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
-			#define _EMISSION
 			#define _ALPHATEST_ON 1
 			#define ASE_SRP_VERSION 100500
 
@@ -2089,7 +2010,8 @@ Shader "RotateParticle"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#pragma shader_feature_local _WITHEMISOION1_ON
+			#define ASE_NEEDS_FRAG_POSITION
+			#pragma shader_feature_local _USECOLOR_ON
 
 
 			struct VertexInput
@@ -2118,14 +2040,17 @@ Shader "RotateParticle"
 				float4 screenPos : TEXCOORD6;
 				#endif
 				float4 ase_texcoord7 : TEXCOORD7;
+				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _color2;
-			float4 _color1;
-			float _AlphaClipTreshold2;
+			float4 _TextureSample0_ST;
+			float4 _AlbedoColor;
+			float3 _V3SliceLocalDirection;
+			float2 _MinMax;
+			float _SliceStage;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -2149,27 +2074,7 @@ Shader "RotateParticle"
 			sampler2D _TextureSample0;
 
 
-			//https://www.shadertoy.com/view/XdXGW8
-			float2 GradientNoiseDir( float2 x )
-			{
-				const float2 k = float2( 0.3183099, 0.3678794 );
-				x = x * k + k.yx;
-				return -1.0 + 2.0 * frac( 16.0 * k * frac( x.x * x.y * ( x.x + x.y ) ) );
-			}
 			
-			float GradientNoise( float2 UV, float Scale )
-			{
-				float2 p = UV * Scale;
-				float2 i = floor( p );
-				float2 f = frac( p );
-				float2 u = f * f * ( 3.0 - 2.0 * f );
-				return lerp( lerp( dot( GradientNoiseDir( i + float2( 0.0, 0.0 ) ), f - float2( 0.0, 0.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 0.0 ) ), f - float2( 1.0, 0.0 ) ), u.x ),
-						lerp( dot( GradientNoiseDir( i + float2( 0.0, 1.0 ) ), f - float2( 0.0, 1.0 ) ),
-						dot( GradientNoiseDir( i + float2( 1.0, 1.0 ) ), f - float2( 1.0, 1.0 ) ), u.x ), u.y );
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2178,6 +2083,7 @@ Shader "RotateParticle"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord7.xy = v.texcoord.xy;
+				o.ase_texcoord8 = v.vertex;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.zw = 0;
@@ -2365,32 +2271,25 @@ Shader "RotateParticle"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 texCoord2 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float cos3 = cos( _TimeParameters.y );
-				float sin3 = sin( _TimeParameters.y );
-				float2 rotator3 = mul( texCoord2 - float2( 0.5,0.5 ) , float2x2( cos3 , -sin3 , sin3 , cos3 )) + float2( 0.5,0.5 );
-				float4 tex2DNode4 = tex2D( _TextureSample0, rotator3 );
-				float2 texCoord7 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
-				float gradientNoise5 = GradientNoise(texCoord7,10.0);
-				gradientNoise5 = gradientNoise5*0.5 + 0.5;
-				float4 lerpResult10 = lerp( _color2 , _color1 , gradientNoise5);
-				float4 temp_output_11_0 = ( tex2DNode4 * lerpResult10 );
-				
-				#ifdef _WITHEMISOION1_ON
-				float4 staticSwitch21 = temp_output_11_0;
+				float2 uv_TextureSample0 = IN.ase_texcoord7.xy * _TextureSample0_ST.xy + _TextureSample0_ST.zw;
+				#ifdef _USECOLOR_ON
+				float4 staticSwitch36 = _AlbedoColor;
 				#else
-				float4 staticSwitch21 = float4( 0,0,0,0 );
+				float4 staticSwitch36 = tex2D( _TextureSample0, uv_TextureSample0 );
 				#endif
 				
-				float3 Albedo = temp_output_11_0.rgb;
+				float3 _localCenter = float3(0,0,0);
+				float temp_output_29_0 = ( ( ( ( _V3SliceLocalDirection.x * IN.ase_texcoord8.xyz.x ) + ( _V3SliceLocalDirection.y * IN.ase_texcoord8.xyz.y ) + ( _V3SliceLocalDirection.z * IN.ase_texcoord8.xyz.z ) ) - ( ( _localCenter.x * _V3SliceLocalDirection.x ) + ( _localCenter.y * _V3SliceLocalDirection.y ) + ( _localCenter.z * _V3SliceLocalDirection.z ) ) ) / sqrt( ( pow( _V3SliceLocalDirection.x , 2.0 ) + pow( _V3SliceLocalDirection.y , 2.0 ) + pow( _V3SliceLocalDirection.z , 2.0 ) ) ) );
+				
+				float3 Albedo = staticSwitch36.rgb;
 				float3 Normal = float3(0, 0, 1);
-				float3 Emission = staticSwitch21.rgb;
+				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
 				float Occlusion = 1;
-				float Alpha = tex2DNode4.a;
-				float AlphaClipThreshold = _AlphaClipTreshold2;
+				float Alpha = (0.0 + (temp_output_29_0 - _MinMax.x) * (1.0 - 0.0) / (_MinMax.y - _MinMax.x));
+				float AlphaClipThreshold = _SliceStage;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -2544,42 +2443,77 @@ Shader "RotateParticle"
 }
 /*ASEBEGIN
 Version=18912
-1913;19;1920;970;1144.616;327.2179;1.199437;True;True
-Node;AmplifyShaderEditor.Vector2Node;6;-946.5193,573.4807;Inherit;False;Constant;_Vector0;Vector 0;1;0;Create;True;0;0;0;False;0;False;1,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
-Node;AmplifyShaderEditor.SinTimeNode;1;-1112,230;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TextureCoordinatesNode;2;-1198.501,92;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TextureCoordinatesNode;7;-771.0842,568.9818;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RotatorNode;3;-884,-19;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;2;FLOAT;1;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.NoiseGeneratorNode;5;-550.6673,561.4847;Inherit;True;Gradient;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;10;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;8;-547.6669,104.157;Inherit;False;Property;_color2;color2;1;1;[HDR];Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;9;-537.1711,288.5878;Inherit;False;Property;_color1;color1;2;1;[HDR];Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.LerpOp;10;-241.7822,201.6204;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;4;-551.9877,-99.49718;Inherit;True;Property;_TextureSample0;Texture Sample 0;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;11;-105.3335,-36.79018;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;20;-239.0414,338.4698;Inherit;False;Property;_AlphaClipTreshold2;AlphaClipTreshold;3;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.StaticSwitch;21;30.83228,121.3716;Inherit;False;Property;_WithEmisoion1;WithEmiso\ion;4;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;19;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;12;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;14;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;15;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;16;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;17;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;18;157.4409,19.49268;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;13;343.3535,95.05723;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;RotateParticle;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;1;Built-in Fog;1;_FinalColorxAlpha;0;Meta Pass;1;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;True;True;True;True;False;;False;0
-WireConnection;7;0;6;0
-WireConnection;3;0;2;0
-WireConnection;3;2;1;4
-WireConnection;5;0;7;0
-WireConnection;10;0;8;0
-WireConnection;10;1;9;0
-WireConnection;10;2;5;0
-WireConnection;4;1;3;0
-WireConnection;11;0;4;0
-WireConnection;11;1;10;0
-WireConnection;21;0;11;0
-WireConnection;13;0;11;0
-WireConnection;13;2;21;0
-WireConnection;13;6;4;4
-WireConnection;13;7;20;0
+1913;79;1920;940;1184.277;641.9073;1.012407;True;True
+Node;AmplifyShaderEditor.Vector3Node;8;-1945.041,-135.726;Inherit;False;Property;_V3SliceLocalDirection;V3SliceLocalDirection;0;0;Create;True;0;0;0;False;0;False;0,0,0;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.Vector3Node;33;-1560.807,206.4271;Inherit;False;Constant;_localCenter;localCenter;4;0;Create;True;0;0;0;False;0;False;0,0,0;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.PosVertexDataNode;10;-1589.852,-430.6051;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PowerNode;24;-1562.644,470.951;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;21;-1218.26,297.7059;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;-1208.311,-396.2268;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-1200.134,-275.6091;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-1222.171,70.2149;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;-1213.993,190.8327;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;17;-1204.4,-168.7355;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;25;-1552.244,580.1506;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PowerNode;26;-1552.243,686.7506;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;2;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;22;-1041.341,175.8512;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;27;-1327.344,598.3506;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;18;-984.1407,-241.4488;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;23;-796.9413,36.75135;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SqrtOpNode;28;-1123.243,637.3507;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;37;-604.1682,-261.2425;Inherit;False;Property;_AlbedoColor;AlbedoColor;5;1;[HDR];Create;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;31;-601.4595,-556.1884;Inherit;True;Property;_TextureSample0;Texture Sample 0;2;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleDivideOpNode;29;-613.4841,131.427;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector2Node;35;-460.1588,227.4773;Inherit;False;Property;_MinMax;MinMax;3;0;Create;True;0;0;0;False;0;False;0,0;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.StaticSwitch;36;-204.5471,-139.3475;Inherit;False;Property;_UseColor;UseColor;4;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TFHCRemapNode;34;-254.8069,148.4271;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;-10;False;2;FLOAT;10;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;9;-446.4476,520.4927;Inherit;False;Property;_SliceStage;SliceStage;1;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.OneMinusNode;30;-457.2124,41.90184;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;-432.7007,125.1839;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;247.3636,52.17481;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;Slicer;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;0;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;1;Built-in Fog;1;_FinalColorxAlpha;0;Meta Pass;1;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+WireConnection;24;0;8;1
+WireConnection;21;0;33;3
+WireConnection;21;1;8;3
+WireConnection;15;0;8;1
+WireConnection;15;1;10;1
+WireConnection;16;0;8;2
+WireConnection;16;1;10;2
+WireConnection;19;0;33;1
+WireConnection;19;1;8;1
+WireConnection;20;0;33;2
+WireConnection;20;1;8;2
+WireConnection;17;0;8;3
+WireConnection;17;1;10;3
+WireConnection;25;0;8;2
+WireConnection;26;0;8;3
+WireConnection;22;0;19;0
+WireConnection;22;1;20;0
+WireConnection;22;2;21;0
+WireConnection;27;0;24;0
+WireConnection;27;1;25;0
+WireConnection;27;2;26;0
+WireConnection;18;0;15;0
+WireConnection;18;1;16;0
+WireConnection;18;2;17;0
+WireConnection;23;0;18;0
+WireConnection;23;1;22;0
+WireConnection;28;0;27;0
+WireConnection;29;0;23;0
+WireConnection;29;1;28;0
+WireConnection;36;1;31;0
+WireConnection;36;0;37;0
+WireConnection;34;0;29;0
+WireConnection;34;1;35;1
+WireConnection;34;2;35;2
+WireConnection;30;0;29;0
+WireConnection;1;0;36;0
+WireConnection;1;6;34;0
+WireConnection;1;7;9;0
 ASEEND*/
-//CHKSM=E780667D36E018A1E56D642543496052DABACB42
+//CHKSM=C966A192915F1E010773B4CBF180DFA6BE5E847A

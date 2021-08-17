@@ -81,6 +81,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2078342643486852851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8242155233305249942}
+  m_Layer: 7
+  m_Name: Tail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8242155233305249942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078342643486852851}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.419, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1697390544516043553}
+  m_Father: {fileID: 8623957444106179151}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3991164316996165318
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +189,7 @@ MonoBehaviour:
   mainVfx: {fileID: 6473104081027419459}
   hitVfx: {fileID: 0}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
+  fireVfx: {fileID: 0}
   audioSource: {fileID: 4635934901314551946}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
@@ -302,12 +334,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsObject: {fileID: 5436353624406495219}
+  tipTransform: {fileID: 8386148805111352677}
+  tailTransform: {fileID: 8242155233305249942}
+  length: 0
   graphicsClone: {fileID: 0}
-  previousOffsetFromPortal: {x: 0, y: 0, z: 0}
   originalMaterials: []
   cloneMaterials: []
   rigidbody: {fileID: 0}
-  sign: 0
 --- !u!1 &5436353624406495219
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +401,7 @@ Transform:
   m_Children:
   - {fileID: 8371234334440448612}
   - {fileID: 8386148805111352677}
-  - {fileID: 1697390544516043553}
+  - {fileID: 8242155233305249942}
   m_Father: {fileID: 2867812205106916632}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -383,7 +416,7 @@ GameObject:
   - component: {fileID: 1697390544516043553}
   - component: {fileID: 2744344632471690294}
   m_Layer: 7
-  m_Name: Tail
+  m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,12 +429,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5998963918309470339}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.291, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8623957444106179151}
-  m_RootOrder: 2
+  m_Father: {fileID: 8242155233305249942}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &2744344632471690294
 TrailRenderer:

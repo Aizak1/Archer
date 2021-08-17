@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: ProjectileMain
   m_Shader: {fileID: 4800000, guid: 77153566431cee643a21e63260de1bb7, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _WITHEMISOION1_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -36,13 +36,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _TrashHold2: 0.497
+    - _AlphaClipTreshold2: 0.1
+    - _AlphaCutoff: 0.5
+    - _TrashHold2: 0.558
+    - _WithEmisoion1: 1
     - __dirty: 0
     m_Colors:
     - _Color: {r: 0.0013864839, g: 0.016551152, b: 0.015857909, a: 1}
     - _Color02: {r: 0.3513666, g: 1.0090528, b: 1.7207954, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _color1: {r: 0, g: 0, b: 0, a: 0}
     - _color2: {r: 0, g: 0, b: 0, a: 0}
-    - _colorMasin2: {r: 1.4635813, g: 6.791017, b: 11.181761, a: 1}
-    - _secondary2: {r: 0.1302005, g: 1.0578368, b: 3.0669465, a: 1}
+    - _colorMasin2: {r: 1.5221245, g: 6.791017, b: 11.181761, a: 1}
+    - _secondary2: {r: 0, g: 2.3443835, b: 12.38446, a: 1}
   m_BuildTextureStacks: []
