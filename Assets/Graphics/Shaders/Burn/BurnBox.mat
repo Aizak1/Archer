@@ -68,6 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _BackFaseColor: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -92,6 +93,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
+    - _alphaTreshold: 0.5
     - _fireDestorsionByheight: 6.59
     m_Colors:
     - _BackFaceColor: {r: 4, g: 2.054902, b: 0, a: 1}

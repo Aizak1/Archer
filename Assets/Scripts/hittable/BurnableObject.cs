@@ -41,7 +41,7 @@ namespace hittable {
 
             float percent = (time - burnStartTime) / burnTime;
 
-            burnCotroller.animationStage = percent;
+            burnCotroller.animationStage = 1 -  percent;
         }
 
         public void ProcessHit(Arrow arrow) {

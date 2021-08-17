@@ -10,7 +10,7 @@ Material:
   m_Name: Barrel outline
   m_Shader: {fileID: 4800000, guid: e3d76a5bba2449545992a087c669da6b, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -28,8 +28,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _FresnelPower: 2.53
     - __dirty: 0
     m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 2.6390157, g: 0.9521155, b: 0, a: 1}
   m_BuildTextureStacks: []

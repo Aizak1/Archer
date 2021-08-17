@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Particle1
-  m_Shader: {fileID: 4800000, guid: 76be0a0a7cff5f442b6beaa3bab3713f, type: 3}
+  m_Shader: {fileID: 4800000, guid: dee64650c181db541b1c3c7f2c0a7aad, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -64,6 +64,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaClipTreshold: 0.015
+    - _AlphaCutoff: 0.5
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -80,6 +82,7 @@ Material:
     - _SrcBlend: 1
     - _TrashHold: 0.268
     - _UVSec: 0
+    - _WithEmisoion: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:

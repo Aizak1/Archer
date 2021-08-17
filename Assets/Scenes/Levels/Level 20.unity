@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641573, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.45104998, g: 0.5008844, b: 0.57420504, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3796,8 +3796,8 @@ MonoBehaviour:
   animationStage: 1
   emisionMyltiplier: 20
   isMoveEmitor: 1
-  startPosition: {x: 0, y: 0, z: -0.625}
-  endPosition: {x: 0, y: 0, z: 0.625}
+  startPosition: {x: 0, y: 0, z: 0.625}
+  endPosition: {x: 0, y: 0, z: -0.625}
 --- !u!23 &1620376406 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 23632355988759734, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
@@ -4946,8 +4946,8 @@ MonoBehaviour:
   animationStage: 1
   emisionMyltiplier: 20
   isMoveEmitor: 1
-  startPosition: {x: 0, y: 0.317, z: 0}
-  endPosition: {x: 0, y: -0.317, z: 0}
+  startPosition: {x: 0, y: -0.317, z: 0}
+  endPosition: {x: 0, y: 0.317, z: 0}
 --- !u!23 &1699223458 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2370020, guid: de2803cb1c5b5d448acfa608090e0942, type: 3}

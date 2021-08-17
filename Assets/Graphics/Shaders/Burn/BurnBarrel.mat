@@ -28,19 +28,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _BackFaseColor: 1
     - _DisolbeGap: 0.309
-    - _FireGap: 0.259
-    - _FireRelativeheight: 0.002231121
+    - _FireGap: 0.27
+    - _FireRelativeheight: 0.222
     - _HiestYposition: 0.9
     - _IsLocal: 1
     - _LowestYPos: -0.1
     - _NoizeTreshhold: 0.392
     - _Smothness: 0.122
     - __dirty: 0
-    - _fireDestorsionByheight: 6.59
+    - _alphaTreshold: 0.5
+    - _fireDestorsionByheight: 6.35
     m_Colors:
     - _BackFaceColor: {r: 4, g: 2.054902, b: 0, a: 1}
     - _DesolveColor: {r: 4, g: 1.8779944, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
