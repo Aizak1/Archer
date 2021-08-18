@@ -40,10 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaClipTreshold: 0.1
+    - _AlphaClipTreshold: 0.279
     - _AlphaCutoff: 0.5
     - _Float0: 0.341
-    - _TrashHold: 0.211
+    - _TrashHold: 0.894
+    - _WithEmisoion: 0
     - __dirty: 0
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
@@ -51,6 +52,6 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _color1: {r: 0, g: 2.0090961, b: 2.297397, a: 1}
     - _color2: {r: 0.00072839664, g: 0.0023517373, b: 0.002176629, a: 1}
-    - _colorMasin: {r: 0.6724853, g: 10.894262, b: 12.844469, a: 1}
-    - _secondary: {r: 0, g: 2.3443835, b: 12.38446, a: 1}
+    - _colorMasin: {r: 0.40784314, g: 1.8196079, b: 2.9960785, a: 1}
+    - _secondary: {r: 0, g: 1.9366646, b: 9.734288, a: 1}
   m_BuildTextureStacks: []
