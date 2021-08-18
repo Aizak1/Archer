@@ -52,10 +52,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaClipTeshold: 0.386
+    - _AlphaClipTeshold: 0.1
     - _AlphaCutoff: 0.5
     - _Cutoff: 0.94
-    - _DisolveTreshold: 0.1
+    - _DisolveTreshold: 0.05
     - _DistorsionPower: 1.67
     - _Float0: 0
     - _InvFade: 0.83
@@ -65,19 +65,19 @@ Material:
     - _OpcaityMultiply: 3.25
     - _SpeedX: 0.8
     - _SpeedY: 0
-    - _VoronoiDensity: 0.45
-    - _VoronoiScale: 0.48
+    - _VoronoiDensity: 3.5
+    - _VoronoiScale: 1
     - _WithEmisoion: 0
     - __dirty: 0
     - _offsetRange: -0.74
-    - _offsetRange1: 0
+    - _offsetRange1: 0.15
     - _qweqweqweqwe: 28.73
-    - _twistStrength: 4.2
+    - _twistStrength: 8
     m_Colors:
     - _CenterTwirl: {r: 1.5, g: 1.5, b: 0, a: 0}
     - _CenterTwirl1: {r: 0.45, g: 0.45, b: 0, a: 0}
     - _Color1: {r: 0.8207547, g: 0.26713243, b: 0.26713243, a: 0.41960785}
-    - _DisolveColor: {r: 239.09435, g: 61.33834, b: 0, a: 1}
+    - _DisolveColor: {r: 766.9961, g: 196.76863, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _FrenelsColor: {r: 0, g: 0.11963703, b: 1.7411011, a: 1}
     - _NoizeColor: {r: 20.38594, g: 13.76051, b: 2.6501722, a: 1}
