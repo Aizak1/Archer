@@ -668,6 +668,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 10895502, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: m_Range
+      value: 0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 10895502, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 19820746, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
       propertyPath: InitialModule.startSizeY.minMaxState
       value: 3
@@ -2874,7 +2882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1073632516
 Transform:
   m_ObjectHideFlags: 0

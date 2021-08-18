@@ -2309,6 +2309,22 @@ PrefabInstance:
       propertyPath: m_Range
       value: 1.44
       objectReference: {fileID: 0}
+    - target: {fileID: 10895502, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: m_Intensity
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 10895502, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19820746, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19820746, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6ec9fa16bc3f3047ae2227e7dfa36fd, type: 3}
 --- !u!4 &380709368 stripped
@@ -5522,7 +5538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568939754381720, guid: 0aae23549399ae240aa3fcaf1b7ae6b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.955
+      value: -11.938005
       objectReference: {fileID: 0}
     - target: {fileID: 4568939754381720, guid: 0aae23549399ae240aa3fcaf1b7ae6b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6949,7 +6965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568939754381720, guid: 0aae23549399ae240aa3fcaf1b7ae6b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.977
+      value: -18.96
       objectReference: {fileID: 0}
     - target: {fileID: 4568939754381720, guid: 0aae23549399ae240aa3fcaf1b7ae6b0, type: 3}
       propertyPath: m_LocalRotation.w
