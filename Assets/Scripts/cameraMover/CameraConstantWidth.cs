@@ -27,9 +27,7 @@ namespace cameraMover {
 
             initialFov = componentCamera.fieldOfView;
             horizontalFov = CalcVerticalFov(initialFov, 1 / targetAspect);
-        }
 
-        private void Update() {
             if (componentCamera.orthographic) {
                 float constantWidthSize = initialSize * (targetAspect / componentCamera.aspect);
                 var size = Mathf.Lerp(constantWidthSize, initialSize, widthOrHeight);
@@ -50,4 +48,3 @@ namespace cameraMover {
         }
     }
 }
-

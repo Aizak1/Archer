@@ -29,73 +29,68 @@ namespace ui {
         }
 
         private void Update() {
-            if (Input.GetMouseButton(0) && bowController && bowController.instantiatedArrow) {
-
-                if (Input.GetMouseButtonDown(0)) {
-
-                    var uiObject = EventSystem.current.currentSelectedGameObject;
-
-                    if (uiObject && uiObject.GetComponent<Button>()) {
-                        return;
-                    }
-
-                    pointList = new List<Vector3>(trajectorySettup.numberOfPoitns);
-
-                    for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
-                        float spaceBetweenPoints = trajectorySettup.spaceBetweenPoints;
-                        var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
-                        pointList.Add(pointPos);
-                    }
-
-                    if (lineRenderer) {
-                        lineRenderer.startWidth = trajectorySettup.StartWidth;
-                        lineRenderer.endWidth = trajectorySettup.EndWidth;
-                    }
-
-                    for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
-                        position = pointList[i];
-                        lineRenderer.positionCount++;
-                        lineRenderer.SetPosition(i - 1, position);
-                    }
-
-                    lineRenderer.positionCount++;
-                    index = lineRenderer.positionCount - 1;
-                    position = pointList[pointList.Count - 1];
-                    lineRenderer.SetPosition(index, position);
-                }
-
-                if (pointList == null) {
-                    return;
-                }
-
-                for (int i = 0; i < pointList.Count; i++) {
-                    pointList[i] = CalculatePointPosition(i * trajectorySettup.spaceBetweenPoints);
-                }
-
-                if (!lineRenderer) {
-                    return;
-                }
-
-                for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
-                    var pos = pointList[i];
-                    lineRenderer.SetPosition(i - 1, pos);
-                }
-
-                index = lineRenderer.positionCount - 1;
-                position = pointList[pointList.Count - 1];
-                lineRenderer.SetPosition(index, position);
+            if (pointList == null) {
+                return;
             }
 
-            if (Input.GetMouseButtonUp(0)) {
+            for (int i = 0; i < pointList.Count; i++) {
+                pointList[i] = CalculatePointPosition(i * trajectorySettup.spaceBetweenPoints);
+            }
 
-                if (pointList == null) {
-                    return;
-                }
-                pointList = null;
+            if (!lineRenderer) {
+                return;
+            }
 
-                if (lineRenderer) {
-                    lineRenderer.positionCount = 0;
-                }
+            for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
+                var pos = pointList[i];
+                lineRenderer.SetPosition(i - 1, pos);
+            }
+
+            index = lineRenderer.positionCount - 1;
+            position = pointList[pointList.Count - 1];
+            lineRenderer.SetPosition(index, position);
+        }
+
+        public void StartDraw() {
+            var uiObject = EventSystem.current.currentSelectedGameObject;
+
+            if (uiObject && uiObject.GetComponent<Button>()) {
+                return;
+            }
+
+            pointList = new List<Vector3>(trajectorySettup.numberOfPoitns);
+
+            for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
+                float spaceBetweenPoints = trajectorySettup.spaceBetweenPoints;
+                var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
+                pointList.Add(pointPos);
+            }
+
+            if (lineRenderer) {
+                lineRenderer.startWidth = trajectorySettup.StartWidth;
+                lineRenderer.endWidth = trajectorySettup.EndWidth;
+            }
+
+            for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
+                position = pointList[i];
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(i - 1, position);
+            }
+
+            lineRenderer.positionCount++;
+            index = lineRenderer.positionCount - 1;
+            position = pointList[pointList.Count - 1];
+            lineRenderer.SetPosition(index, position);
+        }
+
+        public void EndDraw() {
+            if (pointList == null) {
+                return;
+            }
+            pointList = null;
+
+            if (lineRenderer) {
+                lineRenderer.positionCount = 0;
             }
         }
 

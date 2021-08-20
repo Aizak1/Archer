@@ -92,16 +92,6 @@ namespace arrow {
             }
 
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
-        }
-
-        private void FixedUpdate() {
-            if (!isInAir) {
-                return;
-            }
-
-            if (rigidbody.velocity == Vector3.zero) {
-                return;
-            }
 
             var tipDistance = (lastTipPosition - tip.position).magnitude;
             var mask = LayerMask.GetMask(RAYCAST_LAYER);
@@ -110,9 +100,11 @@ namespace arrow {
 
                 if (!hit.collider.isTrigger) {
 
+                    enabled = false;
+
                     trailRenderer.enabled = false;
                     if (mainVfx != null) {
-                        Destroy(mainVfx,VFX_LIFE_AFTER_HIT);
+                        Destroy(mainVfx, VFX_LIFE_AFTER_HIT);
                     }
 
                     rigidbody.Sleep();

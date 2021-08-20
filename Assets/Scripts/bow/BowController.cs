@@ -1,10 +1,10 @@
 using arrow;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using ui;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -57,6 +57,9 @@ namespace bow {
         [HideInInspector]
         public Queue<GameObject> arrowsOnLevel;
 
+        private BowAnimator bowAnimator;
+        private TrajectoryShower trajectoryShower;
+
         private void Start() {
             shotsCount = 0;
             arrowsOnLevel = new Queue<GameObject>();
@@ -68,6 +71,9 @@ namespace bow {
             }
 
             archerAnimator.SetBool("isShooting", false);
+
+            bowAnimator = FindObjectOfType<BowAnimator>();
+            trajectoryShower = FindObjectOfType<TrajectoryShower>();
         }
 
         private void Update() {
@@ -99,6 +105,9 @@ namespace bow {
                     foreach (var rig in archerRigs) {
                         rig.weight = 1;
                     }
+
+                    trajectoryShower.enabled = true;
+                    trajectoryShower.StartDraw();
                 }
 
                 if (instantiatedArrow == null) {
@@ -121,6 +130,8 @@ namespace bow {
                 bowRotationPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
 
                 pullAmount = CalculatePullAmount(pullPosition);
+
+                bowAnimator.UpdatePull(pullAmount);
             }
 
             if (Input.GetMouseButtonUp(0)) {
@@ -168,6 +179,11 @@ namespace bow {
                 }
 
                 archerAnimator.SetBool("isShooting", false);
+
+                bowAnimator.UpdatePull(pullAmount);
+
+                trajectoryShower.EndDraw();
+                trajectoryShower.enabled = false;
             }
         }
 
@@ -175,9 +191,7 @@ namespace bow {
             var pullVector = pullPosition - startTouchPosition;
             var maxPullVector = maxPullTransform.position - minPullTransform.position;
 
-            float maxLength = maxPullVector.magnitude;
-            float currentLength = pullVector.magnitude;
-            float pullAmount = currentLength / maxLength;
+            float pullAmount = pullVector.magnitude / maxPullVector.magnitude;
 
             return Mathf.Clamp(pullAmount, 0, 1);
         }

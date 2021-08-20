@@ -5,14 +5,12 @@ namespace bow {
         [SerializeField]
         private Animator animator;
         [SerializeField]
-        private BowController bowController;
-        [SerializeField]
         private float maxPull;
 
         private const string BLEND = "Blend";
 
-        private void Update() {
-            animator.SetFloat(BLEND, bowController.pullAmount * maxPull);
+        public void UpdatePull(in float pullAmount) {
+            animator.SetFloat(BLEND, pullAmount * maxPull);
         }
     }
 }

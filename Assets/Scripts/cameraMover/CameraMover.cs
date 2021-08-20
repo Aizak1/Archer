@@ -12,15 +12,18 @@ namespace cameraMover {
         [SerializeField]
         private Slider slider;
 
+        private Camera camera;
+
         private void Start() {
-            minPosition = Camera.main.transform.position;
+            camera = Camera.main;
+            minPosition = camera.transform.position;
         }
 
         private void Update() {
             var percent = slider.value;
 
             var deltaPos = (max.position - minPosition) * percent;
-            Camera.main.transform.position = minPosition + deltaPos;
+            camera.transform.position = minPosition + deltaPos;
         }
     }
 }

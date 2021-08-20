@@ -10,25 +10,28 @@ namespace cameraMover {
 
         private Vector3 startPos;
 
+        private Camera camera;
+
         private void Start() {
-            startPos = Camera.main.transform.position;
+            camera = Camera.main;
+            startPos = camera.transform.position;
         }
 
         public void MoveLeft() {
-            var transform = Camera.main.transform.position;
+            var transform = camera.transform.position;
             var pos = new Vector3(transform.x, transform.y, transform.z - step * Time.deltaTime);
 
             if (pos.z >= startPos.z) {
-                Camera.main.transform.position = pos;
+                camera.transform.position = pos;
             }
         }
 
         public void MoveRight() {
-            var transform = Camera.main.transform.position;
+            var transform = camera.transform.position;
             var pos = new Vector3(transform.x, transform.y, transform.z + step * Time.deltaTime);
 
             if (pos.z <= maxPos.position.z) {
-                Camera.main.transform.position = pos;
+                camera.transform.position = pos;
             }
         }
     }
