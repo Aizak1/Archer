@@ -106,8 +106,10 @@ namespace bow {
                         rig.weight = 1;
                     }
 
-                    trajectoryShower.enabled = true;
-                    trajectoryShower.StartDraw();
+                    if (trajectoryShower) {
+                        trajectoryShower.enabled = true;
+                        trajectoryShower.StartDraw();
+                    }
                 }
 
                 if (instantiatedArrow == null) {
@@ -182,8 +184,10 @@ namespace bow {
 
                 bowAnimator.UpdatePull(pullAmount);
 
-                trajectoryShower.EndDraw();
-                trajectoryShower.enabled = false;
+                if (trajectoryShower) {
+                    trajectoryShower.EndDraw();
+                    trajectoryShower.enabled = false;
+                }
             }
         }
 
