@@ -1,7 +1,5 @@
 using bow;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,7 +13,7 @@ namespace ui {
         [SerializeField]
         private TrajectorySettings trajectorySettup;
 
-        private List<Vector3> pointList;
+        private Vector3[] pointList;
         private LineRenderer lineRenderer;
 
         private const string MAIN_TEXTURE = "_MainTex";
@@ -25,20 +23,19 @@ namespace ui {
 
         private void Start() {
             lineRenderer = GetComponent<LineRenderer>();
+
+            if (!lineRenderer) {
+                enabled = false;
+                return;
+            }
+
             lineRenderer.positionCount = 0;
+
         }
 
         private void Update() {
-            if (pointList == null) {
-                return;
-            }
-
-            for (int i = 0; i < pointList.Count; i++) {
+            for (int i = 0; i < pointList.Length; i++) {
                 pointList[i] = CalculatePointPosition(i * trajectorySettup.spaceBetweenPoints);
-            }
-
-            if (!lineRenderer) {
-                return;
             }
 
             for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
@@ -47,23 +44,26 @@ namespace ui {
             }
 
             index = lineRenderer.positionCount - 1;
-            position = pointList[pointList.Count - 1];
+            position = pointList[pointList.Length - 1];
             lineRenderer.SetPosition(index, position);
         }
 
         public void StartDraw() {
+            if (!lineRenderer) {
+                Debug.LogError("No LineRenderer on trajectoryShower");
+                return;
+            }
+
             var uiObject = EventSystem.current.currentSelectedGameObject;
 
             if (uiObject && uiObject.GetComponent<Button>()) {
                 return;
             }
 
-            pointList = new List<Vector3>(trajectorySettup.numberOfPoitns);
-
             for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
                 float spaceBetweenPoints = trajectorySettup.spaceBetweenPoints;
                 var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
-                pointList.Add(pointPos);
+                pointList[i] = pointPos;
             }
 
             if (lineRenderer) {
@@ -79,22 +79,23 @@ namespace ui {
 
             lineRenderer.positionCount++;
             index = lineRenderer.positionCount - 1;
-            position = pointList[pointList.Count - 1];
+            position = pointList[pointList.Length - 1];
             lineRenderer.SetPosition(index, position);
         }
 
         public void EndDraw() {
-            if (pointList == null) {
+            if (!lineRenderer) {
+                Debug.LogError("No LineRenderer on trajectoryShower");
                 return;
             }
-            pointList = null;
-
-            if (lineRenderer) {
-                lineRenderer.positionCount = 0;
-            }
+            lineRenderer.positionCount = 0;
         }
 
         public void SetSettings(TrajectorySettings settings) {
+            if (!lineRenderer) {
+                Debug.LogError("No LineRenderer on trajectoryShower");
+                return;
+            }
             trajectorySettup = settings;
             ApplySettings();
         }
@@ -103,6 +104,7 @@ namespace ui {
             lineRenderer.colorGradient = trajectorySettup.Gradient;
             var XTille = trajectorySettup.XTille;
             lineRenderer.material.SetTextureScale(MAIN_TEXTURE, new Vector2(XTille, 1));
+            pointList = new Vector3[trajectorySettup.numberOfPoitns];
         }
 
         private Vector3 CalculatePointPosition(float t) {
