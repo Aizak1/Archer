@@ -13,16 +13,14 @@ namespace wind {
                 return;
             }
 
-            var rigidbody = arrow.GetComponent<Rigidbody>();
-
-            var velocity = rigidbody.velocity;
+            var velocity = arrow.rigidbody.velocity;
 
             float radAngle = angle * Mathf.Deg2Rad;
 
             float newY = Mathf.Sin(radAngle) * velocity.z + Mathf.Cos(radAngle) * velocity.y;
             float newZ = Mathf.Cos(radAngle) * velocity.z - Mathf.Sin(radAngle) * velocity.y;
 
-            rigidbody.velocity = new Vector3(velocity.x, newY, newZ);
+            arrow.rigidbody.velocity = new Vector3(velocity.x, newY, newZ);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace arrow {
         [SerializeField]
         public Transform tip;
         [SerializeField]
-        private new Rigidbody rigidbody;
+        public Rigidbody rigidbody;
 
         [SerializeField]
         private int splitArrowsAmount;
