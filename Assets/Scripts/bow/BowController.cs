@@ -57,7 +57,13 @@ namespace bow {
         [HideInInspector]
         public Queue<GameObject> arrowsOnLevel;
 
-        private BowAnimator bowAnimator;
+        [SerializeField]
+        private Animator animator;
+        [SerializeField]
+        private float maxPull;
+
+        private const string BLEND = "Blend";
+
         private TrajectoryShower trajectoryShower;
 
         private void Start() {
@@ -71,8 +77,6 @@ namespace bow {
             }
 
             archerAnimator.SetBool("isShooting", false);
-
-            bowAnimator = FindObjectOfType<BowAnimator>();
             trajectoryShower = FindObjectOfType<TrajectoryShower>();
         }
 
@@ -133,7 +137,7 @@ namespace bow {
 
                 pullAmount = CalculatePullAmount(pullPosition);
 
-                bowAnimator.UpdatePull(pullAmount);
+                UpdatePull(pullAmount);
             }
 
             if (Input.GetMouseButtonUp(0)) {
@@ -182,7 +186,7 @@ namespace bow {
 
                 archerAnimator.SetBool("isShooting", false);
 
-                bowAnimator.UpdatePull(pullAmount);
+                UpdatePull(pullAmount);
 
                 if (trajectoryShower) {
                     trajectoryShower.EndDraw();
@@ -198,6 +202,10 @@ namespace bow {
             float pullAmount = pullVector.magnitude / maxPullVector.magnitude;
 
             return Mathf.Clamp(pullAmount, 0, 1);
+        }
+
+        public void UpdatePull(in float pullAmount) {
+            animator.SetFloat(BLEND, pullAmount * maxPull);
         }
     }
 }
