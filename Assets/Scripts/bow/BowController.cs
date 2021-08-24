@@ -51,20 +51,19 @@ namespace bow {
 
         [HideInInspector]
         public int shotsCount;
-
         public const int MAX_ARROWS_COUNT = 13;
-
         [HideInInspector]
         public Queue<GameObject> arrowsOnLevel;
 
         [SerializeField]
-        private Animator animator;
+        private Animator bowAnimator;
         [SerializeField]
         private float maxPull;
-
         private const string BLEND = "Blend";
+        private int blendID;
 
         private TrajectoryShower trajectoryShower;
+
 
         private void Start() {
             shotsCount = 0;
@@ -77,48 +76,49 @@ namespace bow {
             }
 
             archerAnimator.SetBool("isShooting", false);
+            blendID = Animator.StringToHash(BLEND);
             trajectoryShower = FindObjectOfType<TrajectoryShower>();
         }
 
         private void Update() {
 
-            if (Input.GetMouseButton(0)) {
+            if (Input.GetMouseButtonDown(0)) {
 
-                if (Input.GetMouseButtonDown(0)) {
+                var uiObject = EventSystem.current.currentSelectedGameObject;
 
-                    var uiObject = EventSystem.current.currentSelectedGameObject;
-
-                    if (uiObject && uiObject.GetComponent<Button>()) {
-                        return;
-                    }
-
-                    startTouchPosition = camera.ScreenToViewportPoint(Input.mousePosition);
-                    startTouchPosition.z = maxPullTransform.position.z;
-
-                    var pos = arrowPlacementPoint.transform.position;
-                    var rot = arrowPlacementPoint.transform.rotation;
-                    var parent = arrowPlacementPoint.transform;
-
-                    var arrowObjectToSpawn = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
-                    var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
-                    instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
-                    audioSource.PlayOneShot(pullingSound);
-
-                    archerAnimator.SetBool("isShooting", true);
-
-                    foreach (var rig in archerRigs) {
-                        rig.weight = 1;
-                    }
-
-                    if (trajectoryShower) {
-                        trajectoryShower.enabled = true;
-                        trajectoryShower.StartDraw();
-                    }
-                }
-
-                if (instantiatedArrow == null) {
+                if (uiObject && uiObject.GetComponent<Button>()) {
                     return;
                 }
+
+                startTouchPosition = camera.ScreenToViewportPoint(Input.mousePosition);
+                startTouchPosition.z = maxPullTransform.position.z;
+
+                var pos = arrowPlacementPoint.transform.position;
+                var rot = arrowPlacementPoint.transform.rotation;
+                var parent = arrowPlacementPoint.transform;
+
+                var arrowObjectToSpawn = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
+                var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
+                instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
+                audioSource.PlayOneShot(pullingSound);
+
+                archerAnimator.SetBool("isShooting", true);
+
+                foreach (var rig in archerRigs) {
+                    rig.weight = 1;
+                }
+
+                if (trajectoryShower) {
+                    trajectoryShower.enabled = true;
+                    trajectoryShower.StartDraw();
+                }
+            }
+
+            if (instantiatedArrow == null) {
+                return;
+            }
+
+            if (Input.GetMouseButton(0)) {
 
                 var touchPosition = Input.mousePosition;
                 Vector3 pullPosition = camera.ScreenToViewportPoint(touchPosition);
@@ -137,14 +137,10 @@ namespace bow {
 
                 pullAmount = CalculatePullAmount(pullPosition);
 
-                UpdatePull(pullAmount);
+                bowAnimator.SetFloat(blendID, pullAmount * maxPull);
             }
 
             if (Input.GetMouseButtonUp(0)) {
-
-                if (instantiatedArrow == null) {
-                    return;
-                }
 
                 instantiatedArrow.transform.parent = null;
 
@@ -186,7 +182,7 @@ namespace bow {
 
                 archerAnimator.SetBool("isShooting", false);
 
-                UpdatePull(pullAmount);
+                bowAnimator.SetFloat(blendID, pullAmount * maxPull);
 
                 if (trajectoryShower) {
                     trajectoryShower.EndDraw();
@@ -202,10 +198,6 @@ namespace bow {
             float pullAmount = pullVector.magnitude / maxPullVector.magnitude;
 
             return Mathf.Clamp(pullAmount, 0, 1);
-        }
-
-        public void UpdatePull(in float pullAmount) {
-            animator.SetFloat(BLEND, pullAmount * maxPull);
         }
     }
 }
