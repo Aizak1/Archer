@@ -6254,7 +6254,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f455f658fb1dcf345a4cbd41cf815584, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6284,7 +6284,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.028572083
+        value: 0.06479645
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -6326,7 +6326,7 @@ TrailRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.45
@@ -7584,6 +7584,26 @@ PrefabInstance:
     - target: {fileID: 4714890771349990590, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714890772702521596, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714890772702521596, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714890772702521596, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714890772702521596, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714890772702521596, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -129
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b57c9e819c097845b9fda5714c5f8f4, type: 3}

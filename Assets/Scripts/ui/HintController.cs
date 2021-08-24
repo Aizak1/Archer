@@ -30,7 +30,7 @@ namespace ui {
         private const int LEVEL_1 = 1;
         private const int LEVEL_18 = 18;
 
-        private const float ACCURACY = 0.015f;
+        private const float ACCURACY = 0.1f;
 
         private void OnEnable() {
             if (hintCanvas) {
@@ -47,7 +47,8 @@ namespace ui {
 
             switch (levelIndex) {
                 case LEVEL_1:
-                    hintObject.transform.DOMove(pos, time).SetLoops(100);
+                    var tween = hintObject.transform.DOMove(pos, time).SetLoops(100);
+                    tween.OnStepComplete(ClearTrailAfterStep);
                     break;
                 case LEVEL_18:
                     hintObject.transform.DOMove(pos, time).SetLoops(100, LoopType.Yoyo);
@@ -57,16 +58,8 @@ namespace ui {
 
         private void Update() {
 
-            if (hintObject.transform.position == finalPosition.position) {
-                if (trail) {
-                    trail.Clear();
-                    trail.enabled = false;
-                }
-            }
-
             if ((hintObject.transform.position - startPosition).magnitude < ACCURACY) {
                 if (trail) {
-                    trail.Clear();
                     trail.enabled = true;
                 }
             }
@@ -85,6 +78,13 @@ namespace ui {
                 gameCanvas.enabled = true;
 
                 hintObject.transform.DOKill();
+            }
+        }
+
+        private void ClearTrailAfterStep() {
+            if (trail) {
+                trail.Clear();
+                trail.enabled = false;
             }
         }
     }
