@@ -1,17 +1,30 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace level {
     public class SceneLoader : MonoBehaviour {
+
+        [SerializeField]
+        private Animator transitionAnimator;
+
+        private int transitionTriggerId = Animator.StringToHash("StartTransition");
+
+        private float TRANSITION_TIME = 2f / 3f;
+
         public void RestartLevel() {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void LoadLevel(string name) {
+        private IEnumerator LoadLevel(string name) {
+            transitionAnimator.SetTrigger(transitionTriggerId);
+            yield return new WaitForSeconds(TRANSITION_TIME);
             SceneManager.LoadScene(name);
         }
 
-        public void LoadLevel(int index) {
+        private IEnumerator LoadLevel(int index) {
+            transitionAnimator.SetTrigger(transitionTriggerId);
+            yield return new WaitForSeconds(TRANSITION_TIME);
             SceneManager.LoadScene(index);
         }
 
@@ -20,11 +33,19 @@ namespace level {
             if(nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
                 nextLevelIndex = 0;
             }
-            LoadLevel(nextLevelIndex);
+            StartCoroutine(LoadLevel(nextLevelIndex));
         }
 
         public void LoadMenu() {
-            SceneManager.LoadScene(0);
+            StartCoroutine(LoadLevel(0));
+        }
+
+        public void LoadLevelByName(string name) {
+            StartCoroutine(LoadLevel(name));
+        }
+
+        public void LoadLevelByIndex(int index) {
+            StartCoroutine(LoadLevel(index));
         }
 
         public void Quit() {
