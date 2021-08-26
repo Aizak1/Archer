@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 namespace ui {
     public class Manual : MonoBehaviour {
         [SerializeField]
-        private Canvas gameCanvas;
+        private GameObject gameMenu;
 
         [SerializeField]
         private BowController bowController;
 
         [SerializeField]
-        private Canvas[] manualCanvases;
+        private GameObject[] manualMenues;
         private int currentIndex;
 
         [SerializeField]
@@ -24,34 +24,34 @@ namespace ui {
                 return;
             }
 
-            if (manualCanvases.Length == 0) {
+            if (manualMenues.Length == 0) {
                 return;
             }
 
             currentIndex = 0;
 
-            manualCanvases[currentIndex].enabled = true;
-            gameCanvas.enabled = false;
+            manualMenues[currentIndex].SetActive(true);
+            gameMenu.SetActive(false);
 
             bowController.enabled = false;
         }
 
         public void CloseManual() {
-            manualCanvases[currentIndex].enabled = false;
+            manualMenues[currentIndex].SetActive(false);
 
             currentIndex++;
 
-            if (currentIndex >= manualCanvases.Length) {
+            if (currentIndex >= manualMenues.Length) {
                 bowController.enabled = true;
 
                 if (hintController) {
-                    hintController.gameCanvas = gameCanvas;
+                    hintController.gameMenu = gameMenu;
                     hintController.enabled = true;
                 } else {
-                    gameCanvas.enabled = true;
+                    gameMenu.SetActive(true);
                 }
             } else {
-                manualCanvases[currentIndex].enabled = true;
+                manualMenues[currentIndex].SetActive(true);
             }
         }
     }

@@ -8,24 +8,46 @@ namespace level {
         [SerializeField]
         private Animator transitionAnimator;
 
-        private int transitionTriggerId = Animator.StringToHash("StartTransition");
+        [SerializeField]
+        private bool isFadeOut;
+
+        private int fadeInTriggerId = Animator.StringToHash("FadeIn");
+        private int fadeOutTriggerId = Animator.StringToHash("FadeOut");
 
         private float TRANSITION_TIME = 2f / 3f;
+
+        private void Awake() {
+            if (isFadeOut) {
+                transitionAnimator.SetTrigger(fadeOutTriggerId);
+            }
+        }
 
         public void RestartLevel() {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        private IEnumerator LoadLevel(string name) {
-            transitionAnimator.SetTrigger(transitionTriggerId);
-            yield return new WaitForSeconds(TRANSITION_TIME);
+        public void LoadLevel(int index) {
+            SceneManager.LoadScene(index);
+        }
+
+        public void LoadLevel(string name) {
             SceneManager.LoadScene(name);
         }
 
-        private IEnumerator LoadLevel(int index) {
-            transitionAnimator.SetTrigger(transitionTriggerId);
+        public void LoadMenu() {
+            SceneManager.LoadScene(0);
+        }
+
+        private IEnumerator FadeLoadLevel(string name) {
+            transitionAnimator.SetTrigger(fadeInTriggerId);
             yield return new WaitForSeconds(TRANSITION_TIME);
-            SceneManager.LoadScene(index);
+            LoadLevel(name);
+        }
+
+        private IEnumerator FadeLoadLevel(int index) {
+            transitionAnimator.SetTrigger(fadeInTriggerId);
+            yield return new WaitForSeconds(TRANSITION_TIME);
+            LoadLevel(index);
         }
 
         public void LoadNextLevel() {
@@ -33,19 +55,19 @@ namespace level {
             if(nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
                 nextLevelIndex = 0;
             }
-            StartCoroutine(LoadLevel(nextLevelIndex));
+            StartCoroutine(FadeLoadLevel(nextLevelIndex));
         }
 
-        public void LoadMenu() {
-            StartCoroutine(LoadLevel(0));
+        public void FadeLoadMenu() {
+            StartCoroutine(FadeLoadLevel(0));
         }
 
-        public void LoadLevelByName(string name) {
-            StartCoroutine(LoadLevel(name));
+        public void FadeLoadLevelByName(string name) {
+            StartCoroutine(FadeLoadLevel(name));
         }
 
-        public void LoadLevelByIndex(int index) {
-            StartCoroutine(LoadLevel(index));
+        public void FadeLoadLevelByIndex(int index) {
+            StartCoroutine(FadeLoadLevel(index));
         }
 
         public void Quit() {

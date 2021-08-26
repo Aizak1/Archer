@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 namespace ui {
     public class HintController : MonoBehaviour{
         [SerializeField]
-        private Canvas hintCanvas;
+        private Canvas hintMenu;
 
         [SerializeField]
         private GameObject hintObject;
@@ -23,7 +23,7 @@ namespace ui {
         private float time;
 
         [HideInInspector]
-        public Canvas gameCanvas;
+        public GameObject gameMenu;
 
         private Vector3 startPosition;
 
@@ -33,8 +33,8 @@ namespace ui {
         private const float ACCURACY = 0.1f;
 
         private void OnEnable() {
-            if (hintCanvas) {
-                hintCanvas.enabled = true;
+            if (hintMenu) {
+                hintMenu.enabled = true;
                 startPosition = hintObject.transform.position;
                 if (trail) {
                     trail.enabled = true;
@@ -65,8 +65,8 @@ namespace ui {
             }
 
             if (Input.GetMouseButtonDown(0)) {
-                if (hintCanvas) {
-                    hintCanvas.enabled = false;
+                if (hintMenu) {
+                    hintMenu.enabled = false;
                     if (trail) {
                         trail.Clear();
                         trail.enabled = false;
@@ -75,7 +75,7 @@ namespace ui {
                 }
                 enabled = false;
 
-                gameCanvas.enabled = true;
+                gameMenu.SetActive(true);
 
                 hintObject.transform.DOKill();
             }

@@ -6,38 +6,34 @@ using bow;
 namespace ui {
     public class Pauser : MonoBehaviour {
         [SerializeField]
-        private Canvas pauseCanvas;
+        private GameObject pauseMenu;
         [SerializeField]
-        private Canvas gameCanvas;
+        private GameObject gameMenu;
 
         [SerializeField]
         private BowController bowController;
         [SerializeField]
-        private TrajectoryShower trajectoryShower;
-        [SerializeField]
         private TextMeshProUGUI currentLevelText;
 
         private void Start() {
-            pauseCanvas.enabled = false;
+            pauseMenu.SetActive(false);
             int levelNumber = SceneManager.GetActiveScene().buildIndex;
             currentLevelText.text = $"Level {levelNumber}";
 
         }
 
         public void Pause() {
-            gameCanvas.enabled = false;
-            pauseCanvas.enabled = true;
+            gameMenu.SetActive(false);
+            pauseMenu.SetActive(true);
 
-            trajectoryShower.enabled = false;
             bowController.enabled = false;
         }
 
         public void Resume() {
-            pauseCanvas.enabled = false;
+            pauseMenu.SetActive(false);
             bowController.enabled = true;
 
-            gameCanvas.enabled = true;
-            trajectoryShower.enabled = true;
+            gameMenu.SetActive(true);
         }
     }
 }

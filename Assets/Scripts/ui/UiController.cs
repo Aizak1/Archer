@@ -102,10 +102,6 @@ namespace ui {
             }
         }
 
-        public void LoadNextLevelButton() {
-            sceneLoader.LoadNextLevel();
-        }
-
         public void SwitchArrowTypeButton() {
             ArrowType currentArrowType = bowController.arrowTypeToInstantiate;
             arrowTypeToQuiverGroup[currentArrowType].SetActive(false);

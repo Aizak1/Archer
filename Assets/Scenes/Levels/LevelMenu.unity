@@ -240,7 +240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &30990808
 PrefabInstance:
@@ -1253,50 +1253,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127247187}
   m_CullTransparentMesh: 1
---- !u!1 &132382902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 132382904}
-  - component: {fileID: 132382903}
-  m_Layer: 0
-  m_Name: Scene Loader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &132382903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132382902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e023b72fdae45594f93ffdce4a0fc05a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionAnimator: {fileID: 0}
---- !u!4 &132382904
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132382902}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &166591139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,6 +1465,101 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b44415eef131de742a4190453fc4d68e, type: 3}
+--- !u!1 &196387671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196387672}
+  - component: {fileID: 196387675}
+  - component: {fileID: 196387674}
+  - component: {fileID: 196387673}
+  m_Layer: 0
+  m_Name: CrossFade (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &196387672
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196387671}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 705201013}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &196387673
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196387671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a7b6fb5572ba2c941bf8f4d32c718078, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &196387674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196387671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &196387675
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196387671}
+  m_CullTransparentMesh: 1
 --- !u!4 &208001577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4457848601906800, guid: f661498175107c749a33d97304c423eb, type: 3}
@@ -2179,7 +2230,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3032,7 +3083,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4249,7 +4300,7 @@ Transform:
   - {fileID: 811218252}
   - {fileID: 1387796558}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &475910389 stripped
 Transform:
@@ -4589,7 +4640,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &541223400
 PrefabInstance:
@@ -5069,7 +5120,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5632,11 +5683,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4931211907768612, guid: e88b7bb02ae149940a5a0cddf34fe370, type: 3}
   m_PrefabInstance: {fileID: 1129021899}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &675911875 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4141389147476497903, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-  m_PrefabInstance: {fileID: 803054104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &682153553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4418469335166708, guid: 5286e490afadac545ae3a1595b1e96e1, type: 3}
@@ -5981,7 +6027,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723685232
 GameObject:
@@ -6637,7 +6683,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6880,107 +6926,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4457848601906800, guid: f661498175107c749a33d97304c423eb, type: 3}
   m_PrefabInstance: {fileID: 861915788}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &803054104
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4141389147476497810, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_Name
-      value: CrossFadeCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497810, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_RootOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4141389147476497902, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 815b30d4c1909ff46bbfe7d22e9b96e1, type: 3}
 --- !u!1 &804130642
 GameObject:
   m_ObjectHideFlags: 0
@@ -10330,7 +10275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11148,7 +11093,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149935458
 GameObject:
@@ -11215,7 +11160,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11914,7 +11859,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12555,7 +12500,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12959,7 +12904,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13665,7 +13610,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14447,7 +14392,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15968,7 +15913,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17031,7 +16976,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753120851
 GameObject:
@@ -17098,7 +17043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18115,7 +18060,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1868404815
 GameObject:
@@ -18588,7 +18533,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19875,7 +19820,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20293,7 +20238,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20650,7 +20595,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6275476747587273931}
         m_TargetAssemblyTypeName: level.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadLevelByIndex
+        m_MethodName: FadeLoadLevelByIndex
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20758,7 +20703,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2107228238
 GameObject:
@@ -21269,7 +21214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122715782250687911, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 2439968432177322691, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_IsActive
@@ -21289,11 +21234,11 @@ PrefabInstance:
       objectReference: {fileID: -2462756160518730549, guid: 926434144ed03ad4cac1625232086f27, type: 2}
     - target: {fileID: 3339279054929832343, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 3393613359533005452, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 3452952580638203985, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_IsActive
@@ -21321,19 +21266,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608495205882416196, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 5065421088162849636, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: transitionAnimator
       value: 
-      objectReference: {fileID: 675911875}
+      objectReference: {fileID: 196387673}
     - target: {fileID: 5219386837046406555, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 72.00006
       objectReference: {fileID: 0}
     - target: {fileID: 5359331979705679622, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 5746849293423113073, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -21345,7 +21290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275476746856230901, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 6275476746856230903, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_IsActive
@@ -21457,7 +21402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6980626073953372523, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 7059060942618715792, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -21477,11 +21422,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7914937452715074065, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 8153785406874602325, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevelByIndex
+      value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
     - target: {fileID: 9197697010437024691, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_fontAsset

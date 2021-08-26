@@ -10,11 +10,11 @@ namespace level {
         [SerializeField]
         private BowController bowController;
         [SerializeField]
-        private Canvas winCanvas;
+        private GameObject winMenu;
         [SerializeField]
-        private Canvas failCanvas;
+        private GameObject failMenu;
         [SerializeField]
-        private Canvas gameCanvas;
+        private GameObject gameMenu;
 
         [SerializeField]
         private ParticleSystem winVfx;
@@ -58,11 +58,11 @@ namespace level {
                 countOfArrowsForStar = enemiesCount + 1;
             }
             starConditionsCompleteCount = 1;
-            winCanvas.enabled = false;
+            winMenu.SetActive(false);
         }
 
         private void Update() {
-            if (gameCanvas.enabled) {
+            if (gameMenu.activeInHierarchy) {
                 timeSinceStart += Time.deltaTime;
             }
 
@@ -76,8 +76,8 @@ namespace level {
                     audioSource.PlayOneShot(sound);
                 }
 
-                gameCanvas.enabled = false;
-                winCanvas.enabled = true;
+                gameMenu.SetActive(false);
+                winMenu.SetActive(true);
 
                 timeText.text = System.Math.Round(timeSinceStart, 2).ToString();
                 arrowsCountText.text = bowController.shotsCount.ToString();
@@ -126,16 +126,16 @@ namespace level {
 
             if (isFailed) {
 
-                if(failCanvas == null || failTimeText == null || failArrowsCountText == null) {
+                if(failMenu == null || failTimeText == null || failArrowsCountText == null) {
                     return;
                 }
 
-                failCanvas.enabled = true;
+                failMenu.SetActive(true);
                 failTimeText.text = System.Math.Round(timeSinceStart, 2).ToString();
                 failArrowsCountText.text = bowController.shotsCount.ToString();
 
                 bowController.enabled = false;
-                gameCanvas.enabled = false;
+                gameMenu.SetActive(false);
                 enabled = false;
             }
 
