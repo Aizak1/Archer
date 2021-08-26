@@ -4417,6 +4417,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3730005931636317569, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: canvasTransforms.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730005931636317569, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: canvasTransforms.Array.data[5]
+      value: 
+      objectReference: {fileID: 1813121549}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: resource
       value: 
