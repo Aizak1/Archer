@@ -18,39 +18,18 @@ namespace ui {
 
         private const string MAIN_TEXTURE = "_MainTex";
 
-        private int index;
-        private Vector3 position;
-
         private void Start() {
             lineRenderer = GetComponent<LineRenderer>();
 
             if (!lineRenderer) {
-                enabled = false;
+                Debug.LogError("No LineRenderer on trajectory shower");
                 return;
             }
 
             lineRenderer.positionCount = 0;
-
         }
-
-        private void Update() {
-            for (int i = 0; i < pointList.Length; i++) {
-                pointList[i] = CalculatePointPosition(i * trajectorySettup.spaceBetweenPoints);
-            }
-
-            for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
-                var pos = pointList[i];
-                lineRenderer.SetPosition(i - 1, pos);
-            }
-
-            index = lineRenderer.positionCount - 1;
-            position = pointList[pointList.Length - 1];
-            lineRenderer.SetPosition(index, position);
-        }
-
         public void StartDraw() {
             if (!lineRenderer) {
-                Debug.LogError("No LineRenderer on trajectoryShower");
                 return;
             }
 
@@ -60,47 +39,45 @@ namespace ui {
                 return;
             }
 
+            lineRenderer.startWidth = trajectorySettup.StartWidth;
+            lineRenderer.endWidth = trajectorySettup.EndWidth;
+            lineRenderer.positionCount = trajectorySettup.numberOfPoitns;
+        }
+
+        public void Draw() {
+            if (!lineRenderer) {
+                return;
+            }
+
+            for (int i = 0; i < pointList.Length; i++) {
+                var time = (i + 1) * trajectorySettup.spaceBetweenPoints;
+                pointList[i] = CalculatePointPosition(time);
+            }
+
             for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
-                float spaceBetweenPoints = trajectorySettup.spaceBetweenPoints;
-                var pointPos = CalculatePointPosition(i * spaceBetweenPoints);
-                pointList[i] = pointPos;
+                var pos = pointList[i];
+                lineRenderer.SetPosition(i, pos);
             }
-
-            if (lineRenderer) {
-                lineRenderer.startWidth = trajectorySettup.StartWidth;
-                lineRenderer.endWidth = trajectorySettup.EndWidth;
-            }
-
-            for (int i = 1; i < trajectorySettup.numberOfPoitns; i++) {
-                position = pointList[i];
-                lineRenderer.positionCount++;
-                lineRenderer.SetPosition(i - 1, position);
-            }
-
-            lineRenderer.positionCount++;
-            index = lineRenderer.positionCount - 1;
-            position = pointList[pointList.Length - 1];
-            lineRenderer.SetPosition(index, position);
         }
 
         public void EndDraw() {
             if (!lineRenderer) {
-                Debug.LogError("No LineRenderer on trajectoryShower");
                 return;
             }
+
             lineRenderer.positionCount = 0;
         }
 
         public void SetSettings(TrajectorySettings settings) {
-            if (!lineRenderer) {
-                Debug.LogError("No LineRenderer on trajectoryShower");
-                return;
-            }
             trajectorySettup = settings;
             ApplySettings();
         }
 
         private void ApplySettings() {
+            if (!lineRenderer) {
+                return;
+            }
+
             lineRenderer.colorGradient = trajectorySettup.Gradient;
             var XTille = trajectorySettup.XTille;
             lineRenderer.material.SetTextureScale(MAIN_TEXTURE, new Vector2(XTille, 1));

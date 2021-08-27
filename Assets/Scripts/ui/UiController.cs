@@ -79,7 +79,6 @@ namespace ui {
             arrowTypeToQuiverGroup[currentType].SetActive(true);
             int currentTypeIndex = resource.arrowTypeToCount[currentType];
             trajectoryShower.SetSettings(arrowTrajectorySettings[currentTypeIndex]);
-            trajectoryShower.enabled = false;
         }
 
         private void Update() {

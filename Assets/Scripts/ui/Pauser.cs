@@ -19,7 +19,6 @@ namespace ui {
             pauseMenu.SetActive(false);
             int levelNumber = SceneManager.GetActiveScene().buildIndex;
             currentLevelText.text = $"Level {levelNumber}";
-
         }
 
         public void Pause() {

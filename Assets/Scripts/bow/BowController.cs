@@ -109,7 +109,6 @@ namespace bow {
                 }
 
                 if (trajectoryShower) {
-                    trajectoryShower.enabled = true;
                     trajectoryShower.StartDraw();
                 }
             }
@@ -138,6 +137,8 @@ namespace bow {
                 pullAmount = CalculatePullAmount(pullPosition);
 
                 bowAnimator.SetFloat(blendID, pullAmount * maxPull);
+
+                trajectoryShower.Draw();
             }
 
             if (Input.GetMouseButtonUp(0)) {
@@ -186,7 +187,6 @@ namespace bow {
 
                 if (trajectoryShower) {
                     trajectoryShower.EndDraw();
-                    trajectoryShower.enabled = false;
                 }
             }
         }
