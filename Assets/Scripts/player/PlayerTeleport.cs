@@ -27,7 +27,6 @@ namespace player {
             collider.enabled = false;
         }
 
-
         private void Update() {
             for (int i = 0; i < hittablesToDestroy.Length; i++) {
                 if(hittablesToDestroy[i] != null) {

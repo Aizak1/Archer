@@ -11,10 +11,10 @@ namespace level {
         [SerializeField]
         private bool isFadeOut;
 
-        private int fadeInTriggerId = Animator.StringToHash("FadeIn");
-        private int fadeOutTriggerId = Animator.StringToHash("FadeOut");
+        private readonly int fadeInTriggerId = Animator.StringToHash("FadeIn");
+        private readonly int fadeOutTriggerId = Animator.StringToHash("FadeOut");
 
-        private float TRANSITION_TIME = 2f / 3f;
+        private readonly float TRANSITION_TIME = 2f / 3f;
 
         private void Awake() {
             if (isFadeOut) {

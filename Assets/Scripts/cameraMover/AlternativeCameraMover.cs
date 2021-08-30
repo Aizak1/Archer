@@ -10,7 +10,7 @@ namespace cameraMover {
 
         private Vector3 startPos;
 
-        private Camera camera;
+        private new Camera camera;
 
         private void Start() {
             camera = Camera.main;

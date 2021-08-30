@@ -19,7 +19,6 @@ namespace level {
             int levelAt = PlayerPrefs.GetInt(LEVEL_AT, 1);
             for (int i = levelAt; i < levelButtons.Length; i++) {
                 levelButtons[i].interactable = false;
-
             }
 
             var starsAtLevels = PlayerPrefs.GetString(STARTS_AT_LEVELS,"");
@@ -30,9 +29,7 @@ namespace level {
                 for (int j = 0; j < int.Parse(starsAtLevels[i].ToString()); j++) {
                     starsObjects[j].transform.GetChild(0).gameObject.SetActive(true);
                 }
-
             }
-
         }
 
         public void ShowNextPage() {
@@ -49,12 +46,13 @@ namespace level {
             }
 
             currentPageNumber++;
-
         }
+
         public void ShowPrevPage() {
             if(currentPageNumber - 1 < 0) {
                 return;
             }
+
             foreach (var item in pages[currentPageNumber - 1].pageButtons) {
                 item.gameObject.SetActive(true);
             }
@@ -65,7 +63,6 @@ namespace level {
 
             currentPageNumber--;
         }
-
     }
 
     [System.Serializable]

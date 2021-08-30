@@ -10,7 +10,7 @@ namespace hittable {
         private Material[] freezeMaterials;
 
         [SerializeField]
-        private float freezeTime;
+        private float freezeDuration;
         private float unfreezeTime;
 
         [SerializeField]
@@ -45,7 +45,7 @@ namespace hittable {
                 return;
             }
 
-            var percent = 1 - (unfreezeTime - Time.time) / freezeTime;
+            var percent = 1 - (unfreezeTime - Time.time) / freezeDuration;
             float freezeValue = Mathf.Lerp(FREEZE_MAX, FREEZE_MIN, percent);
 
             for (int i = 0; i < freezeMaterials.Length; i++) {
@@ -62,7 +62,7 @@ namespace hittable {
         public void Freeze() {
             audioSource.PlayOneShot(freezeSound);
             animator.speed = 0;
-            unfreezeTime = Time.time + freezeTime;
+            unfreezeTime = Time.time + freezeDuration;
 
             for (int i = 0; i < freezeMaterials.Length; i++) {
                 freezeMaterials[i].SetFloat(SHADER_FREEZE_FIELD, FREEZE_MAX);
@@ -81,7 +81,7 @@ namespace hittable {
 
         public void UnfreezeDueBurn() {
             isFreezeFromStart = false;
-            unfreezeTime = Time.time + freezeTime / 2;
+            unfreezeTime = Time.time + freezeDuration / 2;
         }
 
         private void OnDestroy() {

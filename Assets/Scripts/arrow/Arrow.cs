@@ -22,12 +22,11 @@ namespace arrow {
         public ArrowType arrowType;
 
         public float speed;
-        public bool isInAir;
 
         [SerializeField]
         public Transform tip;
         [SerializeField]
-        public Rigidbody rigidbody;
+        public new Rigidbody rigidbody;
 
         [SerializeField]
         private int splitArrowsAmount;
@@ -68,8 +67,6 @@ namespace arrow {
         [HideInInspector]
         public TrailRenderer trailRenderer;
         [HideInInspector]
-        public float trailTime;
-        [HideInInspector]
         public bool isTeleporting;
 
         private BowController bowController;
@@ -77,20 +74,11 @@ namespace arrow {
         private void Awake() {
             lastTipPosition = tip.transform.position;
             trailRenderer = GetComponentInChildren<TrailRenderer>();
-            trailTime = trailRenderer.time;
             trailRenderer.enabled = false;
             isTeleporting = false;
         }
 
         private void Update() {
-            if (!isInAir) {
-                return;
-            }
-
-            if (rigidbody.velocity == Vector3.zero) {
-                return;
-            }
-
             transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
 
             var tipDistance = (lastTipPosition - tip.position).magnitude;
@@ -109,7 +97,6 @@ namespace arrow {
 
                     rigidbody.Sleep();
                     GetComponent<Collider>().enabled = false;
-                    isInAir = false;
 
                     rigidbody.useGravity = false;
                     rigidbody.isKinematic = true;
@@ -119,8 +106,8 @@ namespace arrow {
                     var parent = new GameObject();
                     parent.transform.position = hit.collider.gameObject.transform.position;
                     parent.transform.rotation = hit.collider.gameObject.transform.rotation;
-
                     parent.transform.parent = hit.collider.gameObject.transform;
+
                     transform.parent = parent.transform;
 
                     if (portalArrow) {
@@ -139,7 +126,7 @@ namespace arrow {
                     var player = hit.collider.GetComponent<Player>();
 
                     if (hittable) {
-                        hittable.ProcessHit(this, hit);
+                        hittable.ProcessHit();
                     } else if (freezable) {
                         freezable.ProcessHit(this);
                     } else if (burnable) {
@@ -149,7 +136,6 @@ namespace arrow {
                         }
                     } else if (player) {
                         player.ProcessHit(hit);
-
                     } else {
                         bowController.arrowsOnLevel.Enqueue(gameObject);
                     }
@@ -182,22 +168,21 @@ namespace arrow {
             lastTipPosition = tip.position;
 
             if (Time.time >= splitTime && isSplit && !isTeleporting) {
-                Split(angleBetweenSplitArrows, splitArrowsAmount);
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
+                Split(angleBetweenSplitArrows, splitArrowsAmount);
             }
         }
 
         private void CreatePortal(RaycastHit hit) {
-            var position = hit.point;
-            var normal = hit.normal;
+            Vector3 pos = hit.point;
+            Vector3 normal = hit.normal;
             normal.x = 0;
-            var rotation = Quaternion.LookRotation(normal);
+            var rot = Quaternion.LookRotation(normal);
             GameObject portal;
 
             var parent = new GameObject();
             parent.transform.position = hit.collider.gameObject.transform.position;
             parent.transform.rotation = hit.collider.gameObject.transform.rotation;
-
             parent.transform.parent = hit.collider.gameObject.transform;
 
             if (portalArrow.isBlue) {
@@ -206,7 +191,7 @@ namespace arrow {
                 if (existPortal) {
                     existPortal.GetComponent<Portal>().Close();
                 }
-                portal = Instantiate(portalArrow.bluePortal, position, rotation, parent.transform);
+                portal = Instantiate(portalArrow.bluePortal, pos, rot, parent.transform);
 
             } else {
 
@@ -214,11 +199,11 @@ namespace arrow {
                 if (existsPortal) {
                     existsPortal.GetComponent<Portal>().Close();
                 }
-                portal = Instantiate(portalArrow.orangePortal, position, rotation, parent.transform);
+                portal = Instantiate(portalArrow.orangePortal, pos, rot, parent.transform);
             }
 
             portal.GetComponentInChildren<Portal>().Open();
-            var offset = portal.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
+            Vector3 offset = portal.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
             offset.x = 0;
             portal.transform.position += offset;
         }
@@ -230,16 +215,16 @@ namespace arrow {
 
             for (int i = 0; i < splitArrowsAmount; i++) {
                 instantiatedArrow = Instantiate(this, transform.position, transform.rotation);
-                var velocity = rigidbody.velocity;
+                Vector3 velocity = rigidbody.velocity;
 
                 float radAngle = angle * Mathf.Deg2Rad;
 
                 float newY = Mathf.Sin(radAngle) * velocity.z + Mathf.Cos(radAngle) * velocity.y;
                 float newZ = Mathf.Cos(radAngle) * velocity.z - Mathf.Sin(radAngle) * velocity.y;
 
-                var newVelocity = new Vector3(velocity.x, newY, newZ);
+                Vector3 newVelocity = new Vector3(velocity.x, newY, newZ);
 
-                instantiatedArrow.Release(newVelocity,false,bowController);
+                instantiatedArrow.Release(newVelocity, false, bowController);
 
                 angle += angleBetweenSplitArrows;
             }
@@ -253,7 +238,6 @@ namespace arrow {
             this.bowController = bowController;
 
             trailRenderer.enabled = true;
-            isInAir = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
             rigidbody.velocity = velocity;
@@ -271,7 +255,7 @@ namespace arrow {
         }
 
         private void OnDestroy() {
-            if(transform.parent != null) {
+            if (transform.parent != null) {
                 Destroy(transform.parent.gameObject);
             }
         }

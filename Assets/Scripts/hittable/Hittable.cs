@@ -1,4 +1,3 @@
-using arrow;
 using level;
 using UnityEngine;
 
@@ -6,8 +5,7 @@ namespace hittable{
     public class Hittable : MonoBehaviour {
 
         [SerializeField]
-        private Enemy enemy;
-
+        private Target target;
         [SerializeField]
         private ConnectedTarget connectedTarget;
         [SerializeField]
@@ -22,9 +20,9 @@ namespace hittable{
             }
         }
 
-        public void ProcessHit(Arrow arrow, RaycastHit hit) {
-            if (enemy) {
-                enemy.ProcessHit();
+        public void ProcessHit() {
+            if (target) {
+                target.ProcessHit();
                 return;
             }
 

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace portal {
     public class PortalCameraRenderer : MonoBehaviour {
@@ -11,6 +10,5 @@ namespace portal {
                 portals[i].PortalRenderer();
             }
         }
-
     }
 }

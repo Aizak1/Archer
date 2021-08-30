@@ -10,6 +10,5 @@ namespace ricochet {
             var newVelocity = new Vector3(velocity.x, -velocity.y, velocity.z);
             rigidBody.velocity = newVelocity;
         }
-
     }
 }

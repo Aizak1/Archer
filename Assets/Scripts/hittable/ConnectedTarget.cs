@@ -10,13 +10,10 @@ namespace hittable {
         [SerializeField]
         private float timeBetweenHits;
 
-        [HideInInspector]
-        public float hitTime;
-
-        private const float START_TIME = float.MinValue;
+        private float hitTime;
 
         private void Start() {
-            hitTime = START_TIME;
+            hitTime = float.MinValue;
         }
 
         public void ProcessHit() {

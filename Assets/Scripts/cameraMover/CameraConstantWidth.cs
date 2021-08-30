@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace cameraMover {
@@ -11,7 +9,7 @@ namespace cameraMover {
         [Range(0f, 1f)]
         private float widthOrHeight = 0.5f;
 
-        private Camera componentCamera;
+        private new Camera camera;
 
         private float initialSize;
         private float targetAspect;
@@ -20,22 +18,22 @@ namespace cameraMover {
         private float horizontalFov = 120f;
 
         private void Start() {
-            componentCamera = GetComponent<Camera>();
-            initialSize = componentCamera.orthographicSize;
+            camera = GetComponent<Camera>();
+            initialSize = camera.orthographicSize;
 
             targetAspect = resolution.x / resolution.y;
 
-            initialFov = componentCamera.fieldOfView;
+            initialFov = camera.fieldOfView;
             horizontalFov = CalcVerticalFov(initialFov, 1 / targetAspect);
 
-            if (componentCamera.orthographic) {
-                float constantWidthSize = initialSize * (targetAspect / componentCamera.aspect);
+            if (camera.orthographic) {
+                float constantWidthSize = initialSize * (targetAspect / camera.aspect);
                 var size = Mathf.Lerp(constantWidthSize, initialSize, widthOrHeight);
-                componentCamera.orthographicSize = size;
+                camera.orthographicSize = size;
             } else {
-                float constantWidthFov = CalcVerticalFov(horizontalFov, componentCamera.aspect);
+                float constantWidthFov = CalcVerticalFov(horizontalFov, camera.aspect);
                 var fieldOfView = Mathf.Lerp(constantWidthFov, initialFov, widthOrHeight);
-                componentCamera.fieldOfView = fieldOfView;
+                camera.fieldOfView = fieldOfView;
             }
         }
 

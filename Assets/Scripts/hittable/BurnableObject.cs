@@ -4,7 +4,6 @@ using arrow;
 namespace hittable {
     public class BurnableObject : MonoBehaviour{
 
-        [SerializeField]
         private bool isBurning;
 
         [SerializeField]
@@ -41,7 +40,7 @@ namespace hittable {
 
             float percent = (time - burnStartTime) / burnTime;
 
-            burnCotroller.animationStage = 1 -  percent;
+            burnCotroller.animationStage = 1 - percent;
         }
 
         public void ProcessHit(Arrow arrow) {

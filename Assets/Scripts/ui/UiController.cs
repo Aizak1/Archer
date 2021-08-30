@@ -52,11 +52,11 @@ namespace ui {
 
         private void Start() {
             arrowsForStar = levelController.PeelCountOfArrowsForStar().ToString();
-            if(arrowTypeText == null || arrowImage == null) {
+            if (arrowTypeText == null || arrowImage == null) {
                 return;
             }
 
-            if(arrowImageTextures.Length < resource.countToArrowType.Count) {
+            if (arrowImageTextures.Length < resource.countToArrowType.Count) {
                 Debug.LogError("Lack of Images");
                 return;
             }
@@ -92,7 +92,7 @@ namespace ui {
                 var currentTime = levelController.PeelTimeSinceStart();
                 var timeRemain = Mathf.RoundToInt(targetTime - currentTime);
 
-                if(timeRemain <= 0) {
+                if (timeRemain <= 0) {
                     timeText.text = "0";
                     timeText.color = Color.red;
                 } else {
@@ -117,7 +117,6 @@ namespace ui {
             arrowImage.texture = arrowTypeToTexture[nextType];
             arrowTypeToQuiverGroup[nextType].SetActive(true);
             trajectoryShower.SetSettings(arrowTrajectorySettings[nextTypeIndex]);
-
         }
     }
 }

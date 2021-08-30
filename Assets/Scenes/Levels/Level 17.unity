@@ -1351,6 +1351,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: connectedTarget
       value: 
       objectReference: {fileID: 286788594}
@@ -1446,7 +1450,6 @@ MonoBehaviour:
   - {fileID: 1359648360}
   - {fileID: 1921604646}
   timeBetweenHits: 1
-  hitTime: 0
 --- !u!4 &286788595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101319103121479963, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
@@ -7873,6 +7876,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: connectedTarget
       value: 
       objectReference: {fileID: 1359648360}
@@ -7968,7 +7975,6 @@ MonoBehaviour:
   - {fileID: 286788594}
   - {fileID: 1921604646}
   timeBetweenHits: 1
-  hitTime: 0
 --- !u!4 &1359648361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101319103121479963, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
@@ -10694,6 +10700,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: connectedTarget
       value: 
       objectReference: {fileID: 1921604646}
@@ -10789,7 +10799,6 @@ MonoBehaviour:
   - {fileID: 286788594}
   - {fileID: 1359648360}
   timeBetweenHits: 1
-  hitTime: 0
 --- !u!4 &1921604647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101319103121479963, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}

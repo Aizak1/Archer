@@ -46,6 +46,7 @@ namespace bow {
         private Rig[] archerRigs;
         [SerializeField]
         private Animator archerAnimator;
+        private readonly int isShootingID = Animator.StringToHash("isShooting");
 
         private new Camera camera;
 
@@ -59,11 +60,9 @@ namespace bow {
         private Animator bowAnimator;
         [SerializeField]
         private float maxPull;
-        private const string BLEND = "Blend";
-        private int blendID;
+        private readonly int blendID = Animator.StringToHash("Blend");
 
         private TrajectoryShower trajectoryShower;
-
 
         private void Start() {
             shotsCount = 0;
@@ -75,8 +74,7 @@ namespace bow {
                 rig.weight = 0;
             }
 
-            archerAnimator.SetBool("isShooting", false);
-            blendID = Animator.StringToHash(BLEND);
+            archerAnimator.SetBool(isShootingID, false);
             trajectoryShower = FindObjectOfType<TrajectoryShower>();
         }
 
@@ -100,9 +98,10 @@ namespace bow {
                 var arrowObjectToSpawn = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
                 var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
                 instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
+                instantiatedArrow.enabled = false;
                 audioSource.PlayOneShot(pullingSound);
 
-                archerAnimator.SetBool("isShooting", true);
+                archerAnimator.SetBool(isShootingID, true);
 
                 foreach (var rig in archerRigs) {
                     rig.weight = 1;
@@ -143,6 +142,8 @@ namespace bow {
 
             if (Input.GetMouseButtonUp(0)) {
 
+                instantiatedArrow.enabled = true;
+
                 instantiatedArrow.transform.parent = null;
 
                 var x = bowRotationPivot.transform.parent.transform.position.x;
@@ -173,15 +174,13 @@ namespace bow {
                 }
 
                 pullAmount = 0;
-                arrowPlacementPoint.transform.localPosition = minPullTransform.localPosition;
-                startTouchPosition = Vector3.zero;
                 instantiatedArrow = null;
 
                 foreach (var rig in archerRigs) {
                     rig.weight = 0;
                 }
 
-                archerAnimator.SetBool("isShooting", false);
+                archerAnimator.SetBool(isShootingID, false);
 
                 bowAnimator.SetFloat(blendID, pullAmount * maxPull);
 

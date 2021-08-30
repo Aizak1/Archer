@@ -1,6 +1,5 @@
 using UnityEngine;
 using hittable;
-using arrow;
 
 [RequireComponent(typeof(Hittable))]
 public class MovingTarget : MonoBehaviour

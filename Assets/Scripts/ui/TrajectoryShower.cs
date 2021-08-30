@@ -121,7 +121,8 @@ namespace ui {
                 return;
             }
 
-            float scaleStep = (trajectorySettup.StartWidth - trajectorySettup.EndWidth) / (ballindex - 1);
+            float deltaWidth = (trajectorySettup.StartWidth - trajectorySettup.EndWidth);
+            float scaleStep = deltaWidth / (ballindex - 1);
             float scale = trajectorySettup.StartWidth;
 
             for (int i = 0; i < ballindex; i++) {

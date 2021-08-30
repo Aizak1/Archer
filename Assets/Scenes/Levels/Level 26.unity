@@ -272,7 +272,7 @@ MonoBehaviour:
   animator: {fileID: 73851180}
   freezeMaterials:
   - {fileID: 2100000, guid: c88b88dc6eeb03b47890e4a4b75da774, type: 2}
-  freezeTime: 7
+  freezeDuration: 6
   audioSource: {fileID: 19554665}
   freezeSound: {fileID: 8300000, guid: c908cfbcd4027604fa7106a39cd62018, type: 3}
   isFreezeFromStart: 1
@@ -10524,8 +10524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 138, y: -287}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 138, y: -282}
+  m_SizeDelta: {x: 82.5, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4511220181004288050
 GameObject:
@@ -10614,8 +10614,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -119.99994, y: -290.00006}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -114, y: -285}
+  m_SizeDelta: {x: 72.5, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5822403827750091959
 CanvasRenderer:
@@ -10784,15 +10784,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 27.9
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -10919,15 +10919,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 27.9
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

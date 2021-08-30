@@ -6931,6 +6931,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: connectedTarget
       value: 
       objectReference: {fileID: 1559885217}
@@ -7025,7 +7029,6 @@ MonoBehaviour:
   targets:
   - {fileID: 1716963556}
   timeBetweenHits: 1
-  hitTime: 0
 --- !u!4 &1559885222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101319103121479963, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
@@ -7725,6 +7728,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: connectedTarget
       value: 
       objectReference: {fileID: 1716963556}
@@ -7819,7 +7826,6 @@ MonoBehaviour:
   targets:
   - {fileID: 1559885217}
   timeBetweenHits: 1
-  hitTime: 0
 --- !u!4 &1716963561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101319103121479963, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}

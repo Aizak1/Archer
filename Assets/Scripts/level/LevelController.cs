@@ -41,7 +41,6 @@ namespace level {
         private int countOfArrowsForStar;
         private int enemiesCount;
 
-
         private int starConditionsCompleteCount;
 
         private float timeSinceStart;
@@ -161,4 +160,3 @@ namespace level {
         }
     }
 }
-

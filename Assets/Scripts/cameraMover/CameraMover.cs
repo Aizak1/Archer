@@ -12,7 +12,7 @@ namespace cameraMover {
         [SerializeField]
         private Slider slider;
 
-        private Camera camera;
+        private new Camera camera;
 
         private void Start() {
             camera = Camera.main;
