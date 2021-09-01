@@ -1,8 +1,6 @@
 using hittable;
 using portal;
-using ricochet;
 using bow;
-using player;
 using UnityEngine;
 
 namespace arrow {
@@ -43,8 +41,6 @@ namespace arrow {
         private ParticleSystem hitVfx;
         [SerializeField]
         private ParticleSystem splitVfx;
-        [SerializeField]
-        private GameObject fireVfx;
 
         private const float VFX_LIFE_AFTER_HIT = 0.3f;
 
@@ -63,17 +59,17 @@ namespace arrow {
         private const string RAYCAST_LAYER = "Default";
 
         [SerializeField]
-        private PortalArrow portalArrow;
-        [HideInInspector]
         public TrailRenderer trailRenderer;
         [HideInInspector]
         public bool isTeleporting;
 
         private BowController bowController;
 
+        [SerializeField]
+        private new Collider collider;
+
         private void Awake() {
             lastTipPosition = tip.transform.position;
-            trailRenderer = GetComponentInChildren<TrailRenderer>();
             trailRenderer.enabled = false;
             isTeleporting = false;
         }
@@ -96,7 +92,7 @@ namespace arrow {
                     }
 
                     rigidbody.Sleep();
-                    GetComponent<Collider>().enabled = false;
+                    collider.enabled = false;
 
                     rigidbody.useGravity = false;
                     rigidbody.isKinematic = true;
@@ -110,8 +106,8 @@ namespace arrow {
 
                     transform.parent = parent.transform;
 
-                    if (portalArrow) {
-                        CreatePortal(hit);
+                    if (arrowType == ArrowType.Portal) {
+                        bowController.portalController.CreatePortal(hit);
                         Destroy(gameObject);
                         return;
                     }
@@ -121,21 +117,9 @@ namespace arrow {
                     }
 
                     var hittable = hit.collider.GetComponent<Hittable>();
-                    var freezable = hit.collider.GetComponent<FreezableObject>();
-                    var burnable = hit.collider.GetComponent<BurnableObject>();
-                    var player = hit.collider.GetComponent<Player>();
 
                     if (hittable) {
-                        hittable.ProcessHit();
-                    } else if (freezable) {
-                        freezable.ProcessHit(this);
-                    } else if (burnable) {
-                        burnable.ProcessHit(this);
-                        if (fireVfx) {
-                            fireVfx.SetActive(true);
-                        }
-                    } else if (player) {
-                        player.ProcessHit(hit);
+                        hittable.ProcessHit(this, hit);
                     } else {
                         bowController.arrowsOnLevel.Enqueue(gameObject);
                     }
@@ -156,12 +140,7 @@ namespace arrow {
                         trailRenderer.Clear();
                         trailRenderer.enabled = false;
                         isTeleporting = true;
-                        portal.StartPortalTravelling(GetComponent<Collider>());
-                    }
-
-                    var surface = hit.collider.GetComponent<RicochetSurface>();
-                    if (surface) {
-                        surface.Richochet(this);
+                        portal.StartPortalTravelling(collider);
                     }
                 }
             }
@@ -171,41 +150,6 @@ namespace arrow {
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
             }
-        }
-
-        private void CreatePortal(RaycastHit hit) {
-            Vector3 pos = hit.point;
-            Vector3 normal = hit.normal;
-            normal.x = 0;
-            var rot = Quaternion.LookRotation(normal);
-            GameObject portal;
-
-            var parent = new GameObject();
-            parent.transform.position = hit.collider.gameObject.transform.position;
-            parent.transform.rotation = hit.collider.gameObject.transform.rotation;
-            parent.transform.parent = hit.collider.gameObject.transform;
-
-            if (portalArrow.isBlue) {
-
-                var existPortal = GameObject.FindGameObjectWithTag(Portal.BLUE_PORTAL_TAG);
-                if (existPortal) {
-                    existPortal.GetComponent<Portal>().Close();
-                }
-                portal = Instantiate(portalArrow.bluePortal, pos, rot, parent.transform);
-
-            } else {
-
-                var existsPortal = GameObject.FindGameObjectWithTag(Portal.ORANGE_PORTAL_TAG);
-                if (existsPortal) {
-                    existsPortal.GetComponent<Portal>().Close();
-                }
-                portal = Instantiate(portalArrow.orangePortal, pos, rot, parent.transform);
-            }
-
-            portal.GetComponentInChildren<Portal>().Open();
-            Vector3 offset = portal.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
-            offset.x = 0;
-            portal.transform.position += offset;
         }
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {

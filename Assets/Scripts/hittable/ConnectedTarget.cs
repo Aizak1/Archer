@@ -3,6 +3,8 @@ using UnityEngine;
 namespace hittable {
     [RequireComponent(typeof(Hittable))]
     public class ConnectedTarget : MonoBehaviour {
+        [SerializeField]
+        private Hittable hittable;
 
         [SerializeField]
         private ConnectedTarget[] targets;
@@ -29,13 +31,11 @@ namespace hittable {
 
             foreach (var target in targets) {
                 Destroy(target);
+                hittable.levelController.DecreaseEnemyCount();
             }
 
+            hittable.levelController.DecreaseEnemyCount();
             Destroy(this);
-        }
-
-        private void OnDestroy() {
-            Destroy(GetComponent<Hittable>());
         }
     }
 }

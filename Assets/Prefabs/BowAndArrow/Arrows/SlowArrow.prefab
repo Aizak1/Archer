@@ -209,7 +209,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowType: 3
   speed: 7
-  isInAir: 0
   tip: {fileID: 8386148805111352677}
   rigidbody: {fileID: 5194487377624509044}
   splitArrowsAmount: 1
@@ -218,14 +217,12 @@ MonoBehaviour:
   mainVfx: {fileID: 725891555308943393}
   hitVfx: {fileID: 0}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
-  fireVfx: {fileID: 0}
   audioSource: {fileID: 4635934901314551946}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
-  portalArrow: {fileID: 0}
-  trailRenderer: {fileID: 0}
-  trailTime: 0
+  trailRenderer: {fileID: 4620717583414769138}
   isTeleporting: 0
+  collider: {fileID: 5357651961430278306}
 --- !u!82 &4635934901314551946
 AudioSource:
   m_ObjectHideFlags: 0
@@ -348,12 +345,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsObject: {fileID: 2814095616492174509}
+  tipTransform: {fileID: 8386148805111352677}
+  tailTransform: {fileID: 4642730870610390657}
+  length: 0
   graphicsClone: {fileID: 0}
-  previousOffsetFromPortal: {x: 0, y: 0, z: 0}
   originalMaterials: []
   cloneMaterials: []
-  rigidbody: {fileID: 0}
-  sign: 0
+  rigidbody: {fileID: 5194487377624509044}
 --- !u!1 &5897339726961812836
 GameObject:
   m_ObjectHideFlags: 0

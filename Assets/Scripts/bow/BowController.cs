@@ -5,6 +5,7 @@ using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using ui;
+using portal;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -48,6 +49,7 @@ namespace bow {
         private Animator archerAnimator;
         private readonly int isShootingID = Animator.StringToHash("isShooting");
 
+        [SerializeField]
         private new Camera camera;
 
         [HideInInspector]
@@ -62,20 +64,22 @@ namespace bow {
         private float maxPull;
         private readonly int blendID = Animator.StringToHash("Blend");
 
+        [SerializeField]
         private TrajectoryShower trajectoryShower;
+
+        [SerializeField]
+        public PortalController portalController;
 
         private void Start() {
             shotsCount = 0;
             arrowsOnLevel = new Queue<GameObject>();
             arrowTypeToInstantiate = arrowResource.countToArrowType[0];
-            camera = Camera.main;
 
             foreach (var rig in archerRigs) {
                 rig.weight = 0;
             }
 
             archerAnimator.SetBool(isShootingID, false);
-            trajectoryShower = FindObjectOfType<TrajectoryShower>();
         }
 
         private void Update() {
@@ -99,6 +103,7 @@ namespace bow {
                 var arrowGameObject = Instantiate(arrowObjectToSpawn, pos, rot, parent);
                 instantiatedArrow = arrowGameObject.GetComponentInChildren<Arrow>();
                 instantiatedArrow.enabled = false;
+
                 audioSource.PlayOneShot(pullingSound);
 
                 archerAnimator.SetBool(isShootingID, true);
@@ -137,7 +142,9 @@ namespace bow {
 
                 bowAnimator.SetFloat(blendID, pullAmount * maxPull);
 
-                trajectoryShower.Draw();
+                if (trajectoryShower) {
+                    trajectoryShower.Draw();
+                }
             }
 
             if (Input.GetMouseButtonUp(0)) {
@@ -168,9 +175,7 @@ namespace bow {
                 shotsCount++;
 
                 if (arrowTypeToInstantiate == ArrowType.Portal) {
-                    var portalArrowPrefab = arrowResource.arrowPrefabs[arrowTypeToInstantiate];
-                    var portalArrow = portalArrowPrefab.GetComponentInChildren<PortalArrow>();
-                    portalArrow.isBlue = !portalArrow.isBlue;
+                    portalController.isBlue = !portalController.isBlue;
                 }
 
                 pullAmount = 0;

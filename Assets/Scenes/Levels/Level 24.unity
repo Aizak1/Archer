@@ -817,6 +817,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 764758968}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target (1)
@@ -906,6 +910,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &286125682 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3412229177642889671, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+  m_PrefabInstance: {fileID: 1903385927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &300648676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684522381995130, guid: a72c2cd1520039b4084a4a33dfeccf7e, type: 3}
@@ -1371,9 +1386,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
       objectReference: {fileID: 786763080}
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: trajectoryShower
+      value: 
+      objectReference: {fileID: 1496330439}
+    - target: {fileID: 5681318911223862649, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: cameraRenderer
+      value: 
+      objectReference: {fileID: 963194230}
+    - target: {fileID: 8587985851345400736, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -1552,6 +1583,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &498590997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2091185621773697746, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+  m_PrefabInstance: {fileID: 498590993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498590995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6477f995e55f4924e8ed5fd54549485b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &523515358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,6 +2650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolution: {x: 1920, y: 1080}
   widthOrHeight: 0.5
+  camera: {fileID: 963194227}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2780,7 +2823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4363527306552524, guid: 5b856ec4f8f8cb84f861f8f8a026c288, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4363527306552524, guid: 5b856ec4f8f8cb84f861f8f8a026c288, type: 3}
       propertyPath: m_LocalScale.x
@@ -2872,6 +2915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   step: 3
   maxPos: {fileID: 285656051}
+  camera: {fileID: 963194227}
 --- !u!4 &1114461008
 Transform:
   m_ObjectHideFlags: 0
@@ -3179,11 +3223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].EndWidth
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].EndWidth
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].StartWidth
@@ -3199,7 +3243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.atime1
-      value: 65535
+      value: 32768
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.ctime1
@@ -3207,7 +3251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key0.a
-      value: 0.47058824
+      value: 0.5882353
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key0.b
@@ -3219,7 +3263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key1.a
-      value: 0
+      value: 0.47058824
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key1.b
@@ -3230,8 +3274,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.atime1
-      value: 65535
+      value: 32768
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.atime2
@@ -3267,7 +3315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key0.a
-      value: 0.47058824
+      value: 0.5882353
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key0.b
@@ -3283,7 +3331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key1.a
-      value: 0
+      value: 0.47058824
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key1.b
@@ -3299,7 +3347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key2.a
-      value: 0.6392157
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.key2.r
@@ -3355,7 +3403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.m_NumAlphaKeys
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.m_NumColorKeys
@@ -3363,7 +3411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.m_NumAlphaKeys
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[1].Gradient.m_NumColorKeys
@@ -3501,21 +3549,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1183756616 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544830602089, guid: a794de97671859e409dd02dec979a670, type: 3}
+--- !u!114 &1183756616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1024177615177157436, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 1183756611}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1183756617 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544442944182, guid: a794de97671859e409dd02dec979a670, type: 3}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1183756617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4706345214662542755, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 1183756611}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1183756618 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544572740286, guid: a794de97671859e409dd02dec979a670, type: 3}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1183756618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2234048763177283464, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 1183756611}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1183756619 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3967554543914201271, guid: a794de97671859e409dd02dec979a670, type: 3}
@@ -3965,6 +4031,7 @@ MonoBehaviour:
   failArrowsCountText: {fileID: 7757534882123916783}
   starTime: 65
   countOfArrowsForStar: 11
+  targetsCount: 3
   starScaleSpeed: 0.5
   isFailed: 0
 --- !u!4 &1451289435
@@ -4219,6 +4286,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 764758968}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target
@@ -4662,6 +4733,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 5.537
       objectReference: {fileID: 0}
+    - target: {fileID: 7424123978254436001, guid: ffa1b26641f4e824ab157b6bfd42acf9, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 7838557471492836723, guid: ffa1b26641f4e824ab157b6bfd42acf9, type: 3}
       propertyPath: m_Name
       value: MovingTargetWithParent
@@ -5224,6 +5299,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 570166682, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 298268437795034729, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: m_Name
       value: Teleporter
@@ -5234,7 +5313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 298268437795064393, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 298268437795064393, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5277,9 +5356,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 498590997}
+    - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: hittable
+      value: 
+      objectReference: {fileID: 286125682}
+    - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: newPosTransform
       value: 
       objectReference: {fileID: 785973709}
+    - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: appearTargetCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1726738584540754016, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
       propertyPath: hittablesToDestroy.Array.size
       value: 1
@@ -5288,6 +5383,10 @@ PrefabInstance:
       propertyPath: hittablesToDestroy.Array.data[0]
       value: 
       objectReference: {fileID: 1713614076}
+    - target: {fileID: 3412229177642889671, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4abc8f6d6d9a8a54cbd72e0ca09510ce, type: 3}
 --- !u!4 &1903385928 stripped

@@ -285,7 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowType: 1
   speed: 10
-  isInAir: 0
   tip: {fileID: 8386148805111352677}
   rigidbody: {fileID: 5194487377624509044}
   splitArrowsAmount: 2
@@ -294,14 +293,12 @@ MonoBehaviour:
   mainVfx: {fileID: 7318163507884715302}
   hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
-  fireVfx: {fileID: 0}
   audioSource: {fileID: 7394638532809229645}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
-  portalArrow: {fileID: 0}
-  trailRenderer: {fileID: 0}
-  trailTime: 0
+  trailRenderer: {fileID: 1464731780451140138}
   isTeleporting: 0
+  collider: {fileID: 3577048291114291362}
 --- !u!82 &7394638532809229645
 AudioSource:
   m_ObjectHideFlags: 0
@@ -417,7 +414,7 @@ MonoBehaviour:
   graphicsClone: {fileID: 0}
   originalMaterials: []
   cloneMaterials: []
-  rigidbody: {fileID: 0}
+  rigidbody: {fileID: 5194487377624509044}
 --- !u!65 &3577048291114291362
 BoxCollider:
   m_ObjectHideFlags: 0

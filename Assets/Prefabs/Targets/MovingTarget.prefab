@@ -130,9 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  target: {fileID: 0}
   connectedTarget: {fileID: 0}
   movingTarget: {fileID: 659835507710497829}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 0}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 0}
 --- !u!114 &659835507710497829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,3 +151,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1328937555427575773}
+  hittable: {fileID: 6935294390449274510}

@@ -20,15 +20,13 @@ namespace portal {
         [HideInInspector]
         public Material[] cloneMaterials;
 
-        [HideInInspector]
+        [SerializeField]
         public new Rigidbody rigidbody;
 
         private Vector3 originalSliceDirection = new Vector3(0, -1, 0);
         private Vector3 cloneSliceDirection = new Vector3(0, 1, 0);
 
         private void Start() {
-            rigidbody = GetComponent<Rigidbody>();
-
             length = (tipTransform.position - tailTransform.position).magnitude;
         }
 

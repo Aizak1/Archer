@@ -16,16 +16,17 @@ namespace portal {
         [SerializeField]
         private AudioClip portalSound;
 
+        [SerializeField]
+        private new Collider collider;
+        [SerializeField]
+        private Animator animator;
+
         private const string OPEN_PORTAL_TRIGGER = "Open";
         private const string CLOSE_PORTAL_TRIGGER = "Close";
 
         private const float CLOSE_ANIMATION_TIME = 0.5f;
         private const int LAST_MATRIX_COLUMN = 3;
         public const float PORTAL_SPAWN_OFFSET = 8.7f;
-
-        private const string UNTAGGED = "Untagged";
-        public const string BLUE_PORTAL_TAG = "Blue Portal";
-        public const string ORANGE_PORTAL_TAG = "Orange Portal";
 
         public const string SLICE_DIRECTION = "_V3SliceLocalDirection";
         public const string SLICE_STAGE = "_SliceStage";
@@ -35,7 +36,6 @@ namespace portal {
 
         private void Awake() {
             trackedTravellers = new List<PortalTraveller>();
-            cameraRenderer = FindObjectOfType<PortalCameraRenderer>();
         }
 
         private void LateUpdate() {
@@ -159,25 +159,7 @@ namespace portal {
             }
         }
 
-        private void CheckSecondPortal() {
-            string tagToFindObject;
-
-            if (isOrange) {
-                tagToFindObject = BLUE_PORTAL_TAG;
-            } else {
-                tagToFindObject = ORANGE_PORTAL_TAG;
-            }
-
-            var portalObject = GameObject.FindGameObjectWithTag(tagToFindObject);
-            if (portalObject == null) {
-                return;
-            }
-            var portal = portalObject.GetComponent<Portal>();
-
-            if (portal == null) {
-                return;
-            }
-
+        private void CheckSecondPortal(Portal portal) {
             ConnectPortals(portal);
             linkedPortal.ConnectPortals(this);
         }
@@ -187,22 +169,20 @@ namespace portal {
             isReady = true;
         }
 
-        public void Open() {
-            GetComponent<Animator>().SetTrigger(OPEN_PORTAL_TRIGGER);
-            CheckSecondPortal();
-            if(cameraRenderer == null) {
-                Debug.LogError("Add Portal camera renderer");
-                return;
+        public void Open(PortalCameraRenderer cameraRenderer, Portal portalToLink = null) {
+            animator.SetTrigger(OPEN_PORTAL_TRIGGER);
+            if (portalToLink) {
+                CheckSecondPortal(portalToLink);
             }
-            cameraRenderer.portals.Add(this);
+            this.cameraRenderer = cameraRenderer;
+            this.cameraRenderer.portals.Add(this);
 
             audioSource.PlayOneShot(portalSound);
         }
 
         public void Close() {
-            GetComponent<Collider>().enabled = false;
-            tag = UNTAGGED;
-            GetComponent<Animator>().SetTrigger(CLOSE_PORTAL_TRIGGER);
+            collider.enabled = false;
+            animator.SetTrigger(CLOSE_PORTAL_TRIGGER);
             Destroy(transform.parent.gameObject, CLOSE_ANIMATION_TIME);
 
             if (cameraRenderer == null) {

@@ -2,6 +2,7 @@ using arrow;
 using UnityEngine;
 
 namespace hittable {
+    [RequireComponent(typeof(Hittable))]
     public class FreezableObject : MonoBehaviour {
 
         [SerializeField]

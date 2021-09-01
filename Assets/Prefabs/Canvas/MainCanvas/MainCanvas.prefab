@@ -3204,6 +3204,7 @@ GameObject:
   - component: {fileID: 3967554544442944177}
   - component: {fileID: 3967554544442944179}
   - component: {fileID: 3967554544442944176}
+  - component: {fileID: 4706345214662542755}
   m_Layer: 5
   m_Name: BigStar
   m_TagString: Untagged
@@ -3265,6 +3266,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &4706345214662542755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967554544442944182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 3967554544442944177}
 --- !u!1 &3967554544545512091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3364,6 +3378,7 @@ GameObject:
   - component: {fileID: 3967554544572740281}
   - component: {fileID: 3967554544572740283}
   - component: {fileID: 3967554544572740280}
+  - component: {fileID: 2234048763177283464}
   m_Layer: 5
   m_Name: LeftStar
   m_TagString: Untagged
@@ -3425,6 +3440,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2234048763177283464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967554544572740286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 3967554544572740281}
 --- !u!1 &3967554544624470269
 GameObject:
   m_ObjectHideFlags: 0
@@ -3943,6 +3971,7 @@ GameObject:
   - component: {fileID: 3967554544830602088}
   - component: {fileID: 3967554544830602090}
   - component: {fileID: 3967554544830602091}
+  - component: {fileID: 1024177615177157436}
   m_Layer: 5
   m_Name: RightStar
   m_TagString: Untagged
@@ -4004,6 +4033,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1024177615177157436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967554544830602089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 3967554544830602088}
 --- !u!1 &3967554544840574644
 GameObject:
   m_ObjectHideFlags: 0

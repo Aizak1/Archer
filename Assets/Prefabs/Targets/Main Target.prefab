@@ -113,6 +113,11 @@ MonoBehaviour:
   target: {fileID: 1678184263792053280}
   connectedTarget: {fileID: 0}
   movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 0}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 0}
 --- !u!114 &1678184263792053280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +130,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4a86c204549b246a12375ff5692faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hittable: {fileID: 6935294390449274510}

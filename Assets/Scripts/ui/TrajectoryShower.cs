@@ -14,6 +14,7 @@ namespace ui {
         private TrajectorySettings trajectorySettup;
 
         private Vector3[] pointList;
+        [SerializeField]
         private LineRenderer lineRenderer;
 
         private const string MAIN_TEXTURE = "_MainTex";
@@ -25,8 +26,6 @@ namespace ui {
         private int ballindex;
 
         private void Start() {
-            lineRenderer = GetComponent<LineRenderer>();
-
             if (!lineRenderer) {
                 Debug.LogError("No LineRenderer on trajectory shower");
                 return;

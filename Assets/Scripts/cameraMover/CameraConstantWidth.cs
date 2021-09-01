@@ -9,6 +9,7 @@ namespace cameraMover {
         [Range(0f, 1f)]
         private float widthOrHeight = 0.5f;
 
+        [SerializeField]
         private new Camera camera;
 
         private float initialSize;
@@ -18,7 +19,6 @@ namespace cameraMover {
         private float horizontalFov = 120f;
 
         private void Start() {
-            camera = GetComponent<Camera>();
             initialSize = camera.orthographicSize;
 
             targetAspect = resolution.x / resolution.y;

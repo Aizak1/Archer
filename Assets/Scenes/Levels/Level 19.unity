@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 11925366}
   - component: {fileID: 11925365}
   - component: {fileID: 11925370}
+  - component: {fileID: 11925369}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -219,6 +220,26 @@ Transform:
   m_Father: {fileID: 2104179967}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11925369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11925364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 11925370}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!114 &11925370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +885,7 @@ GameObject:
   - component: {fileID: 401506801}
   - component: {fileID: 401506800}
   - component: {fileID: 401506804}
+  - component: {fileID: 401506805}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -964,6 +986,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &401506805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401506799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 401506804}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!1 &402065718
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,6 +1019,7 @@ GameObject:
   - component: {fileID: 402065721}
   - component: {fileID: 402065720}
   - component: {fileID: 402065723}
+  - component: {fileID: 402065724}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -1074,6 +1117,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &402065724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 402065723}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!1 &416169492 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1071809767348096231, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
@@ -1229,7 +1292,7 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 0ac67f195c8524d4ea57762a0c7099e6, type: 3}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].EndWidth
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].numberOfPoitns
@@ -1237,7 +1300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.atime1
-      value: 65535
+      value: 32768
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.ctime1
@@ -1245,7 +1308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key0.a
-      value: 0.47058824
+      value: 0.5882353
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key0.b
@@ -1257,7 +1320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key1.a
-      value: 0
+      value: 0.47058824
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key1.b
@@ -1268,8 +1331,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.key2.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.m_NumAlphaKeys
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: arrowTrajectorySettings.Array.data[0].Gradient.m_NumColorKeys
@@ -1396,21 +1463,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &507931323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544830602089, guid: a794de97671859e409dd02dec979a670, type: 3}
+--- !u!114 &507931323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1024177615177157436, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 507931319}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &507931324 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544442944182, guid: a794de97671859e409dd02dec979a670, type: 3}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &507931324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4706345214662542755, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 507931319}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &507931325 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3967554544572740286, guid: a794de97671859e409dd02dec979a670, type: 3}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &507931325 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2234048763177283464, guid: a794de97671859e409dd02dec979a670, type: 3}
   m_PrefabInstance: {fileID: 507931319}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111acf77384565e4fb8732b6016b124d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &507931326 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3967554544802769467, guid: a794de97671859e409dd02dec979a670, type: 3}
@@ -1541,6 +1626,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 402065719}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target (2)
@@ -2492,6 +2581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolution: {x: 1920, y: 1080}
   widthOrHeight: 0.5
+  camera: {fileID: 963194227}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2872,6 +2962,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1904314561}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target (1)
@@ -3305,6 +3399,7 @@ MonoBehaviour:
   failArrowsCountText: {fileID: 0}
   starTime: 45
   countOfArrowsForStar: 7
+  targetsCount: 4
   starScaleSpeed: 0.5
   isFailed: 0
 --- !u!4 &1451289435
@@ -3454,6 +3549,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1883684015}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target
@@ -3732,10 +3831,18 @@ PrefabInstance:
       propertyPath: m_Weight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2091185621773697746, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 3290649557652101980, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 963194227}
     - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -3744,6 +3851,10 @@ PrefabInstance:
       propertyPath: isSplitingMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: trajectoryShower
+      value: 
+      objectReference: {fileID: 444015255}
     - target: {fileID: 4875636186833228805, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.013000488
@@ -4400,6 +4511,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.006211209
       objectReference: {fileID: 0}
+    - target: {fileID: 8587985851345400736, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8798860651987609453, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
@@ -4770,6 +4885,7 @@ GameObject:
   - component: {fileID: 1883684017}
   - component: {fileID: 1883684016}
   - component: {fileID: 1883684019}
+  - component: {fileID: 1883684020}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -4867,6 +4983,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &1883684020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883684014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 1883684019}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!1001 &1900001745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5006,6 +5142,7 @@ GameObject:
   - component: {fileID: 1904314563}
   - component: {fileID: 1904314562}
   - component: {fileID: 1904314565}
+  - component: {fileID: 1904314566}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -5103,6 +5240,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &1904314566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904314560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 1904314565}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!1 &1907164276
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,6 +5273,7 @@ GameObject:
   - component: {fileID: 1907164279}
   - component: {fileID: 1907164278}
   - component: {fileID: 1907164281}
+  - component: {fileID: 1907164282}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -5213,6 +5371,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &1907164282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907164276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 1907164281}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!1001 &1917707804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5577,6 +5755,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1907164277}
     m_Modifications:
+    - target: {fileID: 6935294390449274510, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
+      propertyPath: levelController
+      value: 
+      objectReference: {fileID: 1451289434}
     - target: {fileID: 8099583835394547137, guid: fb6e8359d94274045ae235d0c63eb015, type: 3}
       propertyPath: m_Name
       value: Main Target (1)
@@ -5823,6 +6005,7 @@ GameObject:
   - component: {fileID: 2119867831}
   - component: {fileID: 2119867830}
   - component: {fileID: 2119867834}
+  - component: {fileID: 2119867835}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -5919,6 +6102,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezzeController: {fileID: 2104179968}
+--- !u!114 &2119867835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119867829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  connectedTarget: {fileID: 0}
+  movingTarget: {fileID: 0}
+  burnableObject: {fileID: 0}
+  freezableObject: {fileID: 2119867834}
+  player: {fileID: 0}
+  playerTeleport: {fileID: 0}
+  levelController: {fileID: 1451289434}
 --- !u!222 &458708909709576348
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -83,7 +83,7 @@ namespace ui {
 
         private void Update() {
             if (enemyCountText != null && levelController != null) {
-                enemyCountText.text = levelController.PeelEnemiesCount().ToString();
+                enemyCountText.text = levelController.PeelTargetsCount().ToString();
 
                 string currentArrows = bowController.shotsCount.ToString();
 

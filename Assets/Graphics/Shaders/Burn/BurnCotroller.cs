@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BurnCotroller : MonoBehaviour {
@@ -62,6 +59,7 @@ public class BurnCotroller : MonoBehaviour {
         meshRenderer.material.SetVector("_Position", burnTransform.transform.position);
     }
 
+    #if UNITY_EDITOR
     [ContextMenu("GetStartPosition")]
     private void GetStartPosition() {
         startPosition = particleSystem.transform.localPosition;
@@ -71,4 +69,5 @@ public class BurnCotroller : MonoBehaviour {
     private void GetEndPosition() {
         endPosition = particleSystem.transform.localPosition;
     }
+    #endif
 }

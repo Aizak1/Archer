@@ -1,7 +1,8 @@
 using UnityEngine;
 using level;
 
-namespace player {
+namespace hittable {
+    [RequireComponent(typeof(Hittable))]
     public class Player : MonoBehaviour {
         [SerializeField]
         private LevelController levelController;

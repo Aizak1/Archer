@@ -124,7 +124,6 @@ GameObject:
   - component: {fileID: 5194487377624509044}
   - component: {fileID: 1851190763705419970}
   - component: {fileID: 4635934901314551946}
-  - component: {fileID: 9196913921763422019}
   - component: {fileID: 1380187726592052734}
   - component: {fileID: 7115766762171545578}
   m_Layer: 7
@@ -180,7 +179,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowType: 4
   speed: 10
-  isInAir: 0
   tip: {fileID: 8386148805111352677}
   rigidbody: {fileID: 5194487377624509044}
   splitArrowsAmount: 1
@@ -189,14 +187,12 @@ MonoBehaviour:
   mainVfx: {fileID: 6473104081027419459}
   hitVfx: {fileID: 0}
   splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
-  fireVfx: {fileID: 0}
   audioSource: {fileID: 4635934901314551946}
   impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
   splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
-  portalArrow: {fileID: 9196913921763422019}
-  trailRenderer: {fileID: 0}
-  trailTime: 0
+  trailRenderer: {fileID: 2744344632471690294}
   isTeleporting: 0
+  collider: {fileID: 1380187726592052734}
 --- !u!82 &4635934901314551946
 AudioSource:
   m_ObjectHideFlags: 0
@@ -293,21 +289,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9196913921763422019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991164316996165318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2c49979908135d4589a5106550e0f33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isBlue: 1
-  bluePortal: {fileID: 8727921272806028875, guid: 305972242400cf44f8eaf80140afff97, type: 3}
-  orangePortal: {fileID: 829068917622688132, guid: 0fec1c59b799e1048b2fede3dfdbebbc, type: 3}
 --- !u!65 &1380187726592052734
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -340,7 +321,7 @@ MonoBehaviour:
   graphicsClone: {fileID: 0}
   originalMaterials: []
   cloneMaterials: []
-  rigidbody: {fileID: 0}
+  rigidbody: {fileID: 5194487377624509044}
 --- !u!1 &5436353624406495219
 GameObject:
   m_ObjectHideFlags: 0

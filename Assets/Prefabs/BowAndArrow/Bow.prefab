@@ -353,7 +353,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5854033015894534605}
   - component: {fileID: 3176465753457872173}
-  - component: {fileID: 660293206}
   - component: {fileID: 660293210}
   - component: {fileID: 1077114271}
   - component: {fileID: 8412079814382961}
@@ -404,21 +403,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &660293206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2589571369817754473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844e075f1faf8ac45b382fc8d2028c5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3176465753457872173}
-  bowController: {fileID: 660293210}
-  maxPull: 0.92
 --- !u!114 &660293210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,7 +430,12 @@ MonoBehaviour:
   instantiatedArrow: {fileID: 0}
   archerRigs: []
   archerAnimator: {fileID: 0}
+  camera: {fileID: 0}
   shotsCount: 0
+  bowAnimator: {fileID: 3176465753457872173}
+  maxPull: 0
+  trajectoryShower: {fileID: 0}
+  portalController: {fileID: 0}
 --- !u!82 &1077114271
 AudioSource:
   m_ObjectHideFlags: 0

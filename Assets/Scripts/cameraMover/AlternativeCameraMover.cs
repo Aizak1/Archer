@@ -10,10 +10,10 @@ namespace cameraMover {
 
         private Vector3 startPos;
 
+        [SerializeField]
         private new Camera camera;
 
         private void Start() {
-            camera = Camera.main;
             startPos = camera.transform.position;
         }
 

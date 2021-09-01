@@ -1,18 +1,14 @@
 using UnityEngine;
-using hittable;
 
-[RequireComponent(typeof(Hittable))]
-public class MovingTarget : MonoBehaviour
-{
-    [SerializeField]
-    private Animator animator;
+namespace hittable {
+    [RequireComponent(typeof(Hittable))]
+    public class MovingTarget : MonoBehaviour {
+        [SerializeField]
+        private Animator animator;
 
-    public void ProcessHit() {
-        animator.speed = 0;
-        Destroy(this);
-    }
-
-    private void OnDestroy() {
-        Destroy(GetComponent<Hittable>());
+        public void ProcessHit() {
+            animator.speed = 0;
+            Destroy(this);
+        }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using arrow;
 
 namespace hittable {
+    [RequireComponent(typeof(Hittable))]
     public class BurnableObject : MonoBehaviour{
 
         private bool isBurning;
@@ -10,6 +11,7 @@ namespace hittable {
         private float burnTime;
         private float burnStartTime;
 
+        [SerializeField]
         private new MeshRenderer renderer;
 
         [SerializeField]
@@ -20,10 +22,6 @@ namespace hittable {
 
         private void Awake() {
             burnCotroller.enabled = false;
-        }
-
-        private void Start() {
-            renderer = GetComponent<MeshRenderer>();
         }
 
         private void Update() {

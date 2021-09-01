@@ -25,7 +25,7 @@ namespace level {
         private AudioClip[] winSounds;
 
         [SerializeField]
-        private GameObject[] stars;
+        private Star[] stars;
         [SerializeField]
         private TextMeshProUGUI timeText;
         [SerializeField]
@@ -39,7 +39,8 @@ namespace level {
         private float starTime;
         [SerializeField]
         private int countOfArrowsForStar;
-        private int enemiesCount;
+        [SerializeField]
+        private int targetsCount;
 
         private int starConditionsCompleteCount;
 
@@ -51,10 +52,9 @@ namespace level {
         public bool isFailed;
 
         private void Awake() {
-            enemiesCount = FindObjectsOfType<Hittable>().Length;
             isFailed = false;
             if(countOfArrowsForStar == 0) {
-                countOfArrowsForStar = enemiesCount + 1;
+                countOfArrowsForStar = targetsCount + 1;
             }
             starConditionsCompleteCount = 1;
             winMenu.SetActive(false);
@@ -65,7 +65,7 @@ namespace level {
                 timeSinceStart += Time.deltaTime;
             }
 
-            if (enemiesCount == 0) {
+            if (targetsCount == 0) {
 
                 if (winVfx != null) {
                     Instantiate(winVfx, transform.position, Quaternion.identity);
@@ -90,8 +90,8 @@ namespace level {
                 }
 
                 for (int i = 0; i < starConditionsCompleteCount; i++) {
-                    stars[i].SetActive(true);
-                    var transform = stars[i].GetComponent<RectTransform>();
+                    stars[i].gameObject.SetActive(true);
+                    var transform = stars[i].rectTransform;
                     transform.localScale = Vector3.zero;
                     transform.DOScale(Vector3.one, starScaleSpeed);
                 }
@@ -137,15 +137,14 @@ namespace level {
                 gameMenu.SetActive(false);
                 enabled = false;
             }
-
         }
 
         public void DecreaseEnemyCount() {
-            enemiesCount--;
+            targetsCount--;
         }
 
-        public int PeelEnemiesCount() {
-            return enemiesCount;
+        public int PeelTargetsCount() {
+            return targetsCount;
         }
         public int PeelCountOfArrowsForStar() {
             return countOfArrowsForStar;
