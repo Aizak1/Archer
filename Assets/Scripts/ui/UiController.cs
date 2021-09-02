@@ -50,6 +50,10 @@ namespace ui {
         [SerializeField]
         private SceneLoader sceneLoader;
 
+        private float targetTime;
+        private float currentTime;
+        private int timeRemain;
+
         private void Start() {
             arrowsForStar = levelController.PeelCountOfArrowsForStar().ToString();
             if (arrowTypeText == null || arrowImage == null) {
@@ -83,20 +87,20 @@ namespace ui {
 
         private void Update() {
             if (enemyCountText != null && levelController != null) {
-                enemyCountText.text = levelController.PeelTargetsCount().ToString();
+                enemyCountText.text = "";
+                enemyCountText.text += levelController.PeelTargetsCount();
 
-                string currentArrows = bowController.shotsCount.ToString();
-
-                spendedArrowsText.text = currentArrows + " / " + arrowsForStar;
-                var targetTime = levelController.PeelStarTime();
-                var currentTime = levelController.PeelTimeSinceStart();
-                var timeRemain = Mathf.RoundToInt(targetTime - currentTime);
+                spendedArrowsText.text = bowController.shotsCount + " / " + arrowsForStar;
+                targetTime = levelController.PeelStarTime();
+                currentTime = levelController.PeelTimeSinceStart();
+                timeRemain = Mathf.RoundToInt(targetTime - currentTime);
 
                 if (timeRemain <= 0) {
                     timeText.text = "0";
                     timeText.color = Color.red;
                 } else {
-                    timeText.text = timeRemain.ToString();
+                    timeText.text = "";
+                    timeText.text += timeRemain;
                 }
             }
         }
