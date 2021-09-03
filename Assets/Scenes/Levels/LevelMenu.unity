@@ -21268,6 +21268,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: FadeLoadLevelByIndex
       objectReference: {fileID: 0}
+    - target: {fileID: 2411910597340386548, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: FadeLoadMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 2439968432177322691, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -21319,6 +21323,10 @@ PrefabInstance:
     - target: {fileID: 4608495205882416196, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: FadeLoadLevelByIndex
+      objectReference: {fileID: 0}
+    - target: {fileID: 5065421088162849636, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
+      propertyPath: isFadeOut
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5065421088162849636, guid: 2bf5e64a213bbab4dba55645fcb1d4c0, type: 3}
       propertyPath: transitionAnimator
