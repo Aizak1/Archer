@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using ui;
 using portal;
+using hittable;
 
 namespace bow {
     public class BowController : MonoBehaviour {
@@ -70,6 +71,9 @@ namespace bow {
         [SerializeField]
         public PortalController portalController;
 
+        [SerializeField]
+        private float rotTime;
+
         private void Start() {
             shotsCount = 0;
             arrowsOnLevel = new Queue<GameObject>();
@@ -85,10 +89,19 @@ namespace bow {
         private void Update() {
 
             if (Input.GetMouseButtonDown(0)) {
-
                 var uiObject = EventSystem.current.currentSelectedGameObject;
 
                 if (uiObject && uiObject.GetComponent<Button>()) {
+                    return;
+                }
+
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (!Physics.Raycast(ray, out hit)) {
+                    return;
+                }
+
+                if (!hit.collider.GetComponent<Player>()) {
                     return;
                 }
 
@@ -136,7 +149,11 @@ namespace bow {
                 float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
                 angle = Mathf.Clamp(angle, minBowRotationAngle, maxBowRotationAngle);
 
-                bowRotationPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
+                var rot = Quaternion.AngleAxis(angle, Vector3.left);
+                var oldRot = bowRotationPivot.transform.rotation;
+
+                bowRotationPivot.transform.rotation =
+                    Quaternion.Lerp(oldRot, rot, rotTime * Time.deltaTime);
 
                 pullAmount = CalculatePullAmount(pullPosition);
 
