@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace hittable {
     [RequireComponent(typeof(Hittable))]
-    public class Target : MonoBehaviour {
+    public class SimpleTarget : MonoBehaviour {
         public void ProcessHit() {
             Destroy(this);
         }
