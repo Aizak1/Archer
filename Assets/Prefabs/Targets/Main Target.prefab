@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8084107570033847821}
   - component: {fileID: 8108531369345930281}
   - component: {fileID: 6935294390449274510}
+  - component: {fileID: 403104829684862683}
   m_Layer: 0
   m_Name: Main Target
   m_TagString: Untagged
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 403104829684862683}
   connectedTarget: {fileID: 0}
   movingTarget: {fileID: 0}
   burnableObject: {fileID: 0}
@@ -117,3 +118,15 @@ MonoBehaviour:
   player: {fileID: 0}
   playerTeleport: {fileID: 0}
   levelController: {fileID: 0}
+--- !u!114 &403104829684862683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099583835394547137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4a86c204549b246a12375ff5692faa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
