@@ -6,7 +6,7 @@ namespace hittable{
     public class Hittable : MonoBehaviour {
 
         [SerializeField]
-        private Target target;
+        private SimpleTarget target;
         [SerializeField]
         private ConnectedTarget connectedTarget;
         [SerializeField]
