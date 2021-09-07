@@ -11,6 +11,8 @@ namespace ui {
         private BowController bowController;
 
         [SerializeField]
+        private TrajectorySettings[] arrowTrajectorySettings;
+
         private TrajectorySettings trajectorySettup;
 
         private Vector3[] pointList;
@@ -149,8 +151,8 @@ namespace ui {
             }
         }
 
-        public void SetSettings(TrajectorySettings settings) {
-            trajectorySettup = settings;
+        public void SetSettings(int presetIndex) {
+            trajectorySettup = arrowTrajectorySettings[presetIndex];
             ApplySettings();
         }
 

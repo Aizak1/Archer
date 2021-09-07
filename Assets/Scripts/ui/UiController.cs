@@ -35,8 +35,6 @@ namespace ui {
         [SerializeField]
         private Texture[] arrowImageTextures;
         [SerializeField]
-        private TrajectorySettings[] arrowTrajectorySettings;
-        [SerializeField]
         private GameObject[] quiverGroups;
 
         private  Dictionary<ArrowType, Texture> arrowTypeToTexture
@@ -82,7 +80,7 @@ namespace ui {
             arrowImage.texture = arrowTypeToTexture[currentType];
             arrowTypeToQuiverGroup[currentType].SetActive(true);
             int currentTypeIndex = resource.arrowTypeToCount[currentType];
-            trajectoryShower.SetSettings(arrowTrajectorySettings[currentTypeIndex]);
+            trajectoryShower.SetSettings(currentTypeIndex);
         }
 
         private void Update() {
@@ -116,11 +114,13 @@ namespace ui {
             }
 
             ArrowType nextType = resource.countToArrowType[nextTypeIndex];
+
             bowController.arrowTypeToInstantiate = nextType;
             arrowTypeText.text = nextType.ToString();
             arrowImage.texture = arrowTypeToTexture[nextType];
             arrowTypeToQuiverGroup[nextType].SetActive(true);
-            trajectoryShower.SetSettings(arrowTrajectorySettings[nextTypeIndex]);
+
+            trajectoryShower.SetSettings(nextTypeIndex);
         }
     }
 }
