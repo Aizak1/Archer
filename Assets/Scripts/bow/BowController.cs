@@ -74,6 +74,12 @@ namespace bow {
         [SerializeField]
         private float rotTime;
 
+        private float maxPullTemp;
+        private const float MAX_INCHES = 13f;
+        private const float MIN_INCHES = 7.5f;
+        private const float MAX_PULL_PERCENT = 0.9f;
+        private const float MIN_PULL_PERCENT = 0.6f;
+
         private void Start() {
             shotsCount = 0;
             arrowsOnLevel = new Queue<GameObject>();
@@ -84,6 +90,25 @@ namespace bow {
             }
 
             archerAnimator.SetBool(isShootingID, false);
+
+            var inches = Mathf.Sqrt(Mathf.Pow(Screen.width, 2) + Mathf.Pow(Screen.height, 2)) / Screen.dpi;
+
+            var pivotPos = camera.WorldToViewportPoint(bowRotationPivot.transform.position);
+
+            float[] points = new float[4];
+            points[0] = pivotPos.x;
+            points[1] = 1f - pivotPos.x;
+            points[2] = pivotPos.y;
+            points[3] = 1f - pivotPos.y;
+
+            inches = Mathf.Clamp(inches, MIN_INCHES, MAX_INCHES);
+            var maxDeltaInch = MAX_INCHES - MIN_INCHES;
+            var deltaInch = inches - MIN_INCHES;
+            var percentInch = deltaInch / maxDeltaInch;
+
+            var maxPullDelta = MAX_PULL_PERCENT - MIN_PULL_PERCENT;
+
+            maxPullTemp = Mathf.Min(points) * (MAX_PULL_PERCENT - maxPullDelta * percentInch);
         }
 
         private void Update() {
@@ -106,7 +131,6 @@ namespace bow {
                 }
 
                 startTouchPosition = camera.ScreenToViewportPoint(Input.mousePosition);
-                startTouchPosition.z = maxPullTransform.position.z;
 
                 var pos = arrowPlacementPoint.transform.position;
                 var rot = arrowPlacementPoint.transform.rotation;
@@ -138,7 +162,6 @@ namespace bow {
 
                 var touchPosition = Input.mousePosition;
                 Vector3 pullPosition = camera.ScreenToViewportPoint(touchPosition);
-                pullPosition.z = maxPullTransform.position.z;
 
                 if (pullPosition.x > startTouchPosition.x) {
                     return;
@@ -216,7 +239,7 @@ namespace bow {
             var pullVector = pullPosition - startTouchPosition;
             var maxPullVector = maxPullTransform.position - minPullTransform.position;
 
-            float pullAmount = pullVector.magnitude / maxPullVector.magnitude;
+            float pullAmount = pullVector.magnitude / maxPullTemp;
 
             return Mathf.Clamp(pullAmount, 0, 1);
         }
