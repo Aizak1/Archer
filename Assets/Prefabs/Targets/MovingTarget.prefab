@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8108531369345930281}
   - component: {fileID: 6935294390449274510}
   - component: {fileID: 659835507710497829}
+  - component: {fileID: 2455152152390405995}
   m_Layer: 0
   m_Name: MovingTarget
   m_TagString: Untagged
@@ -151,4 +152,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1328937555427575773}
-  hittable: {fileID: 6935294390449274510}
+--- !u!114 &2455152152390405995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099583835394547137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2589a8a988feb3d49a246d3ae9ad862e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

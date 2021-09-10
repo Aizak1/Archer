@@ -67,5 +67,6 @@ namespace hittable{
                 playerTeleport.ProcessHit(arrow);
             }
         }
+
     }
 }

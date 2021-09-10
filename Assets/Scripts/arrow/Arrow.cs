@@ -2,6 +2,7 @@ using hittable;
 using portal;
 using bow;
 using UnityEngine;
+using homing;
 
 namespace arrow {
 
@@ -12,7 +13,8 @@ namespace arrow {
         Slow,
         Portal,
         Freeze,
-        Fire
+        Fire,
+        Homing
     }
 
     public class Arrow : MonoBehaviour {
@@ -68,14 +70,29 @@ namespace arrow {
         [SerializeField]
         private new Collider collider;
 
+        private HomingArrow homingArrowComponent;
+
         private void Awake() {
             lastTipPosition = tip.transform.position;
             trailRenderer.enabled = false;
             isTeleporting = false;
+
+            if(arrowType == ArrowType.Homing) {
+                homingArrowComponent = GetComponent<HomingArrow>();
+            }
+
         }
 
         private void Update() {
-            transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
+            if(arrowType == ArrowType.Homing) {
+                var lookPos = homingArrowComponent.currentPoint.position - transform.position;
+                if(lookPos != Vector3.zero) {
+                    transform.rotation = Quaternion.LookRotation(lookPos, transform.up);
+                }
+            } else {
+                transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
+            }
+
 
             var tipDistance = (lastTipPosition - tip.position).magnitude;
             var mask = LayerMask.GetMask(RAYCAST_LAYER);
@@ -150,6 +167,18 @@ namespace arrow {
                 Instantiate(splitVfx, transform.position, Quaternion.identity);
                 Split(angleBetweenSplitArrows, splitArrowsAmount);
             }
+
+            if(arrowType == ArrowType.Homing) {
+                float accuracy = 0.1f;
+                var pointPos = homingArrowComponent.currentPoint.position;
+                if ((transform.position - pointPos).magnitude < accuracy) {
+                    homingArrowComponent.ChangeCurrentPoint();
+                } else {
+                    var speed = HomingArrow.SPEED * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, pointPos, speed);
+                }
+
+            }
         }
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
@@ -184,6 +213,12 @@ namespace arrow {
             trailRenderer.enabled = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
+
+            if (arrowType == ArrowType.Homing) {
+                velocity = Vector3.zero;
+                rigidbody.useGravity = false;
+            }
+
             rigidbody.velocity = velocity;
 
             if (splitArrowsAmount <= 1) {
