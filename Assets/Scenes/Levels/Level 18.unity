@@ -1793,6 +1793,7 @@ MonoBehaviour:
   bowController: {fileID: 974753391}
   manualMenues:
   - {fileID: 1813121548}
+  isQuiz: 0
   hintController: {fileID: 2114322121}
 --- !u!4 &885876055
 Transform:
@@ -4776,6 +4777,10 @@ PrefabInstance:
     - target: {fileID: 3967554545083706519, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967554545123783172, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a794de97671859e409dd02dec979a670, type: 3}
