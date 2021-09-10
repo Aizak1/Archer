@@ -67,6 +67,8 @@ namespace level {
 
             if (targetsCount == 0) {
 
+                enabled = false;
+
                 if (winVfx != null) {
                     Instantiate(winVfx, transform.position, Quaternion.identity);
                 }
