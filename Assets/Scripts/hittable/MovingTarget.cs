@@ -1,13 +1,15 @@
 using UnityEngine;
+using tweening;
 
 namespace hittable {
     [RequireComponent(typeof(Hittable))]
+    [RequireComponent(typeof(TweenMove))]
     public class MovingTarget : MonoBehaviour {
         [SerializeField]
-        private Animator animator;
+        private TweenMove tweenMove;
 
         public void ProcessHit() {
-            animator.speed = 0;
+            tweenMove.StopMoving();
             Destroy(this);
         }
     }

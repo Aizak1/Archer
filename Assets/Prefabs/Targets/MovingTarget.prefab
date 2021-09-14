@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 8101319103121479963}
   - component: {fileID: 8076488889676885307}
   - component: {fileID: 8084107570033847821}
-  - component: {fileID: 1328937555427575773}
   - component: {fileID: 6935294390449274510}
   - component: {fileID: 659835507710497829}
   - component: {fileID: 2455152152390405995}
   - component: {fileID: 5608443466869456921}
+  - component: {fileID: 855874525157607379}
   m_Layer: 0
   m_Name: MovingTarget
   m_TagString: Untagged
@@ -30,13 +30,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8099583835394547137}
-  m_LocalRotation: {x: 0.029688923, y: 0.9612971, z: 0.248715, w: 0.1147493}
-  m_LocalPosition: {x: -0.8549421, y: 0.41031358, z: -5.934}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -28.123, y: 164.52, z: 7.437}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &8076488889676885307
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86,25 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &1328937555427575773
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099583835394547137}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6893648118e3a1642a1ed242954ce2e0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6935294390449274510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b168cf71b97386340be5ff9c10f771b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1328937555427575773}
+  tweenMove: {fileID: 855874525157607379}
 --- !u!114 &2455152152390405995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +145,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -665401285317789418, guid: 5560838fa27a5bb419ece71cb1d62a76, type: 3}
+--- !u!114 &855874525157607379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099583835394547137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8edfccc5f57d3c249a9a4b001fbe5197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalPosition: {x: 0, y: 0, z: 0}
+  time: 0
