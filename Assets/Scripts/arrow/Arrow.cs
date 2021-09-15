@@ -84,13 +84,10 @@ namespace arrow {
         }
 
         private void Update() {
-            if(arrowType == ArrowType.Homing) {
-                var lookPos = homingArrowComponent.currentPoint.position - transform.position;
-                if(lookPos != Vector3.zero) {
-                    transform.rotation = Quaternion.LookRotation(lookPos, transform.up);
-                }
-            } else {
-                transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
+
+            var rotation = CalculateArrowRotation(arrowType);
+            if(rotation != Quaternion.identity) {
+                transform.rotation = rotation;
             }
 
 
@@ -178,6 +175,15 @@ namespace arrow {
                     transform.position = Vector3.MoveTowards(transform.position, pointPos, speed);
                 }
 
+            }
+        }
+
+        private Quaternion CalculateArrowRotation(ArrowType type) {
+            if(arrowType == ArrowType.Homing) {
+                var lookPos = homingArrowComponent.currentPoint.position - transform.position;
+                return Quaternion.LookRotation(lookPos, transform.up);
+            } else {
+                return Quaternion.LookRotation(rigidbody.velocity, transform.up);
             }
         }
 
