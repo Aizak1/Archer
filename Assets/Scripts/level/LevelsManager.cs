@@ -15,8 +15,21 @@ namespace level {
         public const string STARTS_AT_LEVELS = "starsAtLevel";
 
         private void Start() {
-            currentPageNumber = 0;
             int levelAt = PlayerPrefs.GetInt(LEVEL_AT, 1);
+            int lastLevelPicked = PlayerPrefs.GetInt(SceneLoader.LAST_PICKED_LEVEL, 1);
+            int countOfLevelsOnPage = 0;
+
+            for (int i = 0; i < pages.Length; i++) {
+                countOfLevelsOnPage += pages[i].pageButtons.Length;
+                if(lastLevelPicked <= countOfLevelsOnPage) {
+                    currentPageNumber = i;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            ShowPage();
+
             for (int i = levelAt; i < levelButtons.Length; i++) {
                 levelButtons[i].interactable = false;
             }
@@ -62,6 +75,18 @@ namespace level {
             }
 
             currentPageNumber--;
+        }
+
+        public void ShowPage() {
+            foreach (var item in pages) {
+                for (int i = 0; i < item.pageButtons.Length; i++) {
+                    item.pageButtons[i].gameObject.SetActive(false);
+                }
+            }
+
+            foreach (var item in pages[currentPageNumber].pageButtons) {
+                item.gameObject.SetActive(true);
+            }
         }
     }
 

@@ -14,6 +14,9 @@ namespace level {
         private readonly int fadeInTriggerId = Animator.StringToHash("FadeIn");
         private readonly int fadeOutTriggerId = Animator.StringToHash("FadeOut");
 
+        public const string LAST_PICKED_LEVEL = "LastPickedLevel";
+        public const string MENU_LEVEL_NAME = "Menu";
+
         private readonly float TRANSITION_TIME = 2f / 3f;
 
         private void Awake() {
@@ -46,20 +49,23 @@ namespace level {
 
         private IEnumerator FadeLoadLevel(int index) {
             transitionAnimator.SetTrigger(fadeInTriggerId);
+            PlayerPrefs.SetInt(LAST_PICKED_LEVEL, index);
             yield return new WaitForSeconds(TRANSITION_TIME);
             LoadLevel(index);
         }
 
         public void LoadNextLevel() {
             var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            if(nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
+            PlayerPrefs.SetInt(LAST_PICKED_LEVEL, nextLevelIndex);
+            if (nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
+                PlayerPrefs.SetInt(LAST_PICKED_LEVEL, nextLevelIndex - 1);
                 nextLevelIndex = 0;
             }
             StartCoroutine(FadeLoadLevel(nextLevelIndex));
         }
 
         public void FadeLoadMenu() {
-            StartCoroutine(FadeLoadLevel(0));
+            StartCoroutine(FadeLoadLevel(MENU_LEVEL_NAME));
         }
 
         public void FadeLoadLevelByName(string name) {
