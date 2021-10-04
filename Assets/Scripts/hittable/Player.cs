@@ -4,14 +4,10 @@ using level;
 namespace hittable {
     [RequireComponent(typeof(Hittable))]
     public class Player : MonoBehaviour {
-        [SerializeField]
-        private LevelController levelController;
-        [SerializeField]
-        private AudioSource audioSource;
-        [SerializeField]
-        private AudioClip auchSound;
-        [SerializeField]
-        private ParticleSystem blood;
+        [SerializeField] private LevelController levelController;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip auchSound;
+        [SerializeField] private ParticleSystem blood;
 
         public void ProcessHit(RaycastHit hit) {
 

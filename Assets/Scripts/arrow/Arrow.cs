@@ -80,7 +80,7 @@ namespace arrow {
             var tipDistance = (lastTipPosition - tip.position).magnitude;
             var mask = LayerMask.GetMask(RAYCAST_LAYER);
             if (tipDistance < TIP_POS_ACCURACY &&
-                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit, mask)) {
+                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit)) {
 
                 if (!hit.collider.isTrigger) {
 
@@ -185,6 +185,24 @@ namespace arrow {
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
             rigidbody.velocity = velocity;
+
+            if (splitArrowsAmount <= 1) {
+                isSplit = false;
+            }
+
+            this.isSplit = isSplit;
+
+            if (this.isSplit) {
+                splitTime = Time.time + timeBeforeSplit;
+            }
+
+        }
+
+        public void Release(float force, bool isSplit) {
+            trailRenderer.enabled = true;
+            rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
+            rigidbody.velocity = transform.forward * force;
 
             if (splitArrowsAmount <= 1) {
                 isSplit = false;
