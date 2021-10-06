@@ -14,7 +14,6 @@ namespace Archer.Controlls.ArrowControlls {
         [SerializeField] private BoxCollider colider;
         [SerializeField] private TrailRenderer trail;
         [SerializeField] private Transform tip;
-        [SerializeField] private GameObject sphere;
 
         public bool IsInAir => isInAir;
         public bool WasShoot => wasShoot;
@@ -39,7 +38,6 @@ namespace Archer.Controlls.ArrowControlls {
 
             if (isInAir && rigid.velocity != Vector3.zero)
                 rigid.rotation = Quaternion.LookRotation(rigid.velocity, transform.up);
-
             var dir = (tip.position - prevTipPos).normalized;
             var layerMask = (1 << hitableLayerIndex);
             var tipDistance = (prevTipPos - tip.position).magnitude;
@@ -110,7 +108,6 @@ namespace Archer.Controlls.ArrowControlls {
         }
 
         private IEnumerator GoThrowObject(Vector3 startPos, Vector3 endPos, ArrowHitable hitable) {
-
             var arrowLengthPosDiff = (tip.position - transform.position);
             var arrowStartPos = startPos - arrowLengthPosDiff;
             var inObjectPassDist = endPos - arrowStartPos;
@@ -184,30 +181,74 @@ namespace Archer.Controlls.ArrowControlls {
             yield return Time.deltaTime;
         }
 
-        public void Hit(Vector3 hitPos, Vector3 tipPos, ArrowHitable hitable) {
+        private IEnumerator GoTrowEndlessObject(Vector3 startPos, Vector3 endPos, ArrowHitable hitable) {
+            var arrowLengthPosDiff = (tip.position - transform.position);
+            var arrowStartPos = startPos - arrowLengthPosDiff;
+            var inObjectPassDist = endPos - arrowStartPos;
+            var inObjectDist = Vector3.Distance(arrowStartPos, endPos);
 
+            var speed = rigid.velocity.magnitude;
+            var dir = rigid.velocity.normalized;
+
+            rigid.useGravity = false;
+            rigid.isKinematic = false;
+            rigid.velocity = Vector3.zero;
+            arrowSpec.IsSplitable = false;
+
+            var Ek = (arrowSpec.ArrowMass * speed * speed) / 2f;
+            var hardnes = hitable.Hardnes;
+
+            while (Ek > 0) {
+                var newSpeed = (float)Math.Sqrt(Ek * 2f / arrowSpec.ArrowMass);
+                var newPos = transform.position + dir * newSpeed * Time.deltaTime;
+                var passDist = Vector3.Distance(transform.position, newPos);
+                var Ekdiff = hardnes * passDist * arrowSpec.PenetrationFactor;
+                var currEk = Ek - Ekdiff;
+                if (currEk < 0) {
+                    var correctPassedDist = Ek / (hardnes * arrowSpec.PenetrationFactor);
+                    var recalcPos = transform.position + dir * correctPassedDist;
+                    transform.position = recalcPos;
+                    break;
+                } else {
+                    transform.position = newPos;
+                    Ek -= Ekdiff;
+                }
+
+                yield return Time.deltaTime;
+            }
+        }
+        
+        public void Hit(Vector3 hitPos, Vector3 tipPos, ArrowHitable hitable) {
             var hardnes = hitable.Hardnes;
             var velocity = rigid.velocity;
             var direction = velocity.normalized;
-            var layerMask = (1 << hitableLayerIndex);
 
+            var layerMask = (1 << hitableLayerIndex);
             var hits = Physics.RaycastAll(hitPos + direction * 10, -direction, 10, layerMask);
-            var sb = new StringBuilder();
 
             RaycastHit? equalHit = null;
-            foreach (var hit in hits) {
-                sb.AppendLine(hit.collider.name);
+
+            foreach (var hit in hits)
                 if (hit.collider.gameObject.Equals(hitable.gameObject))
                     equalHit = hit;
-            }
+
             if (equalHit == null)
                 return;
-            var reverceHit = (RaycastHit)equalHit;
-            var outsidePos = reverceHit.point;
 
+            var reverceHit = (RaycastHit)equalHit;
+
+            if (reverceHit.collider.TryGetComponent(out ArrowPushable pushable)) {
+                pushable.Push(Vector3.zero, rigid.velocity);
+            }
+            
+            var outsidePos = reverceHit.point;
             var arrowNotchTipDiff = tip.position - transform.position;
             transform.position = hitPos - arrowNotchTipDiff;
-            pendingRoutine = StartCoroutine(GoThrowObject(hitPos, outsidePos, hitable));
+            
+            if (hitable.IsEndless)
+                pendingRoutine = StartCoroutine(GoTrowEndlessObject(hitPos, outsidePos, hitable));
+            else
+                pendingRoutine = StartCoroutine(GoThrowObject(hitPos, outsidePos, hitable));
         }
 
         private void Recoshet(Vector3 arrowDir, Vector3 hitDir, float bounce) {

@@ -8,9 +8,7 @@ namespace Archer.ArcherControlls {
         [SerializeField] private Transform arrowPool;
         [SerializeField] private GameObject arrowPlacementPoint;
         [SerializeField] private GameObject bowRotationPivot;
-
         [SerializeField] private BowSpec bowSpec;
-
         [SerializeField] private GameObject arrowPrefab;
 
         private ArrowController arrowController;
@@ -31,14 +29,6 @@ namespace Archer.ArcherControlls {
 
         private void Update() {
             EditorControls();
-            /*
-            #if UNITY_EDITOR
-                EditorControls();
-            #endif
-            #if UNITY_ANDROID
-            #endif
-            */
-            //MobileControls();
         }
 
         private void MobileControls() {
@@ -155,7 +145,6 @@ namespace Archer.ArcherControlls {
                 arrowController.Release(force * bowSpec.MaxForce);
                 ResetAngleAndForce();
                 bowRotationPivot.transform.rotation = Quaternion.Euler(0, 0, 0);
-                //SHOOT
                 isAmmoLoaded = false;
                 archerAnimatorController.SetShotting(false);
                 archerAnimatorController.SetRigsValues(0);
