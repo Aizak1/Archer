@@ -27,7 +27,7 @@ namespace Archer.Controlls.ArrowControlls {
 
         private void Start() {
             hitableLayerIndex = LayerMask.NameToLayer("ArrowHittable");
-            Application.targetFrameRate = 30;
+            //Application.targetFrameRate = 30;
             prevTipPos = tip.position;
         }
 
@@ -49,8 +49,10 @@ namespace Archer.Controlls.ArrowControlls {
                 var dot = Vector3.Dot(dir, hitDir);
 
                 if (Mathf.Abs(dot) < 0.15f) {
+                    Debug.Log("Recoshet");
                     Recoshet(dir, hitDir, hitable.Bounce);
                 } else {
+                    Debug.Log("Hit");
                     Hit(hitPoint, tip.position, hitable);
                 }
             }
@@ -66,7 +68,7 @@ namespace Archer.Controlls.ArrowControlls {
             trail.enabled = true;
             rigid.useGravity = true;
             rigid.isKinematic = false;
-            rigid.velocity = direction * force;
+            rigid.AddForce(direction * force, ForceMode.Impulse);
         }
 
         public void Release(Vector3 velocity) {
@@ -145,6 +147,8 @@ namespace Archer.Controlls.ArrowControlls {
                         var EkPassValue = Vector3.Distance(transform.position, endPos)
                             * hardnes * arrowSpec.PenetrationFactor;
                         var EkRest = Ek - EkPassValue;
+                        if (EkRest < 0)
+                            EkRest = Ek;
                         var exitSpeed = (float)Math.Sqrt(EkRest * 2f / arrowSpec.ArrowMass);
                         enabled = true;
                         trail.enabled = true;
@@ -240,11 +244,15 @@ namespace Archer.Controlls.ArrowControlls {
             if (reverceHit.collider.TryGetComponent(out ArrowPushable pushable)) {
                 pushable.Push(Vector3.zero, rigid.velocity);
             }
-            
+
+            if (reverceHit.collider.TryGetComponent(out ArrowBomb explosion)) {
+                explosion.Hit();
+            }
+
             var outsidePos = reverceHit.point;
             var arrowNotchTipDiff = tip.position - transform.position;
             transform.position = hitPos - arrowNotchTipDiff;
-            
+
             if (hitable.IsEndless)
                 pendingRoutine = StartCoroutine(GoTrowEndlessObject(hitPos, outsidePos, hitable));
             else
