@@ -2,16 +2,11 @@ using UnityEngine;
 
 namespace Archer.Controlls.IHitableAction {
     public class ArrowJointBrokable : MonoBehaviour, IHitable {
-        private Joint joint;
-
-        private void Start()
-        {
-            joint = GetComponent<Joint>();
-        }
+        [SerializeField] private Joint joint;
 
         public void HitAction()
         {
-
+            Destroy(joint);
         }
     }
 }

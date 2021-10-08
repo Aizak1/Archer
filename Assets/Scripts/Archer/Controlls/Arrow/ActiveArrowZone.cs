@@ -1,7 +1,7 @@
 using Archer.Controlls.ArrowControlls;
 using UnityEngine;
 
-namespace Archer.ActiveArrowZoneController {
+namespace Archer.Controlls.ActiveArrowZoneController {
     public class ActiveArrowZone : MonoBehaviour {
         private void OnTriggerExit(Collider other) {
             if (other.TryGetComponent(out ArrowController arrowController)) {

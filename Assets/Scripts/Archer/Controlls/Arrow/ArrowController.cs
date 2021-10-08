@@ -28,7 +28,6 @@ namespace Archer.Controlls.ArrowControlls {
 
         private void Start() {
             hitableLayerIndex = LayerMask.NameToLayer("ArrowHittable");
-            //Application.targetFrameRate = 30;
             prevTipPos = tip.position;
         }
 
@@ -50,10 +49,8 @@ namespace Archer.Controlls.ArrowControlls {
                 var dot = Vector3.Dot(dir, hitDir);
 
                 if (Mathf.Abs(dot) < 0.15f) {
-                    Debug.Log("Recoshet");
                     Recoshet(dir, hitDir, hitable.Bounce);
                 } else {
-                    Debug.Log("Hit");
                     Hit(hitPoint, tip.position, hitable);
                 }
             }
@@ -69,7 +66,8 @@ namespace Archer.Controlls.ArrowControlls {
             trail.enabled = true;
             rigid.useGravity = true;
             rigid.isKinematic = false;
-            rigid.AddForce(direction * force, ForceMode.Impulse);
+            var fixDirection = new Vector3(0, direction.y, direction.z);
+            rigid.AddForce(fixDirection * force, ForceMode.Impulse);
         }
 
         public void Release(Vector3 velocity) {
@@ -79,7 +77,8 @@ namespace Archer.Controlls.ArrowControlls {
             trail.enabled = true;
             rigid.useGravity = true;
             rigid.isKinematic = false;
-            rigid.velocity = velocity;
+            var fixVelocity = new Vector3(0, velocity.y, velocity.z);
+            rigid.velocity = fixVelocity;
         }
 
         public void Split() {
