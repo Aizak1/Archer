@@ -1,12 +1,9 @@
-using System;
 using System.Text;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Archer.Controlls.ArrowHitableControlls {
-    public class ArrowBomb : MonoBehaviour
-    {
+namespace Archer.Controlls.IHitableAction {
+    public class ArrowBomb : MonoBehaviour, IHitable {
         [SerializeField] private Transform explosionSphere;
         [SerializeField] private float explosionDelay;
         [SerializeField] private float explosionRadius;
@@ -26,7 +23,7 @@ namespace Archer.Controlls.ArrowHitableControlls {
             oclusionLayerIndex = LayerMask.NameToLayer("OclusionColiders");
         }
         
-        public void Hit()
+        public void HitAction()
         {
             if (pendingRotineRef == null) {
                 pendingRotineRef = StartCoroutine(CountDown());
@@ -64,7 +61,6 @@ namespace Archer.Controlls.ArrowHitableControlls {
                     rigid.AddForce(force, ForceMode.Impulse);
                 }
             }
-
         }
 
         private void VisualisateExplosion()
@@ -85,16 +81,14 @@ namespace Archer.Controlls.ArrowHitableControlls {
             foreach (var hit in hits) {
                 sb.AppendLine(hit.name);
             }
-
-            Debug.Log(sb);
-
+            
             return hits;
         }
 
         [ContextMenu("Explode")]
         private void DebugExplode()
         {
-            Hit();
+            HitAction();
         }
 
         [ContextMenu("Reset")]
@@ -104,6 +98,5 @@ namespace Archer.Controlls.ArrowHitableControlls {
             transform.rotation = resetRot;
             explosionSphere.transform.localScale = Vector3.one * 0.1f;
         }
-
     }
 }

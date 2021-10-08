@@ -5,6 +5,7 @@ using Archer.Specs.Arrow;
 using UnityEngine;
 using Archer.Types.ArrowTypes;
 using Archer.Controlls.ArrowHitableControlls;
+using Archer.Controlls.IHitableAction;
 
 namespace Archer.Controlls.ArrowControlls {
     public class ArrowController : MonoBehaviour
@@ -245,10 +246,8 @@ namespace Archer.Controlls.ArrowControlls {
                 pushable.Push(Vector3.zero, rigid.velocity);
             }
 
-            if (reverceHit.collider.TryGetComponent(out ArrowBomb explosion)) {
-                explosion.Hit();
-            }
-
+            hitable.PerformHit();
+            
             var outsidePos = reverceHit.point;
             var arrowNotchTipDiff = tip.position - transform.position;
             transform.position = hitPos - arrowNotchTipDiff;
