@@ -1,25 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Archer.Controlls.IHitableAction;
+using Archer.Controlls.ArrowControlls;
 
 namespace Archer.Controlls.ArrowHitableControlls {
     [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(ArrowBalisticInteraction))]
     public class ArrowHitable : MonoBehaviour {
-        [Header("Params")]
-        [SerializeField] private float hardnes;
-        [SerializeField] private float bounce;
-        [Header("Options")]
-        [SerializeField] private bool isEndless;
         [Header("IHitableActions")]
         [SerializeField] private List<GameObject> ihitableGOList = new List<GameObject>();
 
-        public float Hardnes => hardnes;
-        public float Bounce => bounce;
-        public bool IsEndless => isEndless;
-        
+        private ArrowBalisticInteraction arrowBalisticInteraction;
         private List<IHitable> iHitableActionsList;
 
         private void Start() {
+            arrowBalisticInteraction = GetComponent<ArrowBalisticInteraction>();
             InitIhitable();
         }
         
@@ -27,7 +22,8 @@ namespace Archer.Controlls.ArrowHitableControlls {
             ValidateIhitable();
         }
 
-        public void PerformHit() {
+        public void PerformHit(ArrowController arrow) {
+            arrowBalisticInteraction.PerformBalisticHit(arrow);
             PerformIHitable();
         }
 
@@ -35,7 +31,6 @@ namespace Archer.Controlls.ArrowHitableControlls {
             foreach (var ihitable in iHitableActionsList) {
                 ihitable.HitAction();
             }
-
         }
 
         private void ValidateIhitable() {

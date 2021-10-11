@@ -18,6 +18,10 @@ namespace Archer.Controlls.ArrowControlls {
 
         public bool IsInAir => isInAir;
         public bool WasShoot => wasShoot;
+        public bool IsSpliBlock => isSplitBlock;
+
+        public Transform TipTran => tip;
+        public Rigidbody ArrowRigid => rigid;
 
         private Coroutine pendingRoutine;
 
@@ -25,6 +29,7 @@ namespace Archer.Controlls.ArrowControlls {
         private int hitableLayerIndex;
         private bool wasShoot;
         private bool isInAir;
+        private bool isSplitBlock;
 
         private void Start() {
             hitableLayerIndex = LayerMask.NameToLayer("ArrowHittable");
@@ -42,17 +47,19 @@ namespace Archer.Controlls.ArrowControlls {
             var layerMask = (1 << hitableLayerIndex);
             if (Physics.Linecast(
                prevTipPos, tip.position, out RaycastHit hit, layerMask)) {
-                Debug.Log($"hit => {hit.collider.name}");
                 var hitable = hit.collider.GetComponent<ArrowHitable>();
                 var hitPoint = hit.point;
                 var hitDir = hit.normal;
                 var dot = Vector3.Dot(dir, hitDir);
 
+                TryPerformHit(hitPoint, hitable);
+                /*
                 if (Mathf.Abs(dot) < 0.15f) {
                     Recoshet(dir, hitDir, hitable.Bounce);
                 } else {
-                    Hit(hitPoint, tip.position, hitable);
+                    TryPerformHit(hitPoint, tip.position, hitable);
                 }
+                */
             }
 
             prevTipPos = tip.position;
@@ -88,6 +95,8 @@ namespace Archer.Controlls.ArrowControlls {
         }
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
+            if (isSplitBlock)
+                return;
             float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
 
             for (int i = 0; i < splitArrowsAmount; i++) {
@@ -109,6 +118,50 @@ namespace Archer.Controlls.ArrowControlls {
             Destroy(gameObject);
         }
 
+        public void SetBlockSplit(bool splitBlock) {
+            isSplitBlock = splitBlock;
+        }
+
+        public void TryPerformHit(Vector3 hitPos, ArrowHitable hitable) {
+            var velocity = rigid.velocity;
+            var direction = velocity.normalized;
+
+            var layerMask = (1 << hitableLayerIndex);
+            var hits = Physics.RaycastAll(hitPos + direction * 10, -direction, 10, layerMask);
+
+            RaycastHit? equalHit = null;
+
+            foreach (var hit in hits)
+                if (hit.collider.gameObject.Equals(hitable.gameObject))
+                    equalHit = hit;
+
+            if (equalHit == null)
+                return;
+
+            var reverceHit = (RaycastHit)equalHit;
+
+            hitable.PerformHit(this);
+
+            if (reverceHit.collider.TryGetComponent(out ArrowPushable pushable)) {
+                pushable.Push(Vector3.zero, rigid.velocity);
+            }
+            /*
+            */
+            
+            /*
+            var outsidePos = reverceHit.point;
+            var arrowNotchTipDiff = tip.position - transform.position;
+            transform.position = hitPos - arrowNotchTipDiff;
+
+            if (hitable.IsEndless)
+                pendingRoutine = StartCoroutine(GoTrowEndlessObject(hitPos, outsidePos, hitable));
+            else
+                pendingRoutine = StartCoroutine(GoThrowObject(hitPos, outsidePos, hitable));
+            */
+        }
+
+        // TODO hit handlerbelong to arrowHitable
+        /*
         private IEnumerator GoThrowObject(Vector3 startPos, Vector3 endPos, ArrowHitable hitable) {
             var arrowLengthPosDiff = (tip.position - transform.position);
             var arrowStartPos = startPos - arrowLengthPosDiff;
@@ -222,40 +275,6 @@ namespace Archer.Controlls.ArrowControlls {
             }
         }
         
-        public void Hit(Vector3 hitPos, Vector3 tipPos, ArrowHitable hitable) {
-            var hardnes = hitable.Hardnes;
-            var velocity = rigid.velocity;
-            var direction = velocity.normalized;
-
-            var layerMask = (1 << hitableLayerIndex);
-            var hits = Physics.RaycastAll(hitPos + direction * 10, -direction, 10, layerMask);
-
-            RaycastHit? equalHit = null;
-
-            foreach (var hit in hits)
-                if (hit.collider.gameObject.Equals(hitable.gameObject))
-                    equalHit = hit;
-
-            if (equalHit == null)
-                return;
-
-            var reverceHit = (RaycastHit)equalHit;
-
-            if (reverceHit.collider.TryGetComponent(out ArrowPushable pushable)) {
-                pushable.Push(Vector3.zero, rigid.velocity);
-            }
-
-            hitable.PerformHit();
-            
-            var outsidePos = reverceHit.point;
-            var arrowNotchTipDiff = tip.position - transform.position;
-            transform.position = hitPos - arrowNotchTipDiff;
-
-            if (hitable.IsEndless)
-                pendingRoutine = StartCoroutine(GoTrowEndlessObject(hitPos, outsidePos, hitable));
-            else
-                pendingRoutine = StartCoroutine(GoThrowObject(hitPos, outsidePos, hitable));
-        }
 
         private void Recoshet(Vector3 arrowDir, Vector3 hitDir, float bounce) {
             var newDir = Vector3.Reflect(arrowDir, hitDir);
@@ -263,5 +282,6 @@ namespace Archer.Controlls.ArrowControlls {
             rigid.velocity = newDir * velocxity * bounce;
             rigid.rotation = Quaternion.LookRotation(rigid.velocity, transform.up);
         }
+        */
     }
 }
