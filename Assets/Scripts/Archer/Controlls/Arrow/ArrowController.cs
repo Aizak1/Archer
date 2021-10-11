@@ -40,9 +40,9 @@ namespace Archer.Controlls.ArrowControlls {
                 rigid.rotation = Quaternion.LookRotation(rigid.velocity, transform.up);
             var dir = (tip.position - prevTipPos).normalized;
             var layerMask = (1 << hitableLayerIndex);
-            var tipDistance = (prevTipPos - tip.position).magnitude;
-            if (tipDistance < 1 && Physics.Linecast(
+            if (Physics.Linecast(
                prevTipPos, tip.position, out RaycastHit hit, layerMask)) {
+                Debug.Log($"hit => {hit.collider.name}");
                 var hitable = hit.collider.GetComponent<ArrowHitable>();
                 var hitPoint = hit.point;
                 var hitDir = hit.normal;

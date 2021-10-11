@@ -39,15 +39,15 @@ namespace Archer.Controlls.ArrowHitableControlls {
         }
 
         private void ValidateIhitable() {
+            var localIHitableList = new List<GameObject>();
             if (ihitableGOList != null && ihitableGOList.Count > 0) {
-                var localIHitableList = new List<GameObject>();
                 foreach (var ihitable in ihitableGOList) {
                     if (ihitable.TryGetComponent<IHitable>(out _)) {
                         localIHitableList.Add(ihitable);
                     }
                 }
-                ihitableGOList = localIHitableList;
             }
+            ihitableGOList = localIHitableList;
         }
 
         private void InitIhitable() {
