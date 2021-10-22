@@ -10,19 +10,16 @@ namespace Archer.Specs.Bow {
         public float ForceIncrement;
         public float ForveDecrement;
         public float AngleChange;
-        public float InitialRadius;
 
         public BowSpec(
             float maxForce,
             float forceIncrement,
             float forveDecrement,
-            float angleChange,
-            float initialRadius) {
+            float angleChange) {
             MaxForce = maxForce;
             ForceIncrement = forceIncrement;
             ForveDecrement = forveDecrement;
             AngleChange = angleChange;
-            InitialRadius = initialRadius;
         }
     }
 }

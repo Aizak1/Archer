@@ -1,35 +1,32 @@
-using System;
-using System.Collections;
-using System.Text;
 using Archer.Specs.Arrow;
 using UnityEngine;
-using Archer.Types.ArrowTypes;
 using Archer.Controlls.ArrowHitableControlls;
-using Archer.Controlls.IHitableAction;
+using Archer.Specs.Rigid;
+using Archer.Extension.Rigid;
 
 namespace Archer.Controlls.ArrowControlls {
     public class ArrowController : MonoBehaviour
     {
         [SerializeField] private ArrowSpec arrowSpec;
+        [SerializeField] private RigidSpec rigidSpec;
         [SerializeField] private Rigidbody rigid;
         [SerializeField] private BoxCollider colider;
         [SerializeField] private TrailRenderer trail;
         [SerializeField] private Transform tip;
 
-        public bool IsInAir => isInAir;
-        public bool WasShoot => wasShoot;
-        public bool IsSpliBlock => isSplitBlock;
-
-        public Transform TipTran => tip;
-        public Rigidbody ArrowRigid => rigid;
-
-        private Coroutine pendingRoutine;
-
         private Vector3 prevTipPos;
         private int hitableLayerIndex;
         private bool wasShoot;
         private bool isInAir;
-        private bool isSplitBlock;
+        private Transform arrowPool;
+
+        public bool IsInAir => isInAir;
+        public bool WasShoot => wasShoot;
+
+        public Transform TipTran => tip;
+        public Rigidbody ArrowRigid => rigid;
+        public ArrowSpec ArrowSpec => arrowSpec;
+        public RigidSpec RigidSpec => rigidSpec;
 
         private void Start() {
             hitableLayerIndex = LayerMask.NameToLayer("ArrowHittable");
@@ -41,25 +38,14 @@ namespace Archer.Controlls.ArrowControlls {
             if (!isInAir)
                 return;
 
-            if (isInAir && rigid.velocity != Vector3.zero)
+            if (isInAir && rigid != null && rigid.velocity != Vector3.zero)
                 rigid.rotation = Quaternion.LookRotation(rigid.velocity, transform.up);
-            var dir = (tip.position - prevTipPos).normalized;
             var layerMask = (1 << hitableLayerIndex);
             if (Physics.Linecast(
                prevTipPos, tip.position, out RaycastHit hit, layerMask)) {
                 var hitable = hit.collider.GetComponent<ArrowHitable>();
                 var hitPoint = hit.point;
-                var hitDir = hit.normal;
-                var dot = Vector3.Dot(dir, hitDir);
-
                 TryPerformHit(hitPoint, hitable);
-                /*
-                if (Mathf.Abs(dot) < 0.15f) {
-                    Recoshet(dir, hitDir, hitable.Bounce);
-                } else {
-                    TryPerformHit(hitPoint, tip.position, hitable);
-                }
-                */
             }
 
             prevTipPos = tip.position;
@@ -73,19 +59,10 @@ namespace Archer.Controlls.ArrowControlls {
             trail.enabled = true;
             rigid.useGravity = true;
             rigid.isKinematic = false;
-            var fixDirection = new Vector3(0, direction.y, direction.z);
+            var fixDirection = new Vector3(0, direction.y, direction.z).normalized;
             rigid.AddForce(fixDirection * force, ForceMode.Impulse);
-        }
-
-        public void Release(Vector3 velocity) {
-            wasShoot = true;
-            isInAir = true;
-            enabled = true;
-            trail.enabled = true;
-            rigid.useGravity = true;
-            rigid.isKinematic = false;
-            var fixVelocity = new Vector3(0, velocity.y, velocity.z);
-            rigid.velocity = fixVelocity;
+            if (arrowPool != null)
+                transform.SetParent(arrowPool);
         }
 
         public void Split() {
@@ -95,34 +72,57 @@ namespace Archer.Controlls.ArrowControlls {
         }
 
         private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
-            if (isSplitBlock)
+            if (!isInAir)
                 return;
-            float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
-
+            float angle =  -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
+            var arrowAngle = transform.rotation.eulerAngles.x;
+            var speed = rigid.velocity.magnitude;
+            var impulse = rigidSpec.Mass * speed;
             for (int i = 0; i < splitArrowsAmount; i++) {
                 var instantiatedArrow = Instantiate(this, transform.position, transform.rotation);
-                Vector3 velocity = rigid.velocity;
-
-                float radAngle = angle * Mathf.Deg2Rad;
-
-                float newY = Mathf.Sin(radAngle) * velocity.z + Mathf.Cos(radAngle) * velocity.y;
-                float newZ = Mathf.Cos(radAngle) * velocity.z - Mathf.Sin(radAngle) * velocity.y;
-
-                Vector3 newVelocity = new Vector3(velocity.x, newY, newZ);
-
-                instantiatedArrow.Release(newVelocity);
+                var partialImpulce = impulse / splitArrowsAmount;
+                instantiatedArrow.transform.rotation = Quaternion.Euler(arrowAngle + angle, 0, 0);
+                instantiatedArrow.Release(partialImpulce);
 
                 angle += angleBetweenSplitArrows;
             }
-
             Destroy(gameObject);
         }
 
-        public void SetBlockSplit(bool splitBlock) {
-            isSplitBlock = splitBlock;
+        public void ToggleIsInObject(bool isInObject) {
+            isInAir = !isInObject;
+            if (!isInAir) {
+                if (rigid != null) {
+                    rigid.velocity = Vector3.zero;
+                    rigid.useGravity = false;
+                    Destroy(rigid);
+                }
+            } else {
+                rigid = gameObject.AddComponent<Rigidbody>();
+                rigidSpec.ApplyToRigid(rigid);
+                rigid.velocity = Vector3.zero;
+                rigid.useGravity = true;
+                rigid.isKinematic = false;
+                if (arrowPool != null)
+                    transform.SetParent(arrowPool);
+            }
+        }
+
+        public void RemoveControl() {
+            Destroy(trail);
+            Destroy(colider);
+            if (rigid != null)
+                Destroy(rigid);
+        }
+
+        public void SetArrowPool(Transform arrowContainer) {
+            arrowPool = arrowContainer;
         }
 
         public void TryPerformHit(Vector3 hitPos, ArrowHitable hitable) {
+            if (!isInAir || rigid == null)
+                return;
+
             var velocity = rigid.velocity;
             var direction = velocity.normalized;
 
@@ -141,147 +141,6 @@ namespace Archer.Controlls.ArrowControlls {
             var reverceHit = (RaycastHit)equalHit;
 
             hitable.PerformHit(this);
-
-            if (reverceHit.collider.TryGetComponent(out ArrowPushable pushable)) {
-                pushable.Push(Vector3.zero, rigid.velocity);
-            }
-            /*
-            */
-            
-            /*
-            var outsidePos = reverceHit.point;
-            var arrowNotchTipDiff = tip.position - transform.position;
-            transform.position = hitPos - arrowNotchTipDiff;
-
-            if (hitable.IsEndless)
-                pendingRoutine = StartCoroutine(GoTrowEndlessObject(hitPos, outsidePos, hitable));
-            else
-                pendingRoutine = StartCoroutine(GoThrowObject(hitPos, outsidePos, hitable));
-            */
         }
-
-        // TODO hit handlerbelong to arrowHitable
-        /*
-        private IEnumerator GoThrowObject(Vector3 startPos, Vector3 endPos, ArrowHitable hitable) {
-            var arrowLengthPosDiff = (tip.position - transform.position);
-            var arrowStartPos = startPos - arrowLengthPosDiff;
-            var inObjectPassDist = endPos - arrowStartPos;
-            var inObjectDist = Vector3.Distance(arrowStartPos, endPos);
-
-            var speed = rigid.velocity.magnitude;
-            var dir = rigid.velocity.normalized;
-
-            rigid.useGravity = false;
-            rigid.isKinematic = false;
-            rigid.velocity = Vector3.zero;
-            arrowSpec.IsSplitable = false;
-
-            var Ek = (arrowSpec.ArrowMass * speed * speed) / 2f;
-            var hardnes = hitable.Hardnes;
-            var isInBody = true;
-
-            // - Ek/u;
-
-            while (isInBody) {
-                var newSpeed = (float)Math.Sqrt(Ek * 2f / arrowSpec.ArrowMass);
-                var newPos = transform.position + dir * newSpeed * Time.deltaTime;
-                var passDist = Vector3.Distance(transform.position, newPos);
-                var Ekdiff = hardnes * passDist * arrowSpec.PenetrationFactor; // H * d * k
-                var currEk = Ek - Ekdiff;
-                if (currEk < 0) {
-                    var passForFrameInObj = Ek / hardnes;
-                    var recalcPos = transform.position 
-                        + dir * passForFrameInObj * arrowSpec.PenetrationFactor;
-                    var flowPassFactorInObj = Vector3.Distance(
-                        arrowStartPos, recalcPos) / inObjectDist;
-                    if (flowPassFactorInObj <= 1) {
-                        transform.position = recalcPos;
-                    } else {
-                        var EkPassValue = Vector3.Distance(transform.position, endPos)
-                            * hardnes * arrowSpec.PenetrationFactor;
-                        var EkRest = Ek - EkPassValue;
-                        if (EkRest < 0)
-                            EkRest = Ek;
-                        var exitSpeed = (float)Math.Sqrt(EkRest * 2f / arrowSpec.ArrowMass);
-                        enabled = true;
-                        trail.enabled = true;
-                        rigid.useGravity = true;
-                        rigid.isKinematic = false;
-                        rigid.velocity = dir * exitSpeed;
-                        isInBody = false;
-
-                    }
-                    break;
-                } else {
-                    var flowPassFactorInObj = Vector3.Distance(
-                        arrowStartPos, newPos) / inObjectDist;
-                    if (flowPassFactorInObj < 1) {
-                        transform.position = newPos;
-                        Ek -= Ekdiff;
-                        yield return Time.deltaTime;
-                        continue;
-                    } else {
-                        var passDistToExit = Vector3.Distance(transform.position, endPos);
-                        var EkPassToExit = passDistToExit * hardnes * arrowSpec.PenetrationFactor;
-                        var EkRest = Ek - EkPassToExit;
-                        var exitSpeed = (float)Math.Sqrt(EkRest * 2f / arrowSpec.ArrowMass);
-                        enabled = true;
-                        trail.enabled = true;
-                        rigid.useGravity = true;
-                        rigid.isKinematic = false;
-                        rigid.velocity = dir * exitSpeed;
-                        isInBody = false;
-                        break;
-                    }
-                }
-            }
-            yield return Time.deltaTime;
-        }
-
-        private IEnumerator GoTrowEndlessObject(Vector3 startPos, Vector3 endPos, ArrowHitable hitable) {
-            var arrowLengthPosDiff = (tip.position - transform.position);
-            var arrowStartPos = startPos - arrowLengthPosDiff;
-            var inObjectPassDist = endPos - arrowStartPos;
-            var inObjectDist = Vector3.Distance(arrowStartPos, endPos);
-
-            var speed = rigid.velocity.magnitude;
-            var dir = rigid.velocity.normalized;
-
-            rigid.useGravity = false;
-            rigid.isKinematic = false;
-            rigid.velocity = Vector3.zero;
-            arrowSpec.IsSplitable = false;
-
-            var Ek = (arrowSpec.ArrowMass * speed * speed) / 2f;
-            var hardnes = hitable.Hardnes;
-
-            while (Ek > 0) {
-                var newSpeed = (float)Math.Sqrt(Ek * 2f / arrowSpec.ArrowMass);
-                var newPos = transform.position + dir * newSpeed * Time.deltaTime;
-                var passDist = Vector3.Distance(transform.position, newPos);
-                var Ekdiff = hardnes * passDist * arrowSpec.PenetrationFactor;
-                var currEk = Ek - Ekdiff;
-                if (currEk < 0) {
-                    var correctPassedDist = Ek / (hardnes * arrowSpec.PenetrationFactor);
-                    var recalcPos = transform.position + dir * correctPassedDist;
-                    transform.position = recalcPos;
-                    break;
-                } else {
-                    transform.position = newPos;
-                    Ek -= Ekdiff;
-                }
-
-                yield return Time.deltaTime;
-            }
-        }
-        
-
-        private void Recoshet(Vector3 arrowDir, Vector3 hitDir, float bounce) {
-            var newDir = Vector3.Reflect(arrowDir, hitDir);
-            var velocxity = rigid.velocity.magnitude;
-            rigid.velocity = newDir * velocxity * bounce;
-            rigid.rotation = Quaternion.LookRotation(rigid.velocity, transform.up);
-        }
-        */
     }
 }
