@@ -28,6 +28,9 @@ namespace Archer.ArcherControlls {
         public Vector3? CurrecntPoint => currecntPoint;
         public bool IsLeft => isLeft;
         public float EnableRadius => enableRadius;
+        public float CurrentForce => force;
+        public float CurrentAngle =>
+            bowRotationPivot.transform.rotation.eulerAngles.x;
 
 
         private void Start() {
@@ -40,6 +43,7 @@ namespace Archer.ArcherControlls {
         }
 
         private void EditorControls() {
+            var sqtRadius = enableRadius * enableRadius;
             var isMouseDown = Input.GetMouseButtonDown(0);
             var isMouseUp = Input.GetMouseButtonUp(0);
             var isMousePressed = Input.GetMouseButton(0);
@@ -49,6 +53,7 @@ namespace Archer.ArcherControlls {
 
             if (isMouseDown && arrowController != null && arrowController.IsInAir) {
                 arrowController.Split();
+                return;
             }
 
             UpdateAngle(targetAngle);
@@ -68,10 +73,19 @@ namespace Archer.ArcherControlls {
                 return;
             }
 
+            if (isMouseUp && initialPoint != null && arrowController == null) {
+                initialPoint = null;
+                currecntPoint = null;
+                if (isAmmoLoaded) {
+                    isAmmoLoaded = false;
+                    LoadArrow(isAmmoLoaded);
+                }
+
+            }
+
             if (initialPoint != null && currecntPoint != null && prevPos != null) {
-                var delta = (Vector3)prevPos - (Vector3)currecntPoint;
-                var deltaMagnitude = delta.magnitude;
-                if (deltaMagnitude < 2) {
+                var sqrtDelta = ((Vector3)prevPos - (Vector3)currecntPoint).sqrMagnitude;
+                if (sqrtDelta < 4) {
                     return;
                 }
             }
@@ -79,16 +93,13 @@ namespace Archer.ArcherControlls {
             if (isMouseDown) {
                 initialPoint = currecntPoint;
             }
-            Debug.Log(1);
             if (isMousePressed && initialPoint != null) {
                 var inCircle = IsInCircle(
-                    (Vector3)initialPoint, (Vector3)currecntPoint, enableRadius);
+                    (Vector3)initialPoint, (Vector3)currecntPoint, sqtRadius);
                 if (isAmmoLoaded && inCircle) {
-                    Debug.Log(2);
                     isAmmoLoaded = false;
                     LoadArrow(isAmmoLoaded);
                 } else if (!isAmmoLoaded && !inCircle) {
-                    Debug.Log(3);
                     isAmmoLoaded = true;
                     LoadArrow(isAmmoLoaded);
                     var xDiff = ((Vector3)initialPoint).x - ((Vector3)currecntPoint).x;
@@ -98,7 +109,6 @@ namespace Archer.ArcherControlls {
                         isLeft = true;
                 }
                 if (isAmmoLoaded) {
-                    Debug.Log(4);
                     var localCurrentPoint = (Vector3)currecntPoint;
                     var localInitPoint = (Vector3)initialPoint;
                     if (isLeft) {
@@ -129,8 +139,8 @@ namespace Archer.ArcherControlls {
 
         }
 
-        private bool IsInCircle(Vector3 center, Vector3 point, float radius) {
-            return Vector2.Distance(center, point) < radius / 2;
+        private bool IsInCircle(Vector3 center, Vector3 point, float sqtRadius) {
+            return (center - point).sqrMagnitude < sqtRadius;
         }
 
         private float FormatAngle(float angle) {

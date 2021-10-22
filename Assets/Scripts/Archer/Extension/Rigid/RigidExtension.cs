@@ -20,8 +20,8 @@ namespace Archer.Extension.Rigid {
                 rigid.useGravity = rigidSpec.UseGravity;
             }
 
-            rigid.constraints = RigidbodyConstraints.None;
             if (rigidSpec.IsChangeConstraints) {
+                rigid.constraints = RigidbodyConstraints.None;
                 var constrain = RigidbodyConstraints.None;
                 if (rigidSpec.FreezePosX)
                     constrain |= RigidbodyConstraints.FreezePositionX;

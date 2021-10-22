@@ -8,11 +8,11 @@ namespace Archer.Controlls.IHitableAction {
         [SerializeField] private float explosionDelay;
         [SerializeField] private float explosionRadius;
         [SerializeField] private float explosionForce;
-        
-        private Coroutine pendingRotineRef;
-        
-        private int oclusionLayerIndex;
 
+        public HitableAccessFlag Type => type;
+        private HitableAccessFlag type = HitableAccessFlag.avtivateBomb;
+        private Coroutine pendingRotineRef;
+        private int oclusionLayerIndex;
         private Vector3 resetPos;
         private Quaternion resetRot;
 
@@ -37,13 +37,13 @@ namespace Archer.Controlls.IHitableAction {
                 startTime += Time.deltaTime;
                 yield return Time.deltaTime;
             }
-            StartExplode();
+            Explode();
             pendingRotineRef = null;
         }
 
-        private void StartExplode()
+        private void Explode()
         {
-            VisualisateExplosion();
+            //VisualisateExplosion();
             var colidsions = GetTouchedByExplosion();
             var bombPos = transform.position;
 

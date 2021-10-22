@@ -7,6 +7,8 @@ namespace Archer.Controlls.IHitableAction {
     public class ArrowRigidChangeble : MonoBehaviour, IHitable {
         [SerializeField] private RigidSpec rigidSpec;
 
+        public HitableAccessFlag Type => type;
+        private HitableAccessFlag type = HitableAccessFlag.changeRigid;
         private Rigidbody rigid;
 
         private void Start() {

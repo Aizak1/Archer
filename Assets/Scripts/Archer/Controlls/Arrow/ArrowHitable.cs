@@ -7,6 +7,7 @@ namespace Archer.Controlls.ArrowHitableControlls {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(ArrowBalisticInteraction))]
     public class ArrowHitable : MonoBehaviour {
+        [SerializeField] public HitableAccessFlag hitableAccessFlag;
         [Header("IHitableActions")]
         [SerializeField] private List<GameObject> ihitableGOList = new List<GameObject>();
 
@@ -15,11 +16,11 @@ namespace Archer.Controlls.ArrowHitableControlls {
 
         private void Start() {
             arrowBalisticInteraction = GetComponent<ArrowBalisticInteraction>();
-            InitIhitable();
+            InitIHitable();
         }
         
         private void OnValidate() {
-            ValidateIhitable();
+            ValidateIHitable();
         }
 
         public void PerformHit(ArrowController arrow) {
@@ -33,24 +34,36 @@ namespace Archer.Controlls.ArrowHitableControlls {
             }
         }
 
-        private void ValidateIhitable() {
+        private void ValidateIHitable() {
             var localIHitableList = new List<GameObject>();
             if (ihitableGOList != null && ihitableGOList.Count > 0) {
-                foreach (var ihitable in ihitableGOList) {
-                    if (ihitable.TryGetComponent<IHitable>(out _)) {
-                        localIHitableList.Add(ihitable);
+                foreach (var ihitableGo in ihitableGOList) {
+
+                    var ihitabls = ihitableGo.GetComponents<IHitable>();
+                    if (ihitabls.Length > 0) {
+                        var isFind = false;
+                        foreach (var ihitable in ihitabls) {
+                            if (hitableAccessFlag.HasFlag(ihitable.Type)) {
+                                isFind = true;
+                                break;
+                            }
+                        }
+                        if (isFind) {
+                            localIHitableList.Add(ihitableGo);
+                        }
                     }
                 }
             }
             ihitableGOList = localIHitableList;
         }
 
-        private void InitIhitable() {
+        private void InitIHitable() {
             var localIhitableList = new List<IHitable>();
             foreach (var ihitableGO in ihitableGOList) {
-                if (ihitableGO.TryGetComponent(out IHitable ihitable)) {
-                    localIhitableList.Add(ihitable);
-                }
+                var ihitables = ihitableGO.GetComponents<IHitable>();
+                foreach (var ihitable in ihitables)
+                    if (hitableAccessFlag.HasFlag(ihitable.Type))
+                        localIhitableList.Add(ihitable);
             }
             iHitableActionsList = localIhitableList;
         }

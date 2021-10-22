@@ -10,49 +10,78 @@ namespace Archer.Controlls.UI.ShootingControlls {
         [SerializeField] private RectTransform startPoint;
         [SerializeField] private RectTransform currentPoint;
         [SerializeField] private RectTransform enableRadius;
+        [SerializeField] private RectTransform forceBarContainer;
+        [SerializeField] private RectTransform forceBarRight;
+        [SerializeField] private RectTransform forceBarLeft;
 
         [SerializeField] private Sprite disableImage;
         [SerializeField] private Sprite enableImage;
 
+        private RectTransform forceBar => shootingController.IsLeft
+            ? forceBarLeft
+            : forceBarRight;
+
         private void Start() {
-            ToggleControllsVisibility(false);
+            ResetControllsVisibility();
         }
 
 
         private void Update() {
+            ResetControllsVisibility();
+            var maxForceDist = (Screen.width > Screen.height ? Screen.height : Screen.width) / 2;
+            var radius = shootingController.EnableRadius;
+            var sqrRadius = radius * radius;
             var initPointOreNull = shootingController.InitialPoint;
-            if (initPointOreNull == null) {
-                ToggleControllsVisibility(false);
+            var currPointOreNull = shootingController.CurrecntPoint;
+            if (initPointOreNull == null || currPointOreNull == null) {
+                TogglePointEnableState(false);
                 return;
             }
+
+            var initialPoint = (Vector2)initPointOreNull;
+            var currPoint = (Vector2)currPointOreNull;
+
+            startPoint.position = initialPoint;
+            startPoint.gameObject.SetActive(true);
 
             var diametrValue = shootingController.EnableRadius * 2;
             enableRadius.sizeDelta = new Vector2(diametrValue, diametrValue);
             enableRadius.gameObject.SetActive(true);
 
-
-
-
-
-            var initialPoint = (Vector2)initPointOreNull;
-            startPoint.position = initialPoint;
-            startPoint.gameObject.SetActive(true);
-            var currPointOreNull = shootingController.CurrecntPoint;
-            if (currPointOreNull == null) {
-                ToggleControllsVisibility(false);
-                return;
-            }
-            var currPoint = (Vector2)currPointOreNull;
             currentPoint.position = currPoint;
             currentPoint.gameObject.SetActive(true);
-            //Debug.Log(shootingController.IsAmmoLoaded);
 
+            if (IsInCircle(initialPoint, currPoint, sqrRadius)) {
+                TogglePointEnableState(false);
+                forceBarContainer.gameObject.SetActive(false);
+                return;
+            } else {
+                TogglePointEnableState(true);
+                currentPoint.gameObject.SetActive(false);
+                var forceBarPos = GetCircleOnRadiusPoint(initialPoint, currPoint, radius);
+                forceBarContainer.position = forceBarPos;
+                forceBarContainer.gameObject.SetActive(true);
+                
+                var currentRotation = shootingController.CurrentAngle;
+                var currentForce = shootingController.CurrentForce;
+                var forceBarWidth = maxForceDist * currentForce;
+                forceBarContainer.rotation = Quaternion.Euler(0, 0, -currentRotation);
+                forceBar.sizeDelta = new Vector2(forceBarWidth, 20);
+                forceBar.gameObject.SetActive(true);
+
+            }
 
         }
 
 
-        private bool IsInCircle(Vector2 centerPoint, Vector2 point, float radius) {
-            var sqrRadius = radius * radius;
+        private Vector3 GetCircleOnRadiusPoint(Vector3 center, Vector3 point, float radius) {
+            var dir = (point - center).normalized;
+            return center + dir * radius;
+
+
+        }
+
+        private bool IsInCircle(Vector2 centerPoint, Vector2 point, float sqrRadius) {
             return (centerPoint - point).sqrMagnitude < sqrRadius;
         }
 
@@ -68,15 +97,13 @@ namespace Archer.Controlls.UI.ShootingControlls {
             }
         }
 
-        private void ToggleControllsVisibility(bool isVisible) {
+        private void ResetControllsVisibility() {
             startPoint.gameObject.SetActive(false);
             currentPoint.gameObject.SetActive(false);
             enableRadius.gameObject.SetActive(false);
-            if (isVisible) {
-                startPoint.gameObject.SetActive(true);
-                currentPoint.gameObject.SetActive(true);
-                enableRadius.gameObject.SetActive(true);
-            }
+            forceBarContainer.gameObject.SetActive(false);
+            forceBarLeft.gameObject.SetActive(false);
+            forceBarRight.gameObject.SetActive(false);
         }
 
     }

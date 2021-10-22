@@ -113,6 +113,7 @@ namespace Archer.Controlls.ArrowControlls {
             Destroy(colider);
             if (rigid != null)
                 Destroy(rigid);
+            Destroy(this);
         }
 
         public void SetArrowPool(Transform arrowContainer) {

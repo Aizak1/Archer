@@ -8,7 +8,6 @@ namespace Archer.Controlls.ArrowControlls {
     public class ArrowBalisticInteraction : MonoBehaviour {
         [SerializeField] private HitableSpec hitableSpec;
         [SerializeField] private Rigidbody rigid;
-        [SerializeField] private GameObject sphere;
         [SerializeField] private bool isApplyForce;
 
         private List<ArrowImpulceDesc> arrowEnergyDescs;
