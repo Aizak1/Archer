@@ -8,11 +8,10 @@ namespace Archer.Controlls.IHitableAction
         Everything = 127,
         destroyObject = 1,
         brokeJoint = 2,
-        avtivateBomb = 4,
+        activateBomb = 4,
         enableObject = 8,
         changeRigid = 16,
         levelTarget = 32,
-        other = 64
-
+        corrupt = 64
     }
 }

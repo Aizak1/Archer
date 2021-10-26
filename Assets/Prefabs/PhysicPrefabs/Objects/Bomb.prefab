@@ -77,7 +77,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitableAccessFlag: 5
-  fdssd: 0
   ihitableGOList:
   - {fileID: 643275840822070127}
 --- !u!114 &643275840822070119
@@ -354,6 +353,7 @@ GameObject:
   - component: {fileID: 643275842682137831}
   - component: {fileID: 643275842682137829}
   - component: {fileID: 643275842682137830}
+  - component: {fileID: 2418624887958530262}
   m_Layer: 10
   m_Name: Bomb
   m_TagString: Untagged
@@ -406,3 +406,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 2
   m_CollisionDetection: 0
+--- !u!114 &2418624887958530262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643275842682137832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b019f3d776e74946a64ffc33cecf3d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakeRetaliationFactor: 0.3
+  isUnbreakable: 1
+  "br\u0435akeTreshold": 0

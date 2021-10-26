@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Archer.Controlls.IHitableAction;
 
-namespace Archer.Controlls.Ststems.LevelSystem {
+namespace Archer.Controlls.Systems.LevelSystem {
     public class LevelControler : MonoBehaviour {
         [SerializeField] private Transform targetContainer;
 
         private List<ArrowHitableLevelTarget> levelTargetsList;
-        private LevelSpec levelSpec;
+        private LevelTaskSpec levelSpec;
 
         private void Start() {
 
         }
 
-        private void Init(LevelSpec levelSpec) {
+        private void Init(LevelTaskSpec levelSpec) {
             ResetLevelSystem();
             this.levelSpec = levelSpec;
             levelTargetsList = targetContainer.GetComponentsInChildren<ArrowHitableLevelTarget>().ToList();
@@ -46,8 +46,8 @@ namespace Archer.Controlls.Ststems.LevelSystem {
         }
     }
     
-    public struct LevelSpec {
-        public LevelSpec(int primaryTargetCount, int secondaryTargetCount,
+    public struct LevelTaskSpec {
+        public LevelTaskSpec(int primaryTargetCount, int secondaryTargetCount,
             int arrowToCompleteCount, int timeToComplete) {
             this.primaryTargetCount = primaryTargetCount;
             this.secondaryTargetCount = secondaryTargetCount;
@@ -68,31 +68,50 @@ namespace Archer.Controlls.Ststems.LevelSystem {
         public int TimeToComplete => timeToComplete;
     }
 
+
+
+
+
+    /*
     public interface IResourceWatcherServece {
 
         void Init(LevelSpec spec);
-        void StartSesion();
+        void StartSesion(Action onFinishCallback);
     }
    
-
-    public class TimeServece : IResourceWatcherServece {
-        public Action ResourceEndedAction;
-
+    public class TimeWatcherServece : MonoBehaviour, IResourceWatcherServece {
         public void Init(LevelSpec spec) { }
 
-        public void StartSesion() { }
+        public void StartSesion(Action onFinishCallback) { }
 
         private void Reset() { }
 
     }
 
-    public class ArrowServese : IResourceWatcherServece {
-        public Action TimeIsUpAction;
-
+    public class ArrowWatcherServece : MonoBehaviour, IResourceWatcherServece {
         public void Init(LevelSpec spec) { }
 
-        public void StartSesion() { }
+        public void StartSesion(Action onFinishCallback) { }
 
         private void Reset() { }
     }
+
+    public class PrimaryTargetWatcherServece : MonoBehaviour, IResourceWatcherServece
+    {
+        public void Init(LevelSpec spec) { }
+
+        public void StartSesion(Action onFinishCallback) { }
+
+        private void Reset() { }
+    }
+
+    public class SecondaryTargetWatcherServece : MonoBehaviour, IResourceWatcherServece
+    {
+        public void Init(LevelSpec spec) { }
+
+        public void StartSesion(Action onFinishCallback) { }
+
+        private void Reset() { }
+    }
+    */
 }

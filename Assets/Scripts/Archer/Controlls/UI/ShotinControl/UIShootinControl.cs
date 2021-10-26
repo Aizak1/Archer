@@ -6,7 +6,7 @@ using Archer.ArcherControlls;
 
 namespace Archer.Controlls.UI.ShootingControlls { 
     public class UIShootinControl : MonoBehaviour {
-        [SerializeField] private ShottingController shootingController;
+        [SerializeField] private ShootingController shootingController;
         [SerializeField] private RectTransform startPoint;
         [SerializeField] private RectTransform currentPoint;
         [SerializeField] private RectTransform enableRadius;

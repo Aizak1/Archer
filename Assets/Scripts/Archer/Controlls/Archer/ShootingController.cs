@@ -3,7 +3,7 @@ using Archer.Specs.Bow;
 using Archer.Controlls.ArrowControlls;
 
 namespace Archer.ArcherControlls {
-    public class ShottingController : MonoBehaviour {
+    public class ShootingController : MonoBehaviour {
         [SerializeField] private ArcherAnimatorController archerAnimatorController;
         [SerializeField] private Transform arrowPool;
         [SerializeField] private GameObject arrowPlacementPoint;
@@ -12,6 +12,7 @@ namespace Archer.ArcherControlls {
         [SerializeField] private float enableRadius;
         [SerializeField] private GameObject arrowPrefab;
 
+        private bool isOuterControl;
         private ArrowController arrowController;
 
         private float targetAngle;
@@ -32,14 +33,16 @@ namespace Archer.ArcherControlls {
         public float CurrentAngle =>
             bowRotationPivot.transform.rotation.eulerAngles.x;
 
-
         private void Start() {
             archerAnimatorController.SetRigsValues(0);
             archerAnimatorController.SetShotting(false);
+            if (TryGetComponent(out ShootingControllerSimulator _))
+                isOuterControl = true;
         }
 
         private void Update() {
-            EditorControls();
+            if (!isOuterControl)
+                EditorControls();
         }
 
         private void EditorControls() {
@@ -219,6 +222,31 @@ namespace Archer.ArcherControlls {
             var k = force; // 0,1
             var kSecond = Mathf.Lerp(0, 0.6f, k); // 0 .6
             archerAnimatorController.SetShotForce(kSecond);
+        }
+
+        public void OuterControl(float targetAngle, float targetForce, bool arrowRelese) {
+            if (!isAmmoLoaded) {
+                isAmmoLoaded = true;
+                LoadArrow(true);
+                return;
+            }
+            if (arrowRelese) {
+                archerAnimatorController.SetShotForce(0);
+                arrowController.SetArrowPool(arrowPool);
+                arrowController.Release(force * bowSpec.MaxForce);
+                ResetAngleAndForce();
+                bowRotationPivot.transform.rotation = Quaternion.Euler(0, 0, 0);
+                isAmmoLoaded = false;
+                archerAnimatorController.SetShotting(false);
+                archerAnimatorController.SetRigsValues(0);
+                return;
+            }
+            this.targetAngle = targetAngle;
+            this.targetForce = targetForce;
+
+            UpdateAngle(targetAngle);
+            UpdateForce(targetForce);
+
         }
     }
 }

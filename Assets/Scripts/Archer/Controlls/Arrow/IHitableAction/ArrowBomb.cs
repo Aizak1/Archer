@@ -10,7 +10,7 @@ namespace Archer.Controlls.IHitableAction {
         [SerializeField] private float explosionForce;
 
         public HitableAccessFlag Type => type;
-        private HitableAccessFlag type = HitableAccessFlag.avtivateBomb;
+        private HitableAccessFlag type = HitableAccessFlag.activateBomb;
         private Coroutine pendingRotineRef;
         private int oclusionLayerIndex;
         private Vector3 resetPos;
