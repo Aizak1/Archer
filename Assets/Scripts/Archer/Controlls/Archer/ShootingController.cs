@@ -1,9 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Archer.Specs.Bow;
 using Archer.Controlls.ArrowControlls;
+using Archer.Controlls.CameraControll;
+using Archer.Extension.List;
 
 namespace Archer.ArcherControlls {
     public class ShootingController : MonoBehaviour {
+        [SerializeField] private CameraArrowTracker cameraArrowTracker;
         [SerializeField] private ArcherAnimatorController archerAnimatorController;
         [SerializeField] private Transform arrowPool;
         [SerializeField] private GameObject arrowPlacementPoint;
@@ -11,9 +17,18 @@ namespace Archer.ArcherControlls {
         [SerializeField] private BowSpec bowSpec;
         [SerializeField] private float enableRadius;
         [SerializeField] private GameObject arrowPrefab;
+        public bool IsAmmoLoaded => isAmmoLoaded;
+        public Vector3? InitialPoint => initialPoint;
+        public Vector3? CurrecntPoint => currecntPoint;
+        public bool IsLeft => isLeft;
+        public float EnableRadius => enableRadius;
+        public float CurrentForce => force;
+        public float CurrentAngle =>
+            bowRotationPivot.transform.rotation.eulerAngles.x;
 
         private bool isOuterControl;
         private ArrowController arrowController;
+        private List<ArrowController> splitArrowsList;
 
         private float targetAngle;
         private float targetForce;
@@ -24,18 +39,12 @@ namespace Archer.ArcherControlls {
         private bool isAmmoLoaded;
         private bool isLeft;
 
-        public bool IsAmmoLoaded => isAmmoLoaded;
-        public Vector3? InitialPoint => initialPoint;
-        public Vector3? CurrecntPoint => currecntPoint;
-        public bool IsLeft => isLeft;
-        public float EnableRadius => enableRadius;
-        public float CurrentForce => force;
-        public float CurrentAngle =>
-            bowRotationPivot.transform.rotation.eulerAngles.x;
+        private bool IsArrowTraking;
 
         private void Start() {
             archerAnimatorController.SetRigsValues(0);
             archerAnimatorController.SetShotting(false);
+            splitArrowsList = new List<ArrowController>();
             if (TryGetComponent(out ShootingControllerSimulator _))
                 isOuterControl = true;
         }
@@ -45,17 +54,33 @@ namespace Archer.ArcherControlls {
                 EditorControls();
         }
 
+        private void LateUpdate() {
+            if (arrowController == null && splitArrowsList.Count == 0)
+                IsArrowTraking = false;
+
+            if (IsArrowTraking)
+                cameraArrowTracker.TrackObjects(TryGetTracableArrowPos());
+        }
+
+        private void OnTriggerExit(Collider collider) {
+            if (collider.gameObject.TryGetComponent(out ArrowController _)) {
+                IsArrowTraking = true;
+            }
+        }
         private void EditorControls() {
+            if (splitArrowsList.Count > 0)
+                splitArrowsList.UpdateAvalibility();
             var sqtRadius = enableRadius * enableRadius;
             var isMouseDown = Input.GetMouseButtonDown(0);
             var isMouseUp = Input.GetMouseButtonUp(0);
             var isMousePressed = Input.GetMouseButton(0);
-
+            var isNoArrow = arrowController == null && splitArrowsList.Count == 0;
             var prevPos = currecntPoint;
             currecntPoint = Input.mousePosition;
 
             if (isMouseDown && arrowController != null && arrowController.IsInAir) {
-                arrowController.Split();
+                arrowController.TryToSplit(out var splitArrows);
+                splitArrowsList = splitArrows.ToList();
                 return;
             }
 
@@ -76,6 +101,7 @@ namespace Archer.ArcherControlls {
                 return;
             }
 
+
             if (isMouseUp && initialPoint != null && arrowController == null) {
                 initialPoint = null;
                 currecntPoint = null;
@@ -83,7 +109,6 @@ namespace Archer.ArcherControlls {
                     isAmmoLoaded = false;
                     LoadArrow(isAmmoLoaded);
                 }
-
             }
 
             if (initialPoint != null && currecntPoint != null && prevPos != null) {
@@ -93,9 +118,14 @@ namespace Archer.ArcherControlls {
                 }
             }
 
-            if (isMouseDown) {
-                initialPoint = currecntPoint;
+
+            if (isMouseDown && isNoArrow) {
+                if (cameraArrowTracker.IsCameraReady)
+                    initialPoint = currecntPoint;
+                else
+                    cameraArrowTracker.WaitAndJumpToStart(0);
             }
+
             if (isMousePressed && initialPoint != null) {
                 var inCircle = IsInCircle(
                     (Vector3)initialPoint, (Vector3)currecntPoint, sqtRadius);
@@ -111,6 +141,7 @@ namespace Archer.ArcherControlls {
                     else
                         isLeft = true;
                 }
+
                 if (isAmmoLoaded) {
                     var localCurrentPoint = (Vector3)currecntPoint;
                     var localInitPoint = (Vector3)initialPoint;
@@ -118,10 +149,11 @@ namespace Archer.ArcherControlls {
                         if (localCurrentPoint.x > localInitPoint.x)
                             currecntPoint = new Vector3(
                                 localInitPoint.x - 5, localCurrentPoint.y, 0);
-                    } else
+                    } else {
                         if (localCurrentPoint.x < localInitPoint.x)
                         currecntPoint = new Vector3(
                             localInitPoint.x + 5, localCurrentPoint.y, 0);
+                    }
 
                     var direction = ((Vector3)currecntPoint - (Vector3)initialPoint).normalized;
                     var hupotinuse =
@@ -139,7 +171,6 @@ namespace Archer.ArcherControlls {
                     targetForce = forcePercent;
                 }
             }
-
         }
 
         private bool IsInCircle(Vector3 center, Vector3 point, float sqtRadius) {
@@ -182,6 +213,7 @@ namespace Archer.ArcherControlls {
             force = 0;
             bowRotationPivot.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+
 
         public void UpdateAngle(float targetAngle) {
             var currentAngle = bowRotationPivot.transform.rotation.eulerAngles.x;
@@ -247,6 +279,18 @@ namespace Archer.ArcherControlls {
             UpdateAngle(targetAngle);
             UpdateForce(targetForce);
 
+        }
+
+        public Vector3[] TryGetTracableArrowPos() {
+            var posList = new List<Vector3>();
+            if (arrowController != null)
+                posList.Add(arrowController.transform.position);
+            if (splitArrowsList.Count > 0) {
+                foreach (var arrow in splitArrowsList) {
+                    posList.Add(arrow.transform.position);
+                }
+            }
+            return posList.ToArray();
         }
     }
 }

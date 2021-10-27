@@ -19,7 +19,6 @@ namespace Archer.Controlls.Other {
             rot = ClampAngle(rot + cameraSpeed, -360, 360);
             var centerPos = cameraContainerTransform.position;
             var cameraPos = transform.position;
-            //yRotation = ClampAngle(yRotation, negativeXAngleLimit, positiveXAngleLimit);
             transform.position = centerPos + Quaternion.Euler(20
                 , rot, 0f) * (distToCenter * Vector3.back);
             transform.LookAt(centerPos);

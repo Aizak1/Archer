@@ -7,8 +7,8 @@ namespace Archer.Controlls.ArrowControlls {
     [RequireComponent(typeof(Collider))]
     public class ArrowBalisticInteraction : MonoBehaviour {
         [SerializeField] private HitableSpec hitableSpec;
-        [SerializeField] private Rigidbody rigid;
         [SerializeField] private bool isApplyForce;
+        [SerializeField] private Rigidbody rigid;
 
         private List<ArrowImpulceDesc> arrowEnergyDescs;
         private int hitableLayerIndex;
@@ -20,7 +20,7 @@ namespace Archer.Controlls.ArrowControlls {
         }
 
         private void FixedUpdate() {
-            for (int i = 0; i < arrowEnergyDescs.Count; i++) {
+            for (int i = arrowEnergyDescs.Count -1; i > -1; i--) {
                 if (arrowEnergyDescs[i].Arrow == null) {
                     arrowEnergyDescs.RemoveAt(i);
                 } else {
@@ -109,9 +109,14 @@ namespace Archer.Controlls.ArrowControlls {
                 layerMask, QueryTriggerInteraction.Collide);
             var startRes = FindHitObject(startHits, gameObject);
             var endRes = FindHitObject(endHits, gameObject);
-
-            if (startRes == null || endRes == null)
+            if (startRes == null || endRes == null) {
+                //TODO
+                // 1 make ground infinity 
+                // 2 make ricoshet with low speed
+                arrowEnergyDescs.RemoveAt(index);
+                arrow.RemoveControl();
                 return;
+            }
 
             var startHit = (RaycastHit)startRes;
             var endHit = (RaycastHit)endRes;
@@ -181,11 +186,6 @@ namespace Archer.Controlls.ArrowControlls {
                 }
             }
             return resultHit;
-        }
-
-        [ContextMenu("Push")]
-        private void Push() {
-            rigid.AddForce(transform.forward * 10, ForceMode.Impulse);
         }
     }
 

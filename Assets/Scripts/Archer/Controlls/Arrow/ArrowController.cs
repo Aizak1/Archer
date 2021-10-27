@@ -65,15 +65,18 @@ namespace Archer.Controlls.ArrowControlls {
                 transform.SetParent(arrowPool);
         }
 
-        public void Split() {
+        public bool TryToSplit(out ArrowController[] splitArrows) {
             if (isInAir && arrowSpec.IsSplitable) {
-                Split(arrowSpec.SplitAngle, arrowSpec.SplitCount);
+                var result = TryToSplit(arrowSpec.SplitAngle, arrowSpec.SplitCount, out var splitArrowsArr);
+                splitArrows = splitArrowsArr;
+                return result;
             }
+            splitArrows = new ArrowController[0];
+            return false;
         }
 
-        private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
-            if (!isInAir)
-                return;
+        public bool TryToSplit(float angleBetweenSplitArrows, int splitArrowsAmount, out ArrowController[] splitArrows) {
+            splitArrows = new ArrowController[splitArrowsAmount];
             float angle =  -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
             var arrowAngle = transform.rotation.eulerAngles.x;
             var speed = rigid.velocity.magnitude;
@@ -83,10 +86,11 @@ namespace Archer.Controlls.ArrowControlls {
                 var partialImpulce = impulse / splitArrowsAmount;
                 instantiatedArrow.transform.rotation = Quaternion.Euler(arrowAngle + angle, 0, 0);
                 instantiatedArrow.Release(partialImpulce);
-
+                splitArrows[i] = instantiatedArrow;
                 angle += angleBetweenSplitArrows;
             }
             Destroy(gameObject);
+            return true;
         }
 
         public void ToggleIsInObject(bool isInObject) {
