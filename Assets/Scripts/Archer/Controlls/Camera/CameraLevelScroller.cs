@@ -2,49 +2,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Archer.Controlls.CameraControll {
     [RequireComponent(typeof(Camera))]
     public class CameraLevelScroller : MonoBehaviour {
-        [SerializeField] private Vector3 startPos;
-        [SerializeField] private Vector3 endPos;
+        [SerializeField] private Vector3 leftBound;
+        [SerializeField] private Vector3 rightBound;
 
-        [SerializeField] private Vector3 startLimitPos;
-        [SerializeField] private Vector3 endLimitPos;
+        [SerializeField] private Vector3 leftLimitBound;
+        [SerializeField] private Vector3 rightLimitBound;
 
         [SerializeField] private float speed;
 
         private CameraArrowTracker cameraArrowTracker;
 
         private void Update() {
+#if UNITY_ANDROID
+            MobileControls();
+#endif
+#if UNITY_EDITOR
+            EditorControls();
+#endif
+        }
+
+        private void EditorControls() {
             var isPush = Input.GetMouseButton(2);
             var mousePos = Input.mousePosition;
             var pos = transform.position;
             if (isPush) {
                 var factor = GetAccselerationFactor(mousePos);
                 var dist = speed * Time.deltaTime * factor;
-                var minLimit = startLimitPos.z > endLimitPos.z ? endLimitPos.z : startLimitPos.z;
-                var maxLimit = startLimitPos.z < endLimitPos.z ? endLimitPos.z : startLimitPos.z;
+                var minLimit = leftLimitBound.z > rightLimitBound.z ? rightLimitBound.z : leftLimitBound.z;
+                var maxLimit = leftLimitBound.z < rightLimitBound.z ? rightLimitBound.z : leftLimitBound.z;
                 var zPos = Mathf.Clamp(pos.z + dist, minLimit, maxLimit);
                 var newPos = new Vector3(pos.x, pos.y, zPos);
                 transform.position = newPos;
                 return;
             }
 
-            if (pos != startPos || pos != endPos) {
+            if (pos != leftBound || pos != rightBound) {
                 var zPos = pos.z;
-                if(zPos >= startLimitPos.z && zPos < startPos.z) {
+                if (zPos >= leftLimitBound.z && zPos < leftBound.z) {
                     var newZPos = zPos + speed * Time.deltaTime;
-                    if (newZPos > startPos.z)
-                        newZPos = startPos.z;
+                    if (newZPos > leftBound.z)
+                        newZPos = leftBound.z;
                     transform.position = new Vector3(pos.x, pos.y, newZPos);
-                } else if (zPos > endPos.z && zPos <= endLimitPos.z) {
+                } else if (zPos > rightBound.z && zPos <= rightLimitBound.z) {
                     var newZPos = zPos - speed * Time.deltaTime;
-                    if (newZPos < endPos.z)
-                        newZPos = endPos.z;
+                    if (newZPos < rightBound.z)
+                        newZPos = rightBound.z;
                     transform.position = new Vector3(pos.x, pos.y, newZPos);
                 }
             }
+        }
+
+        private void MobileControls() {
+            var pos = transform.position;
+            var touchCount = Input.touchCount;
+            if (touchCount == 2) {
+                var firstTouch = Input.GetTouch(0);
+                var secondTouch = Input.GetTouch(1);
+                var center = (firstTouch.position + secondTouch.position) / 2;
+                var factor = GetAccselerationFactor(center);
+                var dist = speed * Time.deltaTime * factor;
+                var minLimit = leftLimitBound.z > rightLimitBound.z ? rightLimitBound.z : leftLimitBound.z;
+                var maxLimit = leftLimitBound.z < rightLimitBound.z ? rightLimitBound.z : leftLimitBound.z;
+                var newZPos = Mathf.Clamp(pos.z + dist, minLimit, maxLimit);
+                var newPos = new Vector3(pos.x, pos.y, newZPos);
+                transform.position = newPos;
+                return;
+            }
+
+            var zPos = pos.z;
+            if (zPos >= leftLimitBound.z && zPos < leftBound.z) {
+                var newZPos = zPos + speed * Time.deltaTime;
+                if (newZPos > leftBound.z)
+                    newZPos = leftBound.z;
+                transform.position = new Vector3(pos.x, pos.y, newZPos);
+            } else if (zPos > rightBound.z && zPos <= rightLimitBound.z) {
+                var newZPos = zPos - speed * Time.deltaTime;
+                if (newZPos < rightBound.z)
+                    newZPos = rightBound.z;
+                transform.position = new Vector3(pos.x, pos.y, newZPos);
+            }
+
+
+
+
         }
 
         private float GetAccselerationFactor(Vector2 pos) {
@@ -52,25 +95,24 @@ namespace Archer.Controlls.CameraControll {
             return Mathf.Clamp(factor, -1, 1);
         }
 
-
         [ContextMenu("SetStartPosition")]
         private void SetStartPosition() {
-            startPos = transform.position;
+            leftBound = transform.position;
         }
 
         [ContextMenu("SetEndPosition")]
         private void SetEndPosition() {
-            endPos = transform.position;
+            rightBound = transform.position;
         }
 
         [ContextMenu("SetStartLimitPosition")]
         private void SetStartLimitPosition() {
-            startLimitPos = transform.position;
+            leftLimitBound = transform.position;
         }
 
         [ContextMenu("SetEndLimitPosition")]
         private void SetEndLimitPosition() {
-            endLimitPos = transform.position;
+            rightLimitBound = transform.position;
         }
     }
 }

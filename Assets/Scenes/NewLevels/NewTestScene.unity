@@ -5505,7 +5505,6 @@ GameObject:
   - component: {fileID: 861729197}
   - component: {fileID: 861729200}
   - component: {fileID: 861729201}
-  - component: {fileID: 861729202}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5622,26 +5621,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75347c01832c5a4cbadf2c4572c4410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingController: {fileID: 1581836791}
+  activeZoneLenght: 15
+  activeZoneGap: 5
   cameraSpeed: 15
   cameraTrackSpeed: 50
---- !u!114 &861729202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861729196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e2e8fb366cd2d42a2e350fab3a14b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPos: {x: 6, y: 4.2, z: 7.5}
-  endPos: {x: 6, y: 4.2, z: 31.16}
-  startLimitPos: {x: 6, y: 4.2, z: 5.77}
-  endLimitPos: {x: 6, y: 4.2, z: 34.25}
-  speed: 5
 --- !u!1 &895157356
 GameObject:
   m_ObjectHideFlags: 0
@@ -12063,6 +12046,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1835734333}
     - target: {fileID: 1691108085543398352, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691108085543398352, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
       propertyPath: enableRadius
       value: 60
       objectReference: {fileID: 0}
@@ -16599,6 +16586,14 @@ PrefabInstance:
     - target: {fileID: 1025281065649576569, guid: 76b57a74babb2f84da9871f947aef293, type: 3}
       propertyPath: m_Name
       value: ArrowActiveZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025281065649576571, guid: 76b57a74babb2f84da9871f947aef293, type: 3}
+      propertyPath: m_Size.z
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1025281065649576571, guid: 76b57a74babb2f84da9871f947aef293, type: 3}
+      propertyPath: m_Center.z
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76b57a74babb2f84da9871f947aef293, type: 3}
