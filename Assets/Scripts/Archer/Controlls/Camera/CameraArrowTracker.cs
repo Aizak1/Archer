@@ -2,14 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Archer.Controlls.ArrowControlls;
-using Archer.ArcherControlls;
-using Archer.Extension.Vector3Extension;
 
 namespace Archer.Controlls.CameraControll {
     [RequireComponent(typeof(Camera))]
     public class CameraArrowTracker : MonoBehaviour {
-        //[SerializeField] private Collider activeZoneCollider;
         [SerializeField] private float activeZoneLenght;
         [SerializeField] private float activeZoneGap;
         [SerializeField] private float cameraSpeed;
@@ -22,7 +18,6 @@ namespace Archer.Controlls.CameraControll {
 
         private Coroutine pendingRoutine;
         private bool isTraking;
-       // private Vector3 startPos;
 
         public bool IsCameraReady => transform.position.z == leftBound;
 
@@ -30,7 +25,7 @@ namespace Archer.Controlls.CameraControll {
             SetBounds();
         }
 
-        public void QQQ() {
+        public void UpdateCameraMovement() {
 #if UNITY_ANDROID && !UNITY_EDITOR
                 MobileControls();
 #endif

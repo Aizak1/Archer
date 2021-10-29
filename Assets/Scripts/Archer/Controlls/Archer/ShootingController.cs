@@ -5,11 +5,13 @@ using UnityEngine;
 using Archer.Specs.Bow;
 using Archer.Controlls.ArrowControlls;
 using Archer.Controlls.CameraControll;
-using Archer.Extension.List;
+using Archer.Extension.ArrowControlls;
 
 namespace Archer.ArcherControlls {
     public class ShootingController : MonoBehaviour {
+        [SerializeField] private bool isTrackArrows;
         [SerializeField] private CameraArrowTracker cameraArrowTracker;
+        [Space]
         [SerializeField] private ArcherAnimatorController archerAnimatorController;
         [SerializeField] private Transform arrowPool;
         [SerializeField] private GameObject arrowPlacementPoint;
@@ -17,6 +19,7 @@ namespace Archer.ArcherControlls {
         [SerializeField] private BowSpec bowSpec;
         [SerializeField] private float enableRadius;
         [SerializeField] private GameObject arrowPrefab;
+
         public bool IsAmmoLoaded => isAmmoLoaded;
         public Vector3? InitialPoint => initialPoint;
         public Vector3? CurrecntPoint => currecntPoint;
@@ -63,14 +66,20 @@ namespace Archer.ArcherControlls {
         private void LateUpdate() {
             if (arrowController == null && splitArrowsList.Count == 0)
                 IsArrowTraking = false;
-
-            if (IsArrowTraking)
-                cameraArrowTracker.TrackObjects(TryGetTracableArrowPos());
-            else
-                cameraArrowTracker.QQQ();
+            if (isTrackArrows)
+                if (IsArrowTraking)
+                    cameraArrowTracker.TrackObjects(TryGetTracableArrowPos());
+                else
+                    cameraArrowTracker.UpdateCameraMovement();
         }
 
         private void OnTriggerExit(Collider collider) {
+            if (collider.gameObject.TryGetComponent(out ArrowController _)) {
+                IsArrowTraking = true;
+            }
+        }
+
+        private void OnTriggerEnter(Collider collider) {
             if (collider.gameObject.TryGetComponent(out ArrowController _)) {
                 IsArrowTraking = true;
             }
@@ -136,13 +145,14 @@ namespace Archer.ArcherControlls {
             }
 
             if (touch.phase == TouchPhase.Began && isNoArrow) {
-                if (cameraArrowTracker.IsCameraReady)
-                    initialPoint = currecntPoint;
+                if (isTrackArrows)
+                    if (cameraArrowTracker.IsCameraReady)
+                        initialPoint = currecntPoint;
+                    else
+                        cameraArrowTracker.WaitAndJumpToStart(0);
                 else
-                    cameraArrowTracker.WaitAndJumpToStart(0);
+                    initialPoint = currecntPoint;
             }
-
-
 
             if (touch.phase == TouchPhase.Moved && initialPoint != null) {
                 var inCircle = IsInCircle(
@@ -189,10 +199,6 @@ namespace Archer.ArcherControlls {
                     targetForce = forcePercent;
                 }
             }
-
-
-
-
         }
 
         private void EditorControls() {
@@ -248,10 +254,13 @@ namespace Archer.ArcherControlls {
 
 
             if (isMouseDown && isNoArrow) {
-                if (cameraArrowTracker.IsCameraReady)
-                    initialPoint = currecntPoint;
+                if (isTrackArrows)
+                    if (cameraArrowTracker.IsCameraReady)
+                        initialPoint = currecntPoint;
+                    else
+                        cameraArrowTracker.WaitAndJumpToStart(0);
                 else
-                    cameraArrowTracker.WaitAndJumpToStart(0);
+                    initialPoint = currecntPoint;
             }
 
             if (isMousePressed && initialPoint != null) {

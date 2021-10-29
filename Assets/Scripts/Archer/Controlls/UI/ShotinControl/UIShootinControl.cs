@@ -8,12 +8,13 @@ namespace Archer.Controlls.UI.ShootingControlls {
     public class UIShootinControl : MonoBehaviour {
         [SerializeField] private ShootingController shootingController;
         [SerializeField] private RectTransform startPoint;
+        [Space]
         [SerializeField] private RectTransform currentPoint;
         [SerializeField] private RectTransform enableRadius;
         [SerializeField] private RectTransform forceBarContainer;
         [SerializeField] private RectTransform forceBarRight;
         [SerializeField] private RectTransform forceBarLeft;
-
+        [Space]
         [SerializeField] private Sprite disableImage;
         [SerializeField] private Sprite enableImage;
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Archer.Controlls.IHitableAction;
 using Archer.Controlls.ArrowControlls;
+using UnityEngine;
 
 namespace Archer.Controlls.ArrowHitableControlls {
     [RequireComponent(typeof(Collider))]

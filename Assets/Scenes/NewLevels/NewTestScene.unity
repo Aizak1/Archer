@@ -5621,7 +5621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75347c01832c5a4cbadf2c4572c4410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeZoneLenght: 15
+  activeZoneLenght: 30
   activeZoneGap: 5
   cameraSpeed: 15
   cameraTrackSpeed: 50
@@ -12054,6 +12054,14 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1691108085543398352, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
+      propertyPath: isTrackArrows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691108085543398352, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
+      propertyPath: arrowTrackDiff
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691108085543398352, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
       propertyPath: bowSpec.MaxForce
       value: 5
       objectReference: {fileID: 0}
@@ -12155,7 +12163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198332982424483794, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
       propertyPath: m_Size.z
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8198332982424483794, guid: 0147433d4526b5c42a9d078f926972e7, type: 3}
       propertyPath: m_Center.x
