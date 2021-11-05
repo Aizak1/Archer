@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Archer.DataStructure.Levels;
+using Archer.Specs.LevelSpec;
 
 namespace Archer.Controlls.UI.ShootingControlls {
     public class Level : MonoBehaviour {
@@ -15,12 +17,12 @@ namespace Archer.Controlls.UI.ShootingControlls {
         [SerializeField] private Image background;
         [SerializeField] private List<Image> markList;
 
-        public void Setup(LevelStatDescriptor descriptor) {
-            idText.text = descriptor.Id.ToString();
-            var score = descriptor.Score;
+        public void Setup(LevelDescriptor levelDescriptor, LevelResult levelResult) {
+            idText.text = levelDescriptor.Id.ToString();
+            var score = levelResult.Score;
             var index = 0;
             var isComplete = false;
-            var enumerator = descriptor.ScoreLowerBounds.GetEnumerator();
+            var enumerator = levelDescriptor.ScoreLowerBounds.GetEnumerator();
             foreach (var image  in markList) {
                 if (enumerator.MoveNext()) {
                     var lowBoundScore = enumerator.Current;
@@ -41,7 +43,6 @@ namespace Archer.Controlls.UI.ShootingControlls {
                 background.sprite = levelCompleBackground;
             else
                 background.sprite = levelAvalibleBackground;
-
         }
     }
 }

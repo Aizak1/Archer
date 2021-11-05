@@ -4,58 +4,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Archer.Controlls.LevelSystem;
-
+using Archer.Controlls.UI;
+using Archer.Types.Levels;
+using System.Linq;
 
 namespace Archer.Controlls.Systems.Persistance {
     public class SceneControler : MonoBehaviour {
         [SerializeField] private List<string> levelSceneNameList;
+        [SerializeField] private string loaderLevelName;
 
         [SerializeField] private string UIstarnMenuSceneName;
         [SerializeField] private string registrationSceneName;
         [SerializeField] private string mainMenuSceneName;
 
         [SerializeField] private LoadSceneGroup startMenu;
+        [SerializeField] private LoadSceneGroup levelMenu;
+
+        private LoaderControler loaderControler;
+        private List<Scene> tracableLoadedScenes;
+
+        private void Start() {
+            tracableLoadedScenes = new List<Scene>();
+        }
+
+        public void LoaderNotify(LoaderControler loaderControler) {
+            this.loaderControler = loaderControler;
+        }
 
         public void TryLoadStartScene() {
             StartCoroutine(LoadSceneGroup(startMenu));
         }
+        public void TryLoadLevelMenu() {
+            StartCoroutine(LoadSceneGroup(levelMenu));
+        }
 
-        private IEnumerator LoadSceneGroup(LoadSceneGroup group) {
+        /*
+        private IEnumerator LoadSceneGroup(LoadSceneGroup group, bool reload = false) {
             foreach (var sceneName in group.SceneNames) {
                 if (SceneManager.GetSceneByName(sceneName).isLoaded) {
                     var scene = SceneManager.GetSceneByName(sceneName);
-                    if (TryFindFirstOnScene(scene, out LevelSetup levelSetup)
-                        && TryFindFirstOnScene(scene, out LevelUISetup levelUISetup)) {
-                        levelSetup.OnLoad();
-                    }
                     Debug.Log($"{sceneName} already Loaded");
                 } else {
                     var load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                     yield return load;
-                    var scene = SceneManager.GetSceneByName(sceneName);
-                    if (TryFindFirstOnScene(scene, out LevelSetup levelSetup)
-                        && TryFindFirstOnScene(scene, out LevelUISetup levelUISetup)) {
-                        levelSetup.OnLoad();
-                    }
                 }
             }
         }
+        */
 
-       // private void 
+        private IEnumerator LoadSceneGroup(LoadSceneGroup group) {
+            loaderControler?.ToggleVisibility(true);
+            var count = tracableLoadedScenes.Count;
+            var asyncOperationList = new List<AsyncOperation>();
 
-        private bool TryFindFirstOnScene<T>(Scene scene, out T result) where T : MonoBehaviour {
-            var firstLevelGOArray = scene.GetRootGameObjects();
-            foreach (var topLevelGO in firstLevelGOArray) {
-                var component = topLevelGO.GetComponentInChildren<T>();
-                if (component != null) {
-                    result = component;
-                    return true;
-                }
+            foreach (var scene in tracableLoadedScenes) {
+                asyncOperationList.Add(SceneManager.UnloadSceneAsync(scene.name));
             }
-            result = null;
-            return false;
-        }
 
+            foreach (var sceneName in group.SceneNames) {
+                asyncOperationList.Add(SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive));
+            }
+
+            while (!asyncOperationList.All(asyncOperation => asyncOperation.isDone)) {
+                yield return new WaitForEndOfFrame();
+            }
+
+            var localLoadedSceneList = new List<Scene>();
+            foreach (var sceneName in group.SceneNames) {
+                var scene = SceneManager.GetSceneByName(sceneName);
+                if (scene.isLoaded)
+                    localLoadedSceneList.Add(scene);
+            }
+
+            tracableLoadedScenes = localLoadedSceneList;
+            loaderControler?.ToggleVisibility(false);
+        }
     }
 
     [Serializable]

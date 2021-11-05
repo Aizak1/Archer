@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Archer.Extension.Vector3Extension;
+using Archer.DataStructure.Levels;
+using Archer.Specs.LevelSpec;
 
 namespace Archer.Controlls.UI.ShootingControlls {
     public class LevelMenu : MonoBehaviour {
-        [Header("Temp")]
-        [SerializeField] private List<LevelStatDescriptor> levelStatDescriptors;
         [Space]
         [SerializeField] private RectTransform containerTran;
         [Space]
@@ -23,15 +23,17 @@ namespace Archer.Controlls.UI.ShootingControlls {
         [SerializeField] private float snapSpeed;
         [SerializeField] private float width;
 
-        private List<LevelStatDescriptor> levelsDescriptor;
+        private List<LevelDescriptor> levelsDescriptor;
+        private List<LevelResult> levelsResult;
         private int middleStartIndex;
 
         Vector3? prevMousePos;
 
         private void Start() {
             middleStartIndex = 0;
-            levelsDescriptor = levelStatDescriptors;
-            Show(levelStatDescriptors);
+            levelsDescriptor = new List<LevelDescriptor>();
+            levelsResult = new List<LevelResult>();
+            Show();
         }
 
         private void Update() {
@@ -44,6 +46,13 @@ namespace Archer.Controlls.UI.ShootingControlls {
                 return;
 #endif
             UpdateSnap();
+        }
+
+        private void Init(List<LevelDescriptor> levelDescriptorsList, List<LevelResult> levelResults) {
+            middleStartIndex = 0;
+            levelsDescriptor = levelDescriptorsList;
+            levelsResult = levelResults;
+            Show();
         }
 
         private bool MobileControls() {
@@ -128,13 +137,13 @@ namespace Archer.Controlls.UI.ShootingControlls {
             if (containerPos == leftAnchorePos) {
                 middleStartIndex -= middleGroup.MocksCount;
                 containerTran.anchoredPosition3D = middleAnchore.anchoredPosition3D;
-                Show(levelStatDescriptors);
+                Show();
                 return;
             }
             if (containerPos == rightAnchorePos) {
                 middleStartIndex += middleGroup.MocksCount;
                 containerTran.anchoredPosition3D = middleAnchore.anchoredPosition3D;
-                Show(levelStatDescriptors);
+                Show();
                 return;
             }
         }
@@ -160,7 +169,7 @@ namespace Archer.Controlls.UI.ShootingControlls {
             return rightAnchore;
         }
 
-        private void Show(List<LevelStatDescriptor> levelsDescriptor) {
+        private void Show() {
             SetupGroup(middleGroup, middleStartIndex);
 
             var startRightIndex = middleStartIndex + middleGroup.MocksCount;
@@ -172,7 +181,7 @@ namespace Archer.Controlls.UI.ShootingControlls {
 
         private void SetupGroup(LevelGroup levelGroup, int startIndex) {
             if (startIndex > levelsDescriptor.Count || startIndex < 0) {
-                levelGroup.Setup(new List<LevelStatDescriptor>());
+                //levelGroup.Setup(new List<LevelDescriptor>());
                 return;
             }
 
@@ -180,32 +189,9 @@ namespace Archer.Controlls.UI.ShootingControlls {
             var rangeLenghtLimit = levelsDescriptor.Count - startIndex;
             if (rangleLenght > rangeLenghtLimit)
                 rangleLenght = rangeLenghtLimit;
-            
+
             var range = levelsDescriptor.GetRange(startIndex, rangleLenght);
-            levelGroup.Setup(range);
+            //levelGroup.Setup(range);
         }
-
-        [ContextMenu("Show")]
-        private void DebugShow() {
-            Show(levelStatDescriptors);
-        }
-    }
-
-    [Serializable]
-    public struct LevelStatDescriptor {
-        public LevelStatDescriptor(int id, List<int> scoreLowerBounds, int score = 0) {
-            this.id = id;
-            this.scoreLowerBounds = scoreLowerBounds;
-            this.score = score;
-        }
-
-        [SerializeField] private int id;
-        public int Id => id;
-
-        [SerializeField] private int score;
-        public int Score => score;
-
-        [SerializeField] private List<int> scoreLowerBounds;
-        public IEnumerable<int> ScoreLowerBounds => scoreLowerBounds;
     }
 }

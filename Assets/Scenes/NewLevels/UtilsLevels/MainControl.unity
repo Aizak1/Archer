@@ -132,9 +132,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183478817}
+  - component: {fileID: 1183478820}
   - component: {fileID: 1183478818}
   - component: {fileID: 1183478819}
-  - component: {fileID: 1183478820}
+  - component: {fileID: 1183478821}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSceneNameList: []
+  loaderLevelName: Loader
   UIstarnMenuSceneName: UIStartMenu
   registrationSceneName: Registration
   mainMenuSceneName: MenuLevel
@@ -200,6 +202,11 @@ MonoBehaviour:
     - MenuLevel
     - UIStartMenu
     name: mainMenu
+  levelMenu:
+    sceneNames:
+    - MenuLevel
+    - UILevelsMenu
+    name: levelMenu
 --- !u!114 &1183478820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,5 +219,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0575d009c52f23c4e83e7beb0cb8488a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPopup: {fileID: 0}
   sceneControler: {fileID: 1183478819}
   dataOperat: {fileID: 1183478818}
+--- !u!114 &1183478821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183478816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7382ce918a3f64e804a115327d32a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoPopupSceneName: 
+  popupTimeGap: 0
