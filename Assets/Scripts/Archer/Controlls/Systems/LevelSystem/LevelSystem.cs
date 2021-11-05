@@ -19,7 +19,8 @@ namespace Archer.Controlls.Systems.LevelSystem {
         private void Init(LevelTaskSpec levelSpec) {
             ResetLevelSystem();
             this.levelSpec = levelSpec;
-            levelTargetsList = targetContainer.GetComponentsInChildren<ArrowHitableLevelTarget>().ToList();
+            levelTargetsList = 
+                targetContainer.GetComponentsInChildren<ArrowHitableLevelTarget>().ToList();
         }
 
         private void OnTargetHit(ArrowHitableLevelTarget levelTarget) {
@@ -67,10 +68,6 @@ namespace Archer.Controlls.Systems.LevelSystem {
         private int timeToComplete;
         public int TimeToComplete => timeToComplete;
     }
-
-
-
-
 
     /*
     public interface IResourceWatcherServece {
