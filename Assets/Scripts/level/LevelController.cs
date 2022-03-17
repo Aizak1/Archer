@@ -93,7 +93,7 @@ namespace level {
                     stars[i].gameObject.SetActive(true);
                     var transform = stars[i].rectTransform;
                     transform.localScale = Vector3.zero;
-                    transform.DOScale(Vector3.one, starScaleSpeed);
+                    transform.DOScale(new Vector3(1.12f,1.36f,1), starScaleSpeed);
                 }
 
                 var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
