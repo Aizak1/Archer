@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ namespace level {
         [SerializeField]
         private Texture _effectImage;
 
+        [SerializeField]
+        private Color innactiveButtonTextColor;
+
         private int currentPageNumber;
 
         public const string LEVEL_AT = "levelAt";
@@ -22,6 +26,7 @@ namespace level {
             for (int i = levelAt; i < levelButtons.Length; i++) {
                 levelButtons[i].interactable = false;
                 levelButtons[i].GetComponent<RawImage>().texture = _effectImage;
+                levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = innactiveButtonTextColor;
 
             }
 
