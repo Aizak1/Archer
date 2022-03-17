@@ -8,6 +8,8 @@ namespace level {
         private Button[] levelButtons;
         [SerializeField]
         private Page[] pages;
+        [SerializeField]
+        private Texture _effectImage;
 
         private int currentPageNumber;
 
@@ -19,6 +21,8 @@ namespace level {
             int levelAt = PlayerPrefs.GetInt(LEVEL_AT, 1);
             for (int i = levelAt; i < levelButtons.Length; i++) {
                 levelButtons[i].interactable = false;
+                levelButtons[i].GetComponent<RawImage>().texture = _effectImage;
+
             }
 
             var starsAtLevels = PlayerPrefs.GetString(STARTS_AT_LEVELS,"");
