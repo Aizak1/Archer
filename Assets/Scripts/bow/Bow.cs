@@ -17,7 +17,11 @@ namespace bow {
         [SerializeField] private float minBowRotationAngle;
         [SerializeField] private float maxBowRotationAngle;
         
-       
+        [SerializeField] private Transform _minPullTransform;
+        [SerializeField] private Transform _maxPullTransform;
+
+        private float _maxPullMagnitude;
+
         [SerializeField] private ArrowResource arrowResource;
         private ArrowSpawnObject arrowToInstantiate;
 
@@ -25,20 +29,16 @@ namespace bow {
         public float pullAmount;
         [HideInInspector]
         public Arrow instantiatedArrow;
-        
-    
         [HideInInspector]public int shotsCount;
 
         public UnityAction OnStartPull;
         public UnityAction OnPull;
         public UnityAction OnEndPull;
-        
-        
 
         private void Start() {
             shotsCount = 0;
             arrowToInstantiate = arrowResource.ArrowPrefabs[0];
-            
+            _maxPullMagnitude = (_maxPullTransform.position - _minPullTransform.position).magnitude;
         }
         
 
@@ -54,7 +54,7 @@ namespace bow {
             OnStartPull?.Invoke();
         }
 
-        public void Pull(Vector3 startTouchPosition, Vector3 pullPosition, Vector3 maxPull, Vector3 minPull)
+        public void Pull(Vector3 startTouchPosition, Vector3 pullPosition)
         {
             var targetPosition = (startTouchPosition - pullPosition).normalized;
 
@@ -63,7 +63,7 @@ namespace bow {
 
             bowRotationPivot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.left);
 
-            pullAmount = CalculatePullAmount(pullPosition,startTouchPosition,maxPull,minPull);
+            pullAmount = CalculatePullAmount(pullPosition,startTouchPosition);
             OnPull?.Invoke();
         }
 
@@ -95,12 +95,10 @@ namespace bow {
             OnEndPull?.Invoke();
         }
 
-        private float CalculatePullAmount(Vector3 pullPosition, Vector3 startTouchPosition,Vector3 maxPull,Vector3 minPull) 
+        private float CalculatePullAmount(Vector3 pullPosition, Vector3 startTouchPosition) 
         {
             var pullVector = pullPosition - startTouchPosition;
-            var maxPullVector = maxPull - minPull;
-            float pullAmount = pullVector.magnitude / maxPullVector.magnitude;
-
+            float pullAmount = pullVector.magnitude / _maxPullMagnitude;
             return Mathf.Clamp(pullAmount, 0, 1);
         }
     }

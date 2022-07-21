@@ -7,10 +7,7 @@ namespace bow
 {
     public class BowInput : MonoBehaviour
     {
-        [SerializeField] private Transform _minPullTransform;
-        [SerializeField] private Transform _maxPullTransform;
-        
-        private Vector3 _startTouchPosition;
+        private Vector2 _startTouchPosition;
         
         private new Camera _camera;
         private Bow _bow;
@@ -32,8 +29,7 @@ namespace bow
                 }
 
                 _startTouchPosition = _camera.ScreenToViewportPoint(Input.mousePosition);
-                _startTouchPosition.z = _maxPullTransform.position.z;
-                
+
                 _bow.StartPull();
                 
             }
@@ -41,14 +37,13 @@ namespace bow
             if (Input.GetMouseButton(0)) {
 
                 var touchPosition = Input.mousePosition;
-                Vector3 pullPosition = _camera.ScreenToViewportPoint(touchPosition);
-                pullPosition.z = _maxPullTransform.position.z;
+                Vector2 pullPosition = _camera.ScreenToViewportPoint(touchPosition);
 
                 if (pullPosition.x > _startTouchPosition.x) {
                     return;
                 }
                 
-                _bow.Pull(_startTouchPosition, pullPosition, _maxPullTransform.position,_minPullTransform.position);
+                _bow.Pull(_startTouchPosition, pullPosition);
                 
             }
             
