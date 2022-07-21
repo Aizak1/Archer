@@ -16,8 +16,6 @@ namespace hittable{
         [SerializeField]
         private FreezableObject freezableObject;
         [SerializeField]
-        private Player player;
-        [SerializeField]
         private PlayerTeleport playerTeleport;
 
         [SerializeField]
@@ -30,7 +28,7 @@ namespace hittable{
             }
         }
 
-        public void ProcessHit(Arrow arrow, RaycastHit hit) {
+        public void ProcessHit(Arrow arrow) {
             if (target) {
                 target.ProcessHit();
                 levelController.DecreaseEnemyCount();
@@ -57,12 +55,7 @@ namespace hittable{
                 freezableObject.ProcessHit(arrow);
                 return;
             }
-
-            if (player) {
-                player.ProcessHit(hit);
-                return;
-            }
-
+            
             if (playerTeleport) {
                 playerTeleport.ProcessHit(arrow);
             }

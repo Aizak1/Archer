@@ -20,13 +20,14 @@ namespace hittable {
 
         [SerializeField]
         private bool isFreezeFromStart;
-
-        private const string SHADER_FREEZE_FIELD = "_IceSlider";
+        
         private const float FREEZE_MIN = 0f;
         private const float FREEZE_MAX = 1f;
+        private readonly int SHADER_FREEZE_FIELD = Shader.PropertyToID("_IceSlider");
 
         private void Start() {
             originalAnimatorSpeed = animator.speed;
+            
 
             if (freezeMaterials.Length == 0) {
                 enabled = false;

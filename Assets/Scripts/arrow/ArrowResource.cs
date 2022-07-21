@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace arrow {
-    public class ArrowResource : MonoBehaviour {
-        public Dictionary<ArrowType, GameObject> arrowPrefabs
-            = new Dictionary<ArrowType, GameObject>();
+    public class ArrowResource : MonoBehaviour
+    {
+        [SerializeField] private List<ArrowSpawnObject> _arrowsPrefabs;
 
-        public Dictionary<int, ArrowType> countToArrowType = new Dictionary<int, ArrowType>();
-
-        public Dictionary<ArrowType, int> arrowTypeToCount = new Dictionary<ArrowType, int>();
+        public List<ArrowSpawnObject> ArrowPrefabs => _arrowsPrefabs;
     }
 }

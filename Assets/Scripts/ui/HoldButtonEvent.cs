@@ -37,7 +37,7 @@ namespace ui {
             if (!isHold) {
                 return;
             }
-            unityEvent.Invoke();
+            unityEvent?.Invoke();
         }
     }
 }

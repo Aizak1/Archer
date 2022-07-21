@@ -1026,7 +1026,7 @@ Transform:
   - {fileID: 1785150988}
   - {fileID: 909425308}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &474325691
 PrefabInstance:
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMenu: {fileID: 1096505410}
-  bowController: {fileID: 611643682}
+  _bow: {fileID: 611643682}
   manualMenues:
   - {fileID: 145988337}
   hintController: {fileID: 1137298772}
@@ -1267,7 +1267,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &586833807 stripped
 Transform:
@@ -1731,7 +1731,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &714213345
 PrefabInstance:
@@ -2103,6 +2103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda7895caa7e8484db897be84e259428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _arrowsPrefabs:
+  - {fileID: 3418736613634195198, guid: 32034e7e5ff026a48b8c5cedce36871d, type: 3}
 --- !u!4 &786763081
 Transform:
   m_ObjectHideFlags: 0
@@ -2659,6 +2661,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -3120,7 +3123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1148433055
 GameObject:
@@ -3150,7 +3153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1156821656
 PrefabInstance:
@@ -3264,7 +3267,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1192016414 stripped
 Transform:
@@ -4218,7 +4221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0f04bccdedc0944a0925cdd6d0b704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowController: {fileID: 611643682}
+  _bow: {fileID: 611643682}
   winMenu: {fileID: 340902606}
   failMenu: {fileID: 0}
   gameMenu: {fileID: 1096505410}
@@ -5055,7 +5058,7 @@ Transform:
   m_Children:
   - {fileID: 1961003153}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1722101616 stripped
 Transform:
@@ -5130,34 +5133,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1071809768249442939, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-      propertyPath: m_Weight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1071809768911628429, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-      propertyPath: m_Weight
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2091185621773697746, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: levelController
       value: 
       objectReference: {fileID: 1451289434}
     - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 963194227}
-    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: arrowResource
       value: 
       objectReference: {fileID: 786763080}
-    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-      propertyPath: portalController
-      value: 
-      objectReference: {fileID: 1731629871}
-    - target: {fileID: 3912111303885762834, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-      propertyPath: trajectoryShower
-      value: 
-      objectReference: {fileID: 811174993}
     - target: {fileID: 8587985851345400736, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: levelController
       value: 
@@ -5168,7 +5151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8798860652192192331, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8798860652192192331, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5212,17 +5195,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
---- !u!114 &1731629871 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5681318911223862649, guid: d8d8d8d1092aa464aa7608091ffcc67a, type: 3}
-  m_PrefabInstance: {fileID: 1731629870}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d18f7530d284ca94e88a4bec56a21da6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1749162409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4607489187838822, guid: 00e2e59cbc04eab4a982218df54ce70b, type: 3}
@@ -6142,52 +6114,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c96016c34e7be62488e588470988ef5b, type: 3}
---- !u!1 &2011827417
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2011827419}
-  - component: {fileID: 2011827418}
-  m_Layer: 0
-  m_Name: ArrowResourceFiller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2011827418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011827417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e29135604479754faccc96b738fc306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowPrefabs:
-  - {fileID: 8542102953145869890, guid: d1597c1377a100a4b98ce2ce24f2d5eb, type: 3}
-  resource: {fileID: 786763080}
---- !u!4 &2011827419
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011827417}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2022054593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4778183659321382, guid: dc7c84106cc461e4f8dac748879dbe72, type: 3}
@@ -6472,6 +6398,10 @@ PrefabInstance:
       value: TrajectoryShower
       objectReference: {fileID: 0}
     - target: {fileID: 2202697172370807277, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 611643682}
+    - target: {fileID: 2202697172370807277, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
       propertyPath: bowController
       value: 
       objectReference: {fileID: 611643682}
@@ -6525,7 +6455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2202697172370807278, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2202697172370807278, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6592,6 +6522,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 7033105551130693192, guid: 40cb7bc17e86fd548918db12b2097786, type: 2}
+    - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 611643682}
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: resource
       value: 
@@ -6756,6 +6690,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3967554543454436220, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 611643682}
     - target: {fileID: 3967554543454436220, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: bowController
       value: 

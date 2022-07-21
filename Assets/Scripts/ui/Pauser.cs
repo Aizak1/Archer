@@ -11,7 +11,7 @@ namespace ui {
         private GameObject gameMenu;
 
         [SerializeField]
-        private BowController bowController;
+        private Bow _bow;
         [SerializeField]
         private TextMeshProUGUI currentLevelText;
 
@@ -25,12 +25,12 @@ namespace ui {
             gameMenu.SetActive(false);
             pauseMenu.SetActive(true);
 
-            bowController.enabled = false;
+            _bow.enabled = false;
         }
 
         public void Resume() {
             pauseMenu.SetActive(false);
-            bowController.enabled = true;
+            _bow.enabled = true;
 
             gameMenu.SetActive(true);
         }

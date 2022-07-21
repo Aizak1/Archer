@@ -12,7 +12,7 @@ namespace ui {
         [SerializeField]
         private TrajectoryShower trajectoryShower;
         [SerializeField]
-        private BowController bowController;
+        private Bow _bow;
         [SerializeField]
         private ArrowResource resource;
 
@@ -36,12 +36,7 @@ namespace ui {
         private Texture[] arrowImageTextures;
         [SerializeField]
         private GameObject[] quiverGroups;
-
-        private  Dictionary<ArrowType, Texture> arrowTypeToTexture
-          = new Dictionary<ArrowType, Texture>();
-
-        private Dictionary<ArrowType, GameObject> arrowTypeToQuiverGroup
-            = new Dictionary<ArrowType, GameObject>();
+        
 
         private string arrowsForStar;
 
@@ -57,30 +52,10 @@ namespace ui {
             if (arrowTypeText == null || arrowImage == null) {
                 return;
             }
+            
 
-            if (arrowImageTextures.Length < resource.countToArrowType.Count) {
-                Debug.LogError("Lack of Images");
-                return;
-            }
-
-            if (quiverGroups.Length < resource.countToArrowType.Count) {
-                Debug.LogError("Lack of Quiver groups");
-                return;
-            }
-
-            for (int i = 0; i < resource.countToArrowType.Count; i++) {
-                arrowTypeToTexture.Add(resource.countToArrowType[i], arrowImageTextures[i]);
-
-                quiverGroups[i].SetActive(false);
-                arrowTypeToQuiverGroup.Add(resource.countToArrowType[i], quiverGroups[i]);
-            }
-
-            arrowTypeText.text = bowController.arrowTypeToInstantiate.ToString();
-            var currentType = bowController.arrowTypeToInstantiate;
-            arrowImage.texture = arrowTypeToTexture[currentType];
-            arrowTypeToQuiverGroup[currentType].SetActive(true);
-            int currentTypeIndex = resource.arrowTypeToCount[currentType];
-            trajectoryShower.SetSettings(currentTypeIndex);
+            //arrowTypeText.text = bowController.arrowToInstantiate.ToString();
+            trajectoryShower.SetSettings(0);
         }
 
         private void Update() {
@@ -88,7 +63,7 @@ namespace ui {
                 enemyCountText.text = "";
                 enemyCountText.text += levelController.PeelTargetsCount();
 
-                spendedArrowsText.text = bowController.shotsCount + " / " + arrowsForStar;
+                spendedArrowsText.text = _bow.shotsCount + " / " + arrowsForStar;
                 targetTime = levelController.PeelStarTime();
                 currentTime = levelController.PeelTimeSinceStart();
                 timeRemain = Mathf.RoundToInt(targetTime - currentTime);
@@ -104,23 +79,23 @@ namespace ui {
         }
 
         public void SwitchArrowTypeButton() {
-            ArrowType currentArrowType = bowController.arrowTypeToInstantiate;
-            arrowTypeToQuiverGroup[currentArrowType].SetActive(false);
-            int currentTypeIndex = resource.arrowTypeToCount[currentArrowType];
-            int nextTypeIndex = currentTypeIndex + 1;
+            //ArrowType currentArrowType = bowController.arrowToInstantiate;
+            //arrowTypeToQuiverGroup[currentArrowType].SetActive(false);
+            //int currentTypeIndex = resource.arrowTypeToCount[currentArrowType];
+            //int nextTypeIndex = currentTypeIndex + 1;
 
-            if (nextTypeIndex == resource.arrowTypeToCount.Count) {
-                nextTypeIndex = 0;
-            }
+            //if (nextTypeIndex == resource.arrowTypeToCount.Count) {
+             //   nextTypeIndex = 0;
+            //}
 
-            ArrowType nextType = resource.countToArrowType[nextTypeIndex];
+            //ArrowType nextType = resource.countToArrowType[nextTypeIndex];
 
-            bowController.arrowTypeToInstantiate = nextType;
-            arrowTypeText.text = nextType.ToString();
-            arrowImage.texture = arrowTypeToTexture[nextType];
-            arrowTypeToQuiverGroup[nextType].SetActive(true);
+            //bowController.arrowToInstantiate = nextType;
+            //arrowTypeText.text = nextType.ToString();
+            //arrowImage.texture = arrowTypeToTexture[nextType];
+            //arrowTypeToQuiverGroup[nextType].SetActive(true);
 
-            trajectoryShower.SetSettings(nextTypeIndex);
+            //trajectoryShower.SetSettings(nextTypeIndex);
         }
     }
 }

@@ -1,68 +1,89 @@
 using bow;
 using System;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ui {
     public class TrajectoryShower : MonoBehaviour {
+        
+        [SerializeField] private Bow _bow;
+        [SerializeField] private TrajectorySettings[] arrowTrajectorySettings;
+        [SerializeField]private LineRenderer lineRenderer;
+        
+        [SerializeField] private GameObject[] balls;
+        [SerializeField] private float ballDistance = 0.4f;
 
-        [SerializeField]
-        private BowController bowController;
+        private TrajectorySettings _trajectorySetUp;
+        private NativeArray<Vector3> _pointList;
 
-        [SerializeField]
-        private TrajectorySettings[] arrowTrajectorySettings;
-
-        private TrajectorySettings trajectorySettup;
-
-        private Vector3[] pointList;
-        [SerializeField]
-        private LineRenderer lineRenderer;
-
+        private int _ballIndex;
         private const string MAIN_TEXTURE = "_MainTex";
 
-        [SerializeField]
-        private GameObject[] balls;
-        [SerializeField]
-        private float ballDistance = 0.4f;
-        private int ballindex;
+        private void OnEnable()
+        {
+            _bow.OnStartPull += StartDraw;
+            _bow.OnPull += Draw;
+            _bow.OnEndPull += EndDraw;
+        }
 
         private void Start() {
             if (!lineRenderer) {
                 Debug.LogError("No LineRenderer on trajectory shower");
                 return;
             }
+            
 
             lineRenderer.positionCount = 0;
         }
-        public void StartDraw() {
+        private void StartDraw() {
             if (!lineRenderer) {
                 return;
             }
 
-            var uiObject = EventSystem.current.currentSelectedGameObject;
-
-            if (uiObject && uiObject.GetComponent<Button>()) {
+            if (_bow.instantiatedArrow == null)
+            {
                 return;
             }
 
-            lineRenderer.startWidth = trajectorySettup.StartWidth;
-            lineRenderer.endWidth = trajectorySettup.EndWidth;
-            lineRenderer.positionCount = trajectorySettup.numberOfPoitns;
+            lineRenderer.startWidth = _trajectorySetUp.StartWidth;
+            lineRenderer.endWidth = _trajectorySetUp.EndWidth;
+            lineRenderer.positionCount = _trajectorySetUp.numberOfPoitns;
         }
 
-        public void Draw() {
+  
+        private void Draw() {
             if (!lineRenderer) {
                 return;
             }
-
-            for (int i = 0; i < pointList.Length; i++) {
-                var time = (i + 1) * trajectorySettup.spaceBetweenPoints;
-                pointList[i] = CalculatePointPosition(time);
+            
+            if (_bow.instantiatedArrow == null)
+            {
+                return;
             }
 
-            for (int i = 0; i < trajectorySettup.numberOfPoitns; i++) {
-                var pos = pointList[i];
+            var job = new CalculatePositionJob
+            {
+                pointsPositions = _pointList,
+                pullAmount = _bow.pullAmount,
+                speed = _bow.instantiatedArrow.Speed,
+                arrowPosition = _bow.instantiatedArrow.transform.position,
+                direction = _bow.instantiatedArrow.transform.forward,
+                gravity = Physics.gravity,
+                spaceBetweenPoints = _trajectorySetUp.spaceBetweenPoints
+            };
+            var handle = job.Schedule(_pointList.Length,0);
+            handle.Complete();
+            // for (int i = 0; i < _pointList.Length; i++) {
+            //     var time = (i + 1) * _trajectorySetUp.spaceBetweenPoints;
+            //     _pointList[i] = CalculatePointPosition(time);
+            // }
+
+            for (int i = 0; i < _trajectorySetUp.numberOfPoitns; i++) {
+                var pos = _pointList[i];
                 lineRenderer.SetPosition(i, pos);
             }
 
@@ -70,17 +91,17 @@ namespace ui {
                 return;
             }
 
-            float[] magnitudes = new float[pointList.Length - 1];
+            float[] magnitudes = new float[_pointList.Length - 1];
             float sum = 0;
 
             for (int i = 0; i < magnitudes.Length; i++) {
-                magnitudes[i] = (pointList[i] - pointList[i + 1]).magnitude;
+                magnitudes[i] = (_pointList[i] - _pointList[i + 1]).magnitude;
                 sum += magnitudes[i];
             }
 
             float requiredMag = ballDistance;
             float tmpMag = 0;
-            ballindex = 0;
+            _ballIndex = 0;
 
             for (int i = 0; i < magnitudes.Length; i++) {
                 if (tmpMag >= sum) {
@@ -93,11 +114,11 @@ namespace ui {
 
                     float percent = need / full;
 
-                    Vector3 line = pointList[i + 1] - pointList[i];
+                    Vector3 line = _pointList[i + 1] - _pointList[i];
 
-                    balls[ballindex].transform.position = pointList[i] + line * percent;
-                    balls[ballindex].SetActive(true);
-                    ballindex++;
+                    balls[_ballIndex].transform.position = _pointList[i] + line * percent;
+                    balls[_ballIndex].SetActive(true);
+                    _ballIndex++;
 
                     tmpMag += magnitudes[i];
                     requiredMag += ballDistance;
@@ -106,33 +127,33 @@ namespace ui {
                 }
             }
 
-            for (int i = ballindex; i < balls.Length; i++) {
+            for (int i = _ballIndex; i < balls.Length; i++) {
                 balls[i].SetActive(false);
             }
 
-            if (ballindex == 2) {
-                balls[0].transform.localScale = Vector3.one * trajectorySettup.StartWidth;
-                balls[1].transform.localScale = Vector3.one * trajectorySettup.EndWidth;
+            if (_ballIndex == 2) {
+                balls[0].transform.localScale = Vector3.one * _trajectorySetUp.StartWidth;
+                balls[1].transform.localScale = Vector3.one * _trajectorySetUp.EndWidth;
                 return;
-            } else if (ballindex == 1) {
-                balls[0].transform.localScale = Vector3.one * trajectorySettup.StartWidth;
+            } else if (_ballIndex == 1) {
+                balls[0].transform.localScale = Vector3.one * _trajectorySetUp.StartWidth;
                 return;
 
-            } else if (ballindex - 2 < 0) {
+            } else if (_ballIndex - 2 < 0) {
                 return;
             }
 
-            float deltaWidth = (trajectorySettup.StartWidth - trajectorySettup.EndWidth);
-            float scaleStep = deltaWidth / (ballindex - 1);
-            float scale = trajectorySettup.StartWidth;
+            float deltaWidth = (_trajectorySetUp.StartWidth - _trajectorySetUp.EndWidth);
+            float scaleStep = deltaWidth / (_ballIndex - 1);
+            float scale = _trajectorySetUp.StartWidth;
 
-            for (int i = 0; i < ballindex; i++) {
+            for (int i = 0; i < _ballIndex; i++) {
                 balls[i].transform.localScale = Vector3.one * scale;
                 scale -= scaleStep;
             }
         }
 
-        public void EndDraw() {
+        private void EndDraw() {
             if (!lineRenderer) {
                 return;
             }
@@ -143,7 +164,7 @@ namespace ui {
                 return;
             }
 
-            for (int i = 0; i <= ballindex; i++) {
+            for (int i = 0; i <= _ballIndex; i++) {
                 if (i >= balls.Length) {
                     return;
                 }
@@ -152,7 +173,7 @@ namespace ui {
         }
 
         public void SetSettings(int presetIndex) {
-            trajectorySettup = arrowTrajectorySettings[presetIndex];
+            _trajectorySetUp = arrowTrajectorySettings[presetIndex];
             ApplySettings();
         }
 
@@ -161,17 +182,47 @@ namespace ui {
                 return;
             }
 
-            lineRenderer.colorGradient = trajectorySettup.Gradient;
-            var XTille = trajectorySettup.XTille;
+            lineRenderer.colorGradient = _trajectorySetUp.Gradient;
+            var XTille = _trajectorySetUp.XTille;
             lineRenderer.material.SetTextureScale(MAIN_TEXTURE, new Vector2(XTille, 1));
-            pointList = new Vector3[trajectorySettup.numberOfPoitns];
+            _pointList = new NativeArray<Vector3>(_trajectorySetUp.numberOfPoitns,Allocator.Persistent);
         }
 
         private Vector3 CalculatePointPosition(float t) {
-            var arrowTransform = bowController.instantiatedArrow.transform;
+            var arrowTransform = _bow.instantiatedArrow.transform;
             var direction = arrowTransform.forward;
-            var vO = bowController.instantiatedArrow.speed * bowController.pullAmount * direction;
+            var vO = _bow.instantiatedArrow.Speed * _bow.pullAmount * direction;
             return arrowTransform.position + (vO * t) + (t * t) * 0.5f * Physics.gravity;
+        }
+        
+
+        private void OnDisable()
+        {
+            _bow.OnStartPull -= StartDraw;
+            _bow.OnPull -= Draw;
+            _bow.OnEndPull -= EndDraw;
+            _pointList.Dispose();
+        }
+    }
+
+    [BurstCompile]
+    public struct CalculatePositionJob : IJobParallelFor
+    {
+        public NativeArray<Vector3> pointsPositions;
+        [ReadOnly] public Vector3 arrowPosition;
+        [ReadOnly]public Vector3 direction;
+        [ReadOnly]public Vector3 gravity;
+        [ReadOnly]public float speed;
+        [ReadOnly]public float spaceBetweenPoints;
+        [ReadOnly]public float pullAmount;
+     
+
+
+        public void Execute(int index)
+        {
+            var vO = speed * pullAmount * direction;
+            var time = (index + 1) * spaceBetweenPoints;
+            pointsPositions[index] = arrowPosition + (vO * time) + (time * time) * 0.5f * gravity;
         }
     }
 

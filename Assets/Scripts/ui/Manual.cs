@@ -9,7 +9,7 @@ namespace ui {
         private GameObject gameMenu;
 
         [SerializeField]
-        private BowController bowController;
+        private Bow _bow;
 
         [SerializeField]
         private GameObject[] manualMenues;
@@ -33,7 +33,7 @@ namespace ui {
             manualMenues[currentIndex].SetActive(true);
             gameMenu.SetActive(false);
 
-            bowController.enabled = false;
+            _bow.enabled = false;
         }
 
         public void CloseManual() {
@@ -42,7 +42,7 @@ namespace ui {
             currentIndex++;
 
             if (currentIndex >= manualMenues.Length) {
-                bowController.enabled = true;
+                _bow.enabled = true;
 
                 if (hintController) {
                     hintController.gameMenu = gameMenu;

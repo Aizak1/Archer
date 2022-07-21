@@ -20,11 +20,14 @@ namespace hittable {
 
         public void ProcessHit() {
             hitTime = Time.time;
-
-            foreach (var target in targets) {
+            int targetsLength = targets.Length;
+            for (var i = 0; i < targetsLength; i++)
+            {
+                var target = targets[i];
                 float deltaTime = hitTime - target.hitTime;
 
-                if (deltaTime > timeBetweenHits) {
+                if (deltaTime > timeBetweenHits)
+                {
                     return;
                 }
             }

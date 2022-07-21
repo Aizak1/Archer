@@ -356,6 +356,9 @@ GameObject:
   - component: {fileID: 660293210}
   - component: {fileID: 1077114271}
   - component: {fileID: 8412079814382961}
+  - component: {fileID: 7859837860307410603}
+  - component: {fileID: 6347301039959673355}
+  - component: {fileID: 4867023451774864789}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -415,27 +418,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6941f1526c9224a8026d47ba9783c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minPullTransform: {fileID: 320107371}
-  maxPullTransform: {fileID: 463045334}
   arrowPlacementPoint: {fileID: 6361804486924920703}
   bowRotationPivot: {fileID: 0}
   minBowRotationAngle: -90
   maxBowRotationAngle: 90
   arrowResource: {fileID: 0}
-  audioSource: {fileID: 1077114271}
-  shootSound: {fileID: 8300000, guid: 7aac9bf5cea2c634babcaf382197bd44, type: 3}
-  pullingSound: {fileID: 8300000, guid: 2e03a0352afc71d4e94d59eac1d74ecb, type: 3}
   pullAmount: 0
-  arrowTypeToInstantiate: 0
   instantiatedArrow: {fileID: 0}
-  archerRigs: []
-  archerAnimator: {fileID: 0}
-  camera: {fileID: 0}
   shotsCount: 0
-  bowAnimator: {fileID: 3176465753457872173}
-  maxPull: 0
-  trajectoryShower: {fileID: 0}
-  portalController: {fileID: 0}
 --- !u!82 &1077114271
 AudioSource:
   m_ObjectHideFlags: 0
@@ -544,6 +534,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48948dfe9d76b07488dacd46a7955fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7859837860307410603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589571369817754473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3e652292a947989de1bc9b66ec0b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxPull: 0.93
+--- !u!114 &6347301039959673355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589571369817754473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb1cf4a445c4c109c05c41c46354683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minPullTransform: {fileID: 320107371}
+  _maxPullTransform: {fileID: 463045334}
+--- !u!114 &4867023451774864789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589571369817754473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e6e96185d74f35bff59ce1cb6495e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootSound: {fileID: 8300000, guid: 7aac9bf5cea2c634babcaf382197bd44, type: 3}
+  _pullingSound: {fileID: 8300000, guid: 2e03a0352afc71d4e94d59eac1d74ecb, type: 3}
 --- !u!1 &2938454372705689396
 GameObject:
   m_ObjectHideFlags: 0

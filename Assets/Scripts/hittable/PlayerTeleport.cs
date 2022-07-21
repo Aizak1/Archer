@@ -1,5 +1,6 @@
 using UnityEngine;
 using arrow;
+using player;
 
 namespace hittable {
     [RequireComponent(typeof(Hittable))]
@@ -52,8 +53,10 @@ namespace hittable {
             if (player == null || newPosTransform == null) {
                 return;
             }
-            var delta = newPosTransform.position - player.gameObject.transform.position;
-            player.gameObject.transform.position = newPosTransform.position;
+
+            var newPosition = newPosTransform.position;
+            var delta = newPosition - player.transform.position;
+            player.transform.position = newPosition;
             camera.transform.position += delta;
             Destroy(gameObject);
         }

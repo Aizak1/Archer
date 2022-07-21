@@ -1,30 +1,38 @@
 using UnityEngine;
-using UnityEngine.UI;
-
 
 namespace cameraMover {
     public class CameraMover : MonoBehaviour {
-        private Vector3 minPosition;
+        [SerializeField]
+        private float step;
 
         [SerializeField]
-        private Transform max;
+        private Transform maxPos;
 
-        [SerializeField]
-        private Slider slider;
+        private Vector3 startPos;
 
         [SerializeField]
         private new Camera camera;
 
         private void Start() {
-            minPosition = camera.transform.position;
+            startPos = camera.transform.position;
         }
 
-        private void Update() {
-            var percent = slider.value;
+        public void MoveLeft() {
+            var transform = camera.transform.position;
+            var pos = new Vector3(transform.x, transform.y, transform.z - step * Time.deltaTime);
 
-            var deltaPos = (max.position - minPosition) * percent;
-            camera.transform.position = minPosition + deltaPos;
+            if (pos.z >= startPos.z) {
+                camera.transform.position = pos;
+            }
+        }
+
+        public void MoveRight() {
+            var transform = camera.transform.position;
+            var pos = new Vector3(transform.x, transform.y, transform.z + step * Time.deltaTime);
+
+            if (pos.z <= maxPos.position.z) {
+                camera.transform.position = pos;
+            }
         }
     }
 }
-

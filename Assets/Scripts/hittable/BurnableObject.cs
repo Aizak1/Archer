@@ -47,10 +47,6 @@ namespace hittable {
                 return;
             }
 
-            if (arrow.arrowType != ArrowType.Fire) {
-                return;
-            }
-
             Destroy(arrow.gameObject);
 
             burnStartTime = Time.time;

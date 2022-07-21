@@ -4,7 +4,6 @@ namespace ui {
     public class CanvasScaler : MonoBehaviour{
         [SerializeField]
         private RectTransform[] canvasTransforms;
-
         [SerializeField]
         private RectTransform refCanvasTransform;
 

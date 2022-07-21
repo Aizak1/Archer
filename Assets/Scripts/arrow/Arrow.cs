@@ -1,206 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using arrow.behaviours;
 using hittable;
 using portal;
 using bow;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace arrow {
-
-    public enum ArrowType {
-        Wooden,
-        Double,
-        Fast,
-        Slow,
-        Portal,
-        Freeze,
-        Fire
-    }
-
+    
     public class Arrow : MonoBehaviour {
+        
+        [SerializeField] private float _speed;
+        
+        [SerializeField] protected new Rigidbody _rigidbody;
+        [SerializeField] private new Collider _collider;
+        [SerializeField] protected TrailRenderer _trailRenderer;
+        [SerializeField] private Transform tip;
 
-        public ArrowType arrowType;
+        [HideInInspector] public bool isTeleporting;
 
-        public float speed;
-
-        [SerializeField]
-        public Transform tip;
-        [SerializeField]
-        public new Rigidbody rigidbody;
-
-        [SerializeField]
-        private int splitArrowsAmount;
-
-        [SerializeField]
-        private float timeBeforeSplit;
-
-        [SerializeField]
-        private float angleBetweenSplitArrows;
-
-        [SerializeField]
-        private GameObject mainVfx;
-        [SerializeField]
-        private ParticleSystem hitVfx;
-        [SerializeField]
-        private ParticleSystem splitVfx;
-
-        private const float VFX_LIFE_AFTER_HIT = 0.3f;
-
-        [SerializeField]
-        private AudioSource audioSource;
-        [SerializeField]
-        private AudioClip impactSound;
-        [SerializeField]
-        private AudioClip splitSound;
-
-        private float splitTime;
-        private bool isSplit;
-
-        private Vector3 lastTipPosition;
+        private Vector3 _lastTipPosition;
         private const float TIP_POS_ACCURACY = 1;
         private const string RAYCAST_LAYER = "Default";
+        private int _mask;
 
-        [SerializeField]
-        public TrailRenderer trailRenderer;
-        [HideInInspector]
-        public bool isTeleporting;
+        private List<IAdditionalArrowBehavior> _additionalArrowBehaviors;
 
-        private BowController bowController;
+        public UnityAction<RaycastHit> OnHit;
+        public UnityAction OnRelease;
 
-        [SerializeField]
-        private new Collider collider;
+        public float Speed => _speed;
+        public TrailRenderer TrailRenderer => _trailRenderer;
+        public Rigidbody Rigidbody => _rigidbody;
+        public List<IAdditionalArrowBehavior> AdditionalArrowBehaviors => _additionalArrowBehaviors;
 
-        private void Awake() {
-            lastTipPosition = tip.transform.position;
-            trailRenderer.enabled = false;
-            isTeleporting = false;
+        private void Awake()
+        {
+            _lastTipPosition = tip.transform.position;
+            _trailRenderer.enabled = false;
+            _mask = LayerMask.GetMask(RAYCAST_LAYER);
+            
+            _additionalArrowBehaviors = GetComponents<IAdditionalArrowBehavior>().ToList();
         }
 
-        private void Update() {
-            transform.rotation = Quaternion.LookRotation(rigidbody.velocity, transform.up);
-
-            var tipDistance = (lastTipPosition - tip.position).magnitude;
-            var mask = LayerMask.GetMask(RAYCAST_LAYER);
-            if (tipDistance < TIP_POS_ACCURACY &&
-                Physics.Linecast(lastTipPosition, tip.position, out RaycastHit hit, mask)) {
-
-                if (!hit.collider.isTrigger) {
-
-                    enabled = false;
-
-                    trailRenderer.enabled = false;
-                    if (mainVfx != null) {
-                        Destroy(mainVfx, VFX_LIFE_AFTER_HIT);
-                    }
-
-                    rigidbody.Sleep();
-                    collider.enabled = false;
-
-                    rigidbody.useGravity = false;
-                    rigidbody.isKinematic = true;
-
-                    audioSource.PlayOneShot(impactSound);
-
-                    var parent = new GameObject();
-                    parent.transform.position = hit.collider.gameObject.transform.position;
-                    parent.transform.rotation = hit.collider.gameObject.transform.rotation;
-                    parent.transform.parent = hit.collider.gameObject.transform;
-
-                    transform.parent = parent.transform;
-
-                    if (arrowType == ArrowType.Portal) {
-                        bowController.portalController.CreatePortal(hit);
-                        Destroy(gameObject);
-                        return;
-                    }
-
-                    if (hitVfx) {
-                        Instantiate(hitVfx, hit.point, Quaternion.LookRotation(hit.normal));
-                    }
-
-                    var hittable = hit.collider.GetComponent<Hittable>();
-
-                    if (hittable) {
-                        hittable.ProcessHit(this, hit);
-                    } else {
-                        bowController.arrowsOnLevel.Enqueue(gameObject);
-                    }
-
-                    if (bowController.arrowsOnLevel.Count > BowController.MAX_ARROWS_COUNT) {
-                        var arrow = bowController.arrowsOnLevel.Dequeue();
-                        Destroy(arrow);
-                    }
-
-                    trailRenderer.enabled = false;
-
-                    return;
-
-                } else {
-
-                    var portal = hit.collider.GetComponent<Portal>();
-                    if (portal) {
-                        trailRenderer.Clear();
-                        trailRenderer.enabled = false;
-                        isTeleporting = true;
-                        portal.StartPortalTravelling(collider);
-                    }
+        private void Start()
+        {
+            for (int i = 0; i < _additionalArrowBehaviors.Count; i++)
+            {
+                if (_additionalArrowBehaviors[i].IsDisabled)
+                {
+                    _additionalArrowBehaviors.RemoveAt(i);
+                    i--;
                 }
             }
-            lastTipPosition = tip.position;
+        }
 
-            if (Time.time >= splitTime && isSplit && !isTeleporting) {
-                Instantiate(splitVfx, transform.position, Quaternion.identity);
-                Split(angleBetweenSplitArrows, splitArrowsAmount);
+        private void Update()
+        {
+            if (IsHitSomething(out RaycastHit hit))
+            {
+                HitProcessing(hit);
+            }
+            else
+            {
+                Fly();
             }
         }
 
-        private void Split(float angleBetweenSplitArrows, int splitArrowsAmount) {
+        private void Fly()
+        { 
+            transform.rotation = Quaternion.LookRotation(_rigidbody.velocity, transform.up);
+            _lastTipPosition = transform.position;
 
-            float angle = -angleBetweenSplitArrows * (splitArrowsAmount - 1) / 2;
-            Arrow instantiatedArrow = this;
-
-            for (int i = 0; i < splitArrowsAmount; i++) {
-                instantiatedArrow = Instantiate(this, transform.position, transform.rotation);
-                Vector3 velocity = rigidbody.velocity;
-
-                float radAngle = angle * Mathf.Deg2Rad;
-
-                float newY = Mathf.Sin(radAngle) * velocity.z + Mathf.Cos(radAngle) * velocity.y;
-                float newZ = Mathf.Cos(radAngle) * velocity.z - Mathf.Sin(radAngle) * velocity.y;
-
-                Vector3 newVelocity = new Vector3(velocity.x, newY, newZ);
-
-                instantiatedArrow.Release(newVelocity, false, bowController);
-
-                angle += angleBetweenSplitArrows;
+            foreach (var item in _additionalArrowBehaviors)
+            {
+              item.Fly();   
             }
-
-            instantiatedArrow.audioSource.PlayOneShot(splitSound);
-            Destroy(gameObject);
         }
 
-        public void Release(Vector3 velocity, bool isSplit, BowController bowController) {
-
-            this.bowController = bowController;
-
-            trailRenderer.enabled = true;
-            rigidbody.useGravity = true;
-            rigidbody.isKinematic = false;
-            rigidbody.velocity = velocity;
-
-            if (splitArrowsAmount <= 1) {
-                isSplit = false;
+        private bool IsHitSomething(out RaycastHit raycastHit)
+        {
+            raycastHit = new RaycastHit();
+            var tipDistance = (_lastTipPosition - tip.position).magnitude;   
+            if (tipDistance < TIP_POS_ACCURACY &&
+                Physics.Linecast(_lastTipPosition, tip.position, out RaycastHit hit, _mask))
+            {
+                raycastHit = hit;
+                return true;
             }
-
-            this.isSplit = isSplit;
-
-            if (this.isSplit) {
-                splitTime = Time.time + timeBeforeSplit;
-            }
-
+           
+            return false;
         }
 
-        private void OnDestroy() {
-            if (transform.parent != null) {
-                Destroy(transform.parent.gameObject);
+        private  void HitProcessing(RaycastHit hit)
+        {
+            Destroy(_rigidbody);
+            enabled = false;
+
+            _trailRenderer.enabled = false;
+            _collider.enabled = false;
+
+            var hittable = hit.collider.GetComponent<Hittable>();
+            if (hittable)
+            {
+                hittable.ProcessHit(this);
+            }
+            OnHit?.Invoke(hit);
+            foreach (var item in _additionalArrowBehaviors)
+            {
+                item.HitProcessing(hit);   
+            }
+        }
+
+        public  void Release(Vector3 velocity)
+        {
+            _trailRenderer.enabled = true;
+            _rigidbody.useGravity = true;
+            _rigidbody.isKinematic = false;
+            _rigidbody.velocity = velocity;
+            
+            foreach (var item in _additionalArrowBehaviors)
+            {
+                item.Release(velocity);   
             }
         }
     }

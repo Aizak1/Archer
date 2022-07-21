@@ -2224,6 +2224,10 @@ PrefabInstance:
       value: TrajectoryShower
       objectReference: {fileID: 0}
     - target: {fileID: 2202697172370807277, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 1748639036}
+    - target: {fileID: 2202697172370807277, guid: fb934f20d65ca3940974ee7ee98138f4, type: 3}
       propertyPath: bowController
       value: 
       objectReference: {fileID: 1748639036}
@@ -3533,6 +3537,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 1748639036}
+    - target: {fileID: 3967554543454436210, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: resource
       value: 
       objectReference: {fileID: 786763080}
@@ -3692,6 +3700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3967554543454436220, guid: a794de97671859e409dd02dec979a670, type: 3}
+      propertyPath: _bow
+      value: 
+      objectReference: {fileID: 1748639036}
     - target: {fileID: 3967554543454436220, guid: a794de97671859e409dd02dec979a670, type: 3}
       propertyPath: bowController
       value: 
@@ -4100,6 +4112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda7895caa7e8484db897be84e259428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowsPrefabs:
+  - {fileID: 2210969612754681556, guid: d1597c1377a100a4b98ce2ce24f2d5eb, type: 3}
 --- !u!4 &786763081
 Transform:
   m_ObjectHideFlags: 0
@@ -5202,6 +5216,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -7193,7 +7208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0f04bccdedc0944a0925cdd6d0b704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bowController: {fileID: 1748639036}
+  _bow: {fileID: 1748639036}
   winMenu: {fileID: 719743963}
   failMenu: {fileID: 0}
   gameMenu: {fileID: 719743957}
@@ -9836,9 +9851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e29135604479754faccc96b738fc306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefabs:
-  - {fileID: 8542102953145869890, guid: d1597c1377a100a4b98ce2ce24f2d5eb, type: 3}
-  resource: {fileID: 786763080}
 --- !u!4 &2011827419
 Transform:
   m_ObjectHideFlags: 0

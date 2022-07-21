@@ -4,11 +4,12 @@ using bow;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 namespace level {
     public class LevelController : MonoBehaviour {
-        [SerializeField]
-        private BowController bowController;
+        [FormerlySerializedAs("bowController")] [SerializeField]
+        private Bow _bow;
         [SerializeField]
         private GameObject winMenu;
         [SerializeField]
@@ -79,9 +80,9 @@ namespace level {
                 winMenu.SetActive(true);
 
                 timeText.text = System.Math.Round(timeSinceStart, 2).ToString();
-                arrowsCountText.text = bowController.shotsCount.ToString();
+                arrowsCountText.text = _bow.shotsCount.ToString();
 
-                if(bowController.shotsCount <= countOfArrowsForStar) {
+                if(_bow.shotsCount <= countOfArrowsForStar) {
                     starConditionsCompleteCount++;
                 }
 
@@ -119,7 +120,7 @@ namespace level {
                     }
                 }
 
-                bowController.enabled = false;
+                _bow.enabled = false;
                 enabled = false;
             }
 
@@ -131,9 +132,9 @@ namespace level {
 
                 failMenu.SetActive(true);
                 failTimeText.text = System.Math.Round(timeSinceStart, 2).ToString();
-                failArrowsCountText.text = bowController.shotsCount.ToString();
+                failArrowsCountText.text = _bow.shotsCount.ToString();
 
-                bowController.enabled = false;
+                _bow.enabled = false;
                 gameMenu.SetActive(false);
                 enabled = false;
             }

@@ -153,7 +153,7 @@ namespace portal {
                 var arrow = traveller.GetComponent<Arrow>();
 
                 if (arrow != null) {
-                    arrow.trailRenderer.enabled = true;
+                    arrow.TrailRenderer.enabled = true;
                     arrow.isTeleporting = false;
                 }
             }
