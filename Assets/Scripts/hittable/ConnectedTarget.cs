@@ -1,16 +1,10 @@
+using arrow;
 using UnityEngine;
 
 namespace hittable {
-    [RequireComponent(typeof(Hittable))]
-    public class ConnectedTarget : MonoBehaviour {
-        [SerializeField]
-        private Hittable hittable;
-
-        [SerializeField]
-        private ConnectedTarget[] targets;
-
-        [SerializeField]
-        private float timeBetweenHits;
+    public class ConnectedTarget : Target {
+        [SerializeField] private ConnectedTarget[] targets;
+        [SerializeField] private float timeBetweenHits;
 
         private float hitTime;
 
@@ -18,7 +12,7 @@ namespace hittable {
             hitTime = float.MinValue;
         }
 
-        public void ProcessHit() {
+        public override void ProcessHit(Arrow arrow, RaycastHit hit) {
             hitTime = Time.time;
             int targetsLength = targets.Length;
             for (var i = 0; i < targetsLength; i++)
@@ -33,12 +27,15 @@ namespace hittable {
             }
 
             foreach (var target in targets) {
-                Destroy(target);
-                hittable.levelController.DecreaseEnemyCount();
+                target.ProcessHitBase(arrow,hit);
             }
 
-            hittable.levelController.DecreaseEnemyCount();
-            Destroy(this);
+            ProcessHitBase(arrow,hit);
+        }
+
+        private void ProcessHitBase(Arrow arrow, RaycastHit hit)
+        {
+            base.ProcessHit(arrow, hit);
         }
     }
 }

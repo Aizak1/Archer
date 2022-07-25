@@ -1,14 +1,22 @@
+using System;
+using arrow;
 using UnityEngine;
 
 namespace hittable {
-    [RequireComponent(typeof(Hittable))]
-    public class MovingTarget : MonoBehaviour {
-        [SerializeField]
-        private Animator animator;
+    public class MovingTarget : Target
+    {
+        private Animator _animator;
 
-        public void ProcessHit() {
-            animator.speed = 0;
-            Destroy(this);
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
         }
+
+        public override void ProcessHit(Arrow arrow, RaycastHit hit)
+        {
+            _animator.speed = 0;
+            base.ProcessHit(arrow, hit);
+        }
+        
     }
 }

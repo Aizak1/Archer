@@ -30,12 +30,27 @@ public class BurnCotroller : MonoBehaviour {
     private Vector3 endPosition;
 
     private ParticleSystem.EmissionModule emisonModule;
+    
+    [SerializeField] private float _burnTime;
+    private float _burnStartTime;
 
     private void Start() {
         emisonModule = particleSystem.emission;
     }
 
     private void Update() {
+        
+        float time = Time.time;
+
+        if (time >= _burnStartTime + _burnTime) {
+            Destroy(gameObject);
+            return;
+        }
+
+        float percent = (time - _burnStartTime) / _burnTime;
+
+        animationStage = 1 - percent;
+
         if (animationStage < 0.01f || animationStage > 0.99f) {
             particleSystem.Stop();
             if (!particleSystem.IsAlive()) {
@@ -57,6 +72,11 @@ public class BurnCotroller : MonoBehaviour {
         }
 
         meshRenderer.material.SetVector("_Position", burnTransform.transform.position);
+    }
+
+    public void SetBurnStartTime(float time)
+    {
+        _burnStartTime = time;
     }
 
     #if UNITY_EDITOR

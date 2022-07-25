@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 4635934901314551946}
   - component: {fileID: 5357651961430278306}
   - component: {fileID: 7875527647112681422}
+  - component: {fileID: 2839817101292070079}
   m_Layer: 7
   m_Name: Main Arrow
   m_TagString: Untagged
@@ -316,22 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2c96ea3bc23b6489add09a977d8795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowType: 6
-  speed: 7
+  _speed: 7
+  _rigidbody: {fileID: 5194487377624509044}
+  _collider: {fileID: 5357651961430278306}
+  _trailRenderer: {fileID: 4050884079663924970}
   tip: {fileID: 8386148805111352677}
-  rigidbody: {fileID: 5194487377624509044}
-  splitArrowsAmount: 1
-  timeBeforeSplit: 1
-  angleBetweenSplitArrows: 30
-  mainVfx: {fileID: 5196461923653417737}
-  hitVfx: {fileID: 198498569432132500, guid: 6c86c599d7bf3464eb4506d2584fbe57, type: 3}
-  splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
-  audioSource: {fileID: 4635934901314551946}
-  impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
-  splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
-  trailRenderer: {fileID: 4050884079663924970}
   isTeleporting: 0
-  collider: {fileID: 5357651961430278306}
 --- !u!82 &4635934901314551946
 AudioSource:
   m_ObjectHideFlags: 0
@@ -461,6 +452,18 @@ MonoBehaviour:
   originalMaterials: []
   cloneMaterials: []
   rigidbody: {fileID: 5194487377624509044}
+--- !u!114 &2839817101292070079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991164316996165318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbb98c353194bafa68b041d1e12b795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4712887640106892155
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +649,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5832823175582339433}
+  - component: {fileID: 4977143365488538506}
   m_Layer: 0
   m_Name: FireArrow
   m_TagString: Untagged
@@ -668,6 +672,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4977143365488538506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542102953145869890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efb19477add51b4faf4f497690adf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentArrow: {fileID: 1851190763705419970}
 --- !u!1 &8778244316314703067
 GameObject:
   m_ObjectHideFlags: 0
@@ -5529,11 +5546,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3dd5518a6b470c4697263fd98832718, type: 3}
---- !u!1 &5196461923653417737 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5646118540723916116, guid: c3dd5518a6b470c4697263fd98832718, type: 3}
-  m_PrefabInstance: {fileID: 452190046484493917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5196461923653417738 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5646118540723916119, guid: c3dd5518a6b470c4697263fd98832718, type: 3}

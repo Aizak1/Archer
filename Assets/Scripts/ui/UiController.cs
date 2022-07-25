@@ -52,17 +52,14 @@ namespace ui {
             if (arrowTypeText == null || arrowImage == null) {
                 return;
             }
-            
-
             //arrowTypeText.text = bowController.arrowToInstantiate.ToString();
             trajectoryShower.SetSettings(0);
+            ShowEnemyCountText();
+            levelController.OnTargetsDecrease.AddListener(ShowEnemyCountText);
         }
 
         private void Update() {
             if (enemyCountText != null && levelController != null) {
-                enemyCountText.text = "";
-                enemyCountText.text += levelController.PeelTargetsCount();
-
                 spendedArrowsText.text = _bow.shotsCount + " / " + arrowsForStar;
                 targetTime = levelController.PeelStarTime();
                 currentTime = levelController.PeelTimeSinceStart();
@@ -76,6 +73,11 @@ namespace ui {
                     timeText.text += timeRemain;
                 }
             }
+        }
+
+        private void ShowEnemyCountText()
+        {
+            enemyCountText.text = levelController.PeelTargetsCount().ToString();
         }
 
         public void SwitchArrowTypeButton() {

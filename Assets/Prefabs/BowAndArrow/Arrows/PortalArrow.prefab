@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 4635934901314551946}
   - component: {fileID: 1380187726592052734}
   - component: {fileID: 7115766762171545578}
+  - component: {fileID: 2125212928221280094}
   m_Layer: 7
   m_Name: Main Arrow
   m_TagString: Untagged
@@ -177,22 +178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2c96ea3bc23b6489add09a977d8795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowType: 4
-  speed: 10
+  _speed: 9
+  _rigidbody: {fileID: 5194487377624509044}
+  _collider: {fileID: 1380187726592052734}
+  _trailRenderer: {fileID: 2744344632471690294}
   tip: {fileID: 8386148805111352677}
-  rigidbody: {fileID: 5194487377624509044}
-  splitArrowsAmount: 1
-  timeBeforeSplit: 1
-  angleBetweenSplitArrows: 0
-  mainVfx: {fileID: 6473104081027419459}
-  hitVfx: {fileID: 0}
-  splitVfx: {fileID: 155471036219132785, guid: ceec5568f17b48c4bafe25a81d629114, type: 3}
-  audioSource: {fileID: 4635934901314551946}
-  impactSound: {fileID: 8300000, guid: d32316f738713554193c105a7e0ffb65, type: 3}
-  splitSound: {fileID: 8300000, guid: af8f6d683ec5c2a46be6b2b14c683927, type: 3}
-  trailRenderer: {fileID: 2744344632471690294}
   isTeleporting: 0
-  collider: {fileID: 1380187726592052734}
 --- !u!82 &4635934901314551946
 AudioSource:
   m_ObjectHideFlags: 0
@@ -322,6 +313,18 @@ MonoBehaviour:
   originalMaterials: []
   cloneMaterials: []
   rigidbody: {fileID: 5194487377624509044}
+--- !u!114 &2125212928221280094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3991164316996165318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeed00b7418943dd85ffcd3c05ff53b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5436353624406495219
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5832823175582339433}
+  - component: {fileID: 6274286024409655537}
   m_Layer: 0
   m_Name: PortalArrow
   m_TagString: Untagged
@@ -666,3 +670,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6274286024409655537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542102953145869890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efb19477add51b4faf4f497690adf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentArrow: {fileID: 1851190763705419970}

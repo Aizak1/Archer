@@ -1,55 +1,74 @@
+using System;
 using UnityEngine;
 
 namespace portal {
-    public class PortalController : MonoBehaviour {
-        [SerializeField]
-        private PortalCameraRenderer cameraRenderer;
+    public class PortalController : MonoBehaviour
+    {
 
-        [SerializeField]
-        private GameObject orangePortalPrefab;
-        [SerializeField]
-        private GameObject bluePortalPrefab;
+        private static PortalController _instance;
 
-        private Portal orangePortal;
-        private Portal bluePortal;
+        public static PortalController Instance => _instance;
+        
+      
+        [SerializeField] private PortalCameraRenderer _cameraRenderer;
 
-        public bool isBlue;
+       
+        [SerializeField] private PortalSpawnObject _orangePortalPrefab;
+       
+        [SerializeField] private PortalSpawnObject _bluePortalPrefab;
+
+        private Portal _orangePortal;
+        private Portal _bluePortal;
+
+        public bool _isBlue;
+
+        private void Awake()
+        {
+            _instance = this;
+        }
 
         public void CreatePortal(RaycastHit hit) {
             Vector3 pos = hit.point;
             Vector3 normal = hit.normal;
             normal.x = 0;
             var rot = Quaternion.LookRotation(normal);
-            GameObject portal;
+            PortalSpawnObject portalSpawnObject;
 
             var parent = new GameObject();
-            parent.transform.position = hit.collider.gameObject.transform.position;
-            parent.transform.rotation = hit.collider.gameObject.transform.rotation;
-            parent.transform.parent = hit.collider.gameObject.transform;
+            parent.transform.position = hit.collider.transform.position;
+            parent.transform.rotation = hit.collider.transform.rotation;
+            parent.transform.parent = hit.collider.transform;
 
-            if (isBlue) {
+            if (_isBlue) {
 
-                if (bluePortal) {
-                    bluePortal.Close();
+                if (_bluePortal) {
+                    _bluePortal.Close();
                 }
-                portal = Instantiate(bluePortalPrefab, pos, rot, parent.transform);
-                bluePortal = portal.GetComponentInChildren<Portal>();
-                bluePortal.Open(cameraRenderer, orangePortal);
+                portalSpawnObject = Instantiate(_bluePortalPrefab, pos, rot, parent.transform);
+                _bluePortal = portalSpawnObject.PortalToSpawn;
+                _bluePortal.Open(_cameraRenderer, _orangePortal);
 
 
             } else {
 
-                if (orangePortal) {
-                    orangePortal.Close();
+                if (_orangePortal) {
+                    _orangePortal.Close();
                 }
-                portal = Instantiate(orangePortalPrefab, pos, rot, parent.transform);
-                orangePortal = portal.GetComponentInChildren<Portal>();
-                orangePortal.Open(cameraRenderer, bluePortal);
+                portalSpawnObject = Instantiate(_orangePortalPrefab, pos, rot, parent.transform);
+                _orangePortal = portalSpawnObject.PortalToSpawn;
+                _orangePortal.Open(_cameraRenderer, _bluePortal);
             }
 
-            Vector3 offset = portal.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
+            Vector3 offset = portalSpawnObject.transform.forward.normalized / Portal.PORTAL_SPAWN_OFFSET;
             offset.x = 0;
-            portal.transform.position += offset;
+            portalSpawnObject.transform.position += offset;
+            
+            _isBlue = !_isBlue;
+        }
+
+        private void OnDestroy()
+        {
+            _instance = null;
         }
     }
 }

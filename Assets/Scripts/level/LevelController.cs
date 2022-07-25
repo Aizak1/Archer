@@ -4,6 +4,7 @@ using bow;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace level {
@@ -40,7 +41,6 @@ namespace level {
         private float starTime;
         [SerializeField]
         private int countOfArrowsForStar;
-        [SerializeField]
         private int targetsCount;
 
         private int starConditionsCompleteCount;
@@ -52,6 +52,8 @@ namespace level {
 
         public bool isFailed;
 
+        public UnityEvent OnTargetsDecrease;
+
         private void Awake() {
             isFailed = false;
             if(countOfArrowsForStar == 0) {
@@ -59,6 +61,14 @@ namespace level {
             }
             starConditionsCompleteCount = 1;
             winMenu.SetActive(false);
+            
+            var targets = FindObjectsOfType<Target>();
+            targetsCount = targets.Length;
+            foreach (var item in targets)
+            {
+                item.OnTargetHitted.AddListener(DecreaseTargetsCount);
+                
+            }
         }
 
         private void Update() {
@@ -140,8 +150,10 @@ namespace level {
             }
         }
 
-        public void DecreaseEnemyCount() {
+        public void DecreaseTargetsCount() {
             targetsCount--;
+            
+            OnTargetsDecrease?.Invoke();
         }
 
         public int PeelTargetsCount() {

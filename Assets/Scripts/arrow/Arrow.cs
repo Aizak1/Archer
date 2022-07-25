@@ -96,17 +96,26 @@ namespace arrow {
 
         private  void HitProcessing(RaycastHit hit)
         {
+            if (hit.collider.isTrigger)
+            {
+                var portal = hit.collider.GetComponent<Portal>();
+                if (portal) {
+                    _trailRenderer.Clear();
+                    _trailRenderer.enabled = false;
+                    isTeleporting = true;
+                    portal.StartPortalTravelling(_collider);
+                }
+                return;
+            }
+            
             Destroy(_rigidbody);
             enabled = false;
 
             _trailRenderer.enabled = false;
             _collider.enabled = false;
 
-            var hittable = hit.collider.GetComponent<Hittable>();
-            if (hittable)
-            {
-                hittable.ProcessHit(this);
-            }
+            var hittable = hit.collider.GetComponent<IHittable>();
+            hittable?.ProcessHit(this,hit);
             OnHit?.Invoke(hit);
             foreach (var item in _additionalArrowBehaviors)
             {

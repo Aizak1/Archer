@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8084107570033847821}
   - component: {fileID: 1328937555427575773}
   - component: {fileID: 8108531369345930281}
-  - component: {fileID: 6935294390449274510}
   - component: {fileID: 659835507710497829}
   m_Layer: 0
   m_Name: MovingTarget
@@ -118,26 +117,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8332f017cfb13984196e491ffb1aaf3f, type: 3}
---- !u!114 &6935294390449274510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099583835394547137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  connectedTarget: {fileID: 0}
-  movingTarget: {fileID: 659835507710497829}
-  burnableObject: {fileID: 0}
-  freezableObject: {fileID: 0}
-  player: {fileID: 0}
-  playerTeleport: {fileID: 0}
-  levelController: {fileID: 0}
 --- !u!114 &659835507710497829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,5 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b168cf71b97386340be5ff9c10f771b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1328937555427575773}
-  hittable: {fileID: 6935294390449274510}
+  OnTargetHitted:
+    m_PersistentCalls:
+      m_Calls: []

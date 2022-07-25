@@ -1,15 +1,13 @@
 using UnityEngine;
 using arrow;
+using level;
 using player;
 
 namespace hittable {
-    [RequireComponent(typeof(Hittable))]
-    public class PlayerTeleport : MonoBehaviour {
-        [SerializeField]
-        private Hittable hittable;
-
-        [SerializeField]
-        private Player player;
+    public class PlayerTeleport : MonoBehaviour, IHittable {
+        
+        [SerializeField] private Player player;
+        [SerializeField] private LevelController _levelController;
 
         [SerializeField]
         private new Camera camera;
@@ -27,28 +25,26 @@ namespace hittable {
 
         [SerializeField]
         private ParticleSystem particle;
-
-        private bool isVisible = false;
+        
 
         private void Start() {
             renderer.enabled = false;
             collider.enabled = false;
+            _levelController.OnTargetsDecrease.AddListener(EnableTeleport);
         }
 
-        private void Update() {
-            if (hittable.levelController.PeelTargetsCount() > appearTargetCount) {
-                return;
+        private void EnableTeleport()
+        {
+            if (_levelController.PeelTargetsCount() != appearTargetCount)
+            {
+                return;;
             }
-
-            if (!isVisible) {
-                renderer.enabled = true;
-                collider.enabled = true;
-                particle.Play();
-                isVisible = true;
-            }
+            renderer.enabled = true;
+            collider.enabled = true;
+            particle.Play();
         }
 
-        public void ProcessHit(Arrow arrow) {
+        public void ProcessHit(Arrow arrow,RaycastHit hit) {
             Destroy(arrow.gameObject);
             if (player == null || newPosTransform == null) {
                 return;

@@ -1,10 +1,10 @@
+using arrow;
 using hittable;
 using UnityEngine;
 using level;
 
 namespace player {
-    [RequireComponent(typeof(Hittable))]
-    public class Player : MonoBehaviour {
+    public class Player : MonoBehaviour, IHittable {
         [SerializeField]
         private LevelController levelController;
         [SerializeField]
@@ -14,8 +14,8 @@ namespace player {
         [SerializeField]
         private ParticleSystem blood;
 
-        public void ProcessHit(RaycastHit hit) {
-
+        public void ProcessHit(Arrow arrow, RaycastHit hit)
+        {
             if (levelController == null) {
                 return;
             }

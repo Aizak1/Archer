@@ -1,60 +1,48 @@
 using UnityEngine;
 using arrow;
+using arrow.behaviours;
 
 namespace hittable {
-    [RequireComponent(typeof(Hittable))]
-    public class BurnableObject : MonoBehaviour{
+    [RequireComponent(typeof(MeshRenderer),typeof(BurnCotroller))]
+    public class BurnableObject : MonoBehaviour, IHittable{
 
-        private bool isBurning;
+        [SerializeField]private Material _burnMaterial;
+        
+        private bool _isBurning;
+        private new MeshRenderer _renderer;
+        private BurnCotroller _burnController;
 
-        [SerializeField]
-        private float burnTime;
-        private float burnStartTime;
-
-        [SerializeField]
-        private new MeshRenderer renderer;
-
-        [SerializeField]
-        private Material burnMaterial;
-
-        [SerializeField]
-        private BurnCotroller burnCotroller;
-
-        private void Awake() {
-            burnCotroller.enabled = false;
+        private void Awake()
+        {
+            _renderer = GetComponent<MeshRenderer>();
+            _burnController = GetComponent<BurnCotroller>();
+            _burnController.enabled = false;
         }
+        
+        public void ProcessHit(Arrow arrow, RaycastHit hit) {
 
-        private void Update() {
-            if (!isBurning) {
+            if (_isBurning) {
                 return;
             }
+            
+            foreach (var item in arrow.AdditionalArrowBehaviors)
+            {
+                if (item.BehaviorType != BehaviorType.Fire)
+                {
+                   continue;
+                }
+                
+                Destroy(arrow.gameObject);
 
-            float time = Time.time;
+                _burnController.SetBurnStartTime(Time.time);
+                _isBurning = true;
 
-            if (time >= burnStartTime + burnTime) {
-                Destroy(gameObject);
-                return;
+                _renderer.material = _burnMaterial;
+
+                _burnController.enabled = true;
+                return; 
             }
 
-            float percent = (time - burnStartTime) / burnTime;
-
-            burnCotroller.animationStage = 1 - percent;
-        }
-
-        public void ProcessHit(Arrow arrow) {
-
-            if (isBurning) {
-                return;
-            }
-
-            Destroy(arrow.gameObject);
-
-            burnStartTime = Time.time;
-            isBurning = true;
-
-            renderer.material = burnMaterial;
-
-            burnCotroller.enabled = true;
         }
     }
 }

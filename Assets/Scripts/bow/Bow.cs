@@ -25,10 +25,10 @@ namespace bow {
         [SerializeField] private ArrowResource arrowResource;
         private ArrowSpawnObject arrowToInstantiate;
 
-        [HideInInspector]
-        public float pullAmount;
-        [HideInInspector]
-        public Arrow instantiatedArrow;
+     
+        [HideInInspector]public float pullAmount;
+       
+        [HideInInspector]public Arrow instantiatedArrow;
         [HideInInspector]public int shotsCount;
 
         public UnityAction OnStartPull;

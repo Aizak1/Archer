@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 8076488889676885307}
   - component: {fileID: 8084107570033847821}
   - component: {fileID: 8108531369345930281}
-  - component: {fileID: 6935294390449274510}
-  - component: {fileID: 3151520055086747351}
+  - component: {fileID: 7539177591467333733}
   m_Layer: 0
   m_Name: Main Target
   m_TagString: Untagged
@@ -98,7 +97,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 8332f017cfb13984196e491ffb1aaf3f, type: 3}
---- !u!114 &6935294390449274510
+--- !u!114 &7539177591467333733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,26 +106,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8099583835394547137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2db8807d551be448898152b4aa42ea9, type: 3}
+  m_Script: {fileID: 11500000, guid: 539d3137ba4940e4b9ff7dda0db4a788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 3151520055086747351}
-  connectedTarget: {fileID: 0}
-  movingTarget: {fileID: 0}
-  burnableObject: {fileID: 0}
-  freezableObject: {fileID: 0}
-  player: {fileID: 0}
-  playerTeleport: {fileID: 0}
-  levelController: {fileID: 0}
---- !u!114 &3151520055086747351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099583835394547137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7819844908daa814fa494df916c54675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  OnTargetHitted:
+    m_PersistentCalls:
+      m_Calls: []
