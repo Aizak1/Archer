@@ -6,54 +6,50 @@ using player;
 namespace hittable {
     public class PlayerTeleport : MonoBehaviour, IHittable {
         
-        [SerializeField] private Player player;
+        [SerializeField] private Player _player;
         [SerializeField] private LevelController _levelController;
-
-        [SerializeField]
-        private new Camera camera;
-
-        [SerializeField]
-        private int appearTargetCount;
-
-        [SerializeField]
-        private Transform newPosTransform;
-
-        [SerializeField]
-        private new MeshRenderer renderer;
-        [SerializeField]
-        private new BoxCollider collider;
-
-        [SerializeField]
-        private ParticleSystem particle;
         
+        [SerializeField] private int _appearTargetCount;
+        [SerializeField] private Transform _newPosTransform;
+        
+        [SerializeField]private ParticleSystem _particle;
+        
+        private new Camera _camera;
+        private new MeshRenderer _renderer;
+        private new BoxCollider _collider;
 
         private void Start() {
-            renderer.enabled = false;
-            collider.enabled = false;
+            
+            _camera = Camera.main;
+            _renderer = GetComponent<MeshRenderer>();
+            _collider = GetComponent<BoxCollider>();
+            
+            _renderer.enabled = false;
+            _collider.enabled = false;
             _levelController.OnTargetsDecrease.AddListener(EnableTeleport);
         }
 
         private void EnableTeleport()
         {
-            if (_levelController.PeelTargetsCount() != appearTargetCount)
+            if (_levelController.PeelTargetsCount() != _appearTargetCount)
             {
                 return;;
             }
-            renderer.enabled = true;
-            collider.enabled = true;
-            particle.Play();
+            _renderer.enabled = true;
+            _collider.enabled = true;
+            _particle.Play();
         }
 
         public void ProcessHit(Arrow arrow,RaycastHit hit) {
             Destroy(arrow.gameObject);
-            if (player == null || newPosTransform == null) {
+            if (_player == null || _newPosTransform == null) {
                 return;
             }
 
-            var newPosition = newPosTransform.position;
-            var delta = newPosition - player.transform.position;
-            player.transform.position = newPosition;
-            camera.transform.position += delta;
+            var newPosition = _newPosTransform.position;
+            var delta = newPosition - _player.transform.position;
+            _player.transform.position = newPosition;
+            _camera.transform.position += delta;
             Destroy(gameObject);
         }
     }
