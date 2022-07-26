@@ -17,7 +17,6 @@ namespace ui {
             int currentScene = SceneManager.GetActiveScene().buildIndex;
             if (PlayerPrefs.GetInt(LevelsManager.LEVEL_AT) > currentScene) 
             {
-                Debug.Log("Change from manual");
                 _levelController.ChangeGameState(GameState.InGame);
                 return;
             }

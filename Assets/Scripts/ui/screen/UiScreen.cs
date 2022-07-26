@@ -20,7 +20,6 @@ namespace ui.screen
         private void SetActive(GameState gameState)
         {
             gameObject.SetActive(_activationState == gameState);
-            Debug.Log(gameObject.name + '-' + _activationState);
         }
         
     }
