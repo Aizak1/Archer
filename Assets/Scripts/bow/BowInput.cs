@@ -20,8 +20,14 @@ namespace bow
 
         private void Update()
         {
+            if (!_bow.enabled)
+            {
+                return;
+            }
+            
             if (Input.GetMouseButtonDown(0)) {
-
+                
+                
                 var uiObject = EventSystem.current.currentSelectedGameObject;
 
                 if (uiObject && uiObject.GetComponent<Button>()) {

@@ -31,7 +31,7 @@ namespace hittable {
 
         private void EnableTeleport()
         {
-            if (_levelController.PeelTargetsCount() != _appearTargetCount)
+            if (_levelController.TargetsCount != _appearTargetCount)
             {
                 return;;
             }

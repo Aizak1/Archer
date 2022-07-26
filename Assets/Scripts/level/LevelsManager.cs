@@ -27,7 +27,6 @@ namespace level {
                 levelButtons[i].interactable = false;
                 levelButtons[i].GetComponent<RawImage>().texture = _effectImage;
                 levelButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = innactiveButtonTextColor;
-
             }
 
             var starsAtLevels = PlayerPrefs.GetString(STARTS_AT_LEVELS,"");

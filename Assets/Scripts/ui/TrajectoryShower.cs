@@ -35,9 +35,8 @@ namespace ui {
                 Debug.LogError("No LineRenderer on trajectory shower");
                 return;
             }
-            
-
             lineRenderer.positionCount = 0;
+            SetSettings(0);
         }
         private void StartDraw() {
             if (!lineRenderer) {

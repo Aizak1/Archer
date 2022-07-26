@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 namespace level {
     public class SceneLoader : MonoBehaviour {
 
-        [SerializeField]
-        private Animator transitionAnimator;
+       
+        [SerializeField] private Animator transitionAnimator;
 
-        [SerializeField]
-        private bool isFadeOut;
+       
+        [SerializeField] private bool isFadeOut;
 
-        private readonly int fadeInTriggerId = Animator.StringToHash("FadeIn");
-        private readonly int fadeOutTriggerId = Animator.StringToHash("FadeOut");
+        private readonly int _fadeInTriggerId = Animator.StringToHash("FadeIn");
+        private readonly int _fadeOutTriggerId = Animator.StringToHash("FadeOut");
 
         private readonly float TRANSITION_TIME = 2f / 3f;
 
         private void Awake() {
             if (isFadeOut) {
-                transitionAnimator.SetTrigger(fadeOutTriggerId);
+                transitionAnimator.SetTrigger(_fadeOutTriggerId);
             }
         }
 
@@ -39,20 +39,20 @@ namespace level {
         }
 
         private IEnumerator FadeLoadLevel(string name) {
-            transitionAnimator.SetTrigger(fadeInTriggerId);
+            transitionAnimator.SetTrigger(_fadeInTriggerId);
             yield return new WaitForSeconds(TRANSITION_TIME);
             LoadLevel(name);
         }
 
         private IEnumerator FadeLoadLevel(int index) {
-            transitionAnimator.SetTrigger(fadeInTriggerId);
+            transitionAnimator.SetTrigger(_fadeInTriggerId);
             yield return new WaitForSeconds(TRANSITION_TIME);
             LoadLevel(index);
         }
 
         public void LoadNextLevel() {
             var nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            if(nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
+            if (nextLevelIndex == SceneManager.sceneCountInBuildSettings) {
                 nextLevelIndex = 0;
             }
             StartCoroutine(FadeLoadLevel(nextLevelIndex));

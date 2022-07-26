@@ -20,7 +20,7 @@ namespace player {
                 return;
             }
 
-            levelController.isFailed = true;
+            levelController.OnFail();
             if (blood != null) {
                 Instantiate(blood, hit.point, Quaternion.identity);
             }
